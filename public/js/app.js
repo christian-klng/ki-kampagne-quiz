@@ -33,7 +33,9 @@
   const esc = (value) =>
     String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-  const freshState = () => ({ screen: "start", index: 0, answers: {}, order: {}, live: {}, chat: [], summary: null });
+  // answers: erste Wahl (zählt für die Punkte) · revised: aktuell angezeigte Wahl nach dem Umentscheiden
+  // tried: alle schon ausprobierten Optionen · liveCache: Live-Ergebnisse pro Frage und Option
+  const freshState = () => ({ screen: "start", index: 0, answers: {}, revised: {}, tried: {}, order: {}, live: {}, liveCache: {}, chat: [], summary: null });
 
   function loadState() {
     try {
@@ -74,6 +76,8 @@
 
   const optionOf = (q, id) => q.options.find((o) => o.id === id);
   const chosenOption = (q) => optionOf(q, state.answers[q.id]);
+  const shownOption = (q) => optionOf(q, state.revised[q.id] || state.answers[q.id]);
+  const triedOptions = (q) => state.tried[q.id] || (state.answers[q.id] ? [state.answers[q.id]] : []);
 
   function points() {
     return quiz.questions.reduce((sum, q) => {
@@ -184,34 +188,42 @@
       state.order[q.id] = shuffle(q.options.map((o) => o.id));
       save();
     }
-    const chosen = chosenOption(q);
+    const first = chosenOption(q);
+    const shown = shownOption(q);
+    const tried = triedOptions(q);
     const options = state.order[q.id].map((id) => optionOf(q, id));
     const pad = String(q.id).padStart(2, "0");
 
+    // Nach der Entscheidung bleiben alle Optionen wählbar. Bewertet sind nur die schon ausprobierten.
     const answers = options.map((o) => {
       const t = TYPES[o.type];
+      const isShown = shown && o.id === shown.id;
       let cls = "answer";
-      if (chosen) cls += o.id === chosen.id ? ` is-chosen v-${t.cls}` : o.type === "sehrgut" ? " is-best" : " is-dimmed";
-      const pressed = chosen ? o.id === chosen.id : o.id === selected;
-      return `<li><button type="button" class="${cls}" data-option="${o.id}" aria-pressed="${pressed}" ${chosen ? "disabled" : ""}>
+      if (isShown) cls += ` is-chosen v-${t.cls}`;
+      else if (shown && tried.includes(o.id)) cls += " is-tried";
+      const pressed = shown ? isShown : o.id === selected;
+      const label = shown && o.id === first.id && first.id !== shown.id ? `${t.label} · erste Wahl` : t.label;
+      return `<li><button type="button" class="${cls}" data-option="${o.id}" aria-pressed="${pressed}" ${isShown ? "disabled" : ""}>
         <span class="answer-text">${esc(o.text)}</span>
-        ${chosen ? `<span class="verdict v-${t.cls}">${t.label}</span>` : ""}
+        ${shown && tried.includes(o.id) ? `<span class="verdict v-${t.cls}">${label}</span>` : ""}
       </button></li>`;
     }).join("");
 
     let below;
-    if (chosen) {
-      const t = TYPES[chosen.type];
-      // Bei „verboten“ läuft die Kampagne mit der rechtssicheren Variante weiter
-      const title = chosen.type === "verboten" ? `${t.title} – es geht rechtssicher weiter` : t.title;
+    if (shown) {
+      const t = TYPES[shown.type];
+      const stop = shown.type === "verboten";
+      const title = stop ? `${t.title} – wähle eine rechtssichere Variante` : t.title;
+      // Bei „verboten“ sagt es schon der Titel, bei „sehr gut“ gibt es nichts Besseres
+      const hint = stop || shown.type === "sehrgut" ? "" : "Umentscheiden? Klick oben eine andere Option an.";
       const last = state.index === quiz.questions.length - 1;
       below = `<div class="feedback fb-${t.cls}" role="status">
         <div class="box">
           <h2>${title}</h2>
-          <p>${esc(chosen.feedback)}</p>
-          ${chosen.law ? `<p class="law">${esc(chosen.law)}</p>` : ""}
+          <p>${esc(shown.feedback)}</p>
+          ${shown.law || hint ? `<p class="fb-meta">${shown.law ? `<span class="law">${esc(shown.law)}</span>` : ""}${hint ? `<span class="fb-hint">${esc(hint)}</span>` : ""}</p>` : ""}
         </div>
-        <button type="button" class="button" data-action="next">${last ? "Zum Launch" : "Weiter"}</button>
+        <button type="button" class="button" data-action="next" ${stop ? "disabled" : ""}>${last ? "Zum Launch" : "Weiter"}</button>
       </div>`;
     } else {
       below = `<div class="actions"><button type="button" class="button" data-action="decide" ${selected ? "" : "disabled"}>Entscheiden</button></div>`;
@@ -219,7 +231,7 @@
 
     return `<main class="stage layout-question layout-decision ${state.index % 2 ? "is-image-right" : ""}">
       <div class="content">
-        ${renderPanel(q, chosen, pad)}
+        ${renderPanel(q, shown, pad)}
         <section class="question mark">
           <p class="kicker">Kapitel ${q.chapter} · ${esc(quiz.chapters[q.chapter - 1])}</p>
           <p class="situation"><strong>${esc(q.title)}.</strong> ${esc(q.situation)}</p>
@@ -280,23 +292,28 @@
 
   /** Lädt (einmal pro Frage) das Live-Ergebnis und füllt das Panel. */
   async function fillLive(q) {
-    const chosen = chosenOption(q);
+    const chosen = shownOption(q);
     if (!q.live || !chosen || chosen.type === "verboten") return;
     if (q.live.type === "chat") return renderChat(q, chosen);
 
     const body = document.getElementById("live-body");
     const note = document.getElementById("live-note");
-    let result = state.live[q.id];
-    if (!result || result.option !== chosen.id) {
+    const key = `${q.id}:${chosen.id}`;
+    let result = state.liveCache[key] || (state.live[q.id]?.option === chosen.id ? state.live[q.id] : null);
+    if (!result) {
       try {
         const data = await api(q.live.type === "image" ? "/api/image" : "/api/text", { q: q.id, option: chosen.id });
         result = { option: chosen.id, ...data };
       } catch (error) {
         result = { option: chosen.id, text: null, url: null, source: "fallback", error: error.message };
       }
-      state.live[q.id] = result;
-      save();
+      state.liveCache[key] = result;
     }
+    // Die Kampagne (Plakat, Claim) nutzt das Ergebnis der aktuell gewählten Option,
+    // sofern der Spieler nicht inzwischen schon wieder umentschieden hat
+    if (shownOption(q)?.id === chosen.id) state.live[q.id] = result;
+    save();
+    if (shownOption(q)?.id !== chosen.id) return;
     // Panel könnte inzwischen weg sein (Spieler war schneller)
     if (!document.body.contains(body)) return;
 
@@ -335,7 +352,7 @@
 
   async function sendChat(text) {
     const q = quiz.questions[state.index];
-    const chosen = chosenOption(q);
+    const chosen = shownOption(q);
     state.chat.push({ role: "user", content: text.slice(0, 300) });
     state.chatPending = true;
     renderChat(q, chosen);
@@ -413,12 +430,15 @@
       const o = chosenOption(q);
       if (!o) return "";
       const t = TYPES[o.type];
+      const last = shownOption(q);
+      const changed = last.id !== o.id;
       const best = q.options.find((x) => x.type === "sehrgut");
       return `<li class="review-item">
         <p class="review-head"><span class="review-num">${q.id}</span> <strong>${esc(q.title)}</strong> <span class="verdict v-${t.cls}">${t.label}</span></p>
         <p>${esc(o.text)}</p>
         ${o.law ? `<p class="law">${esc(o.law)}</p>` : ""}
-        ${o.type !== "sehrgut" ? `<p class="review-best"><strong>Sehr gut wäre:</strong> ${esc(best.text)}</p>` : ""}
+        ${changed ? `<p class="review-best"><strong>Umentschieden zu (${TYPES[last.type].label}):</strong> ${esc(last.text)}</p>` : ""}
+        ${o.type !== "sehrgut" && last.type !== "sehrgut" ? `<p class="review-best"><strong>Sehr gut wäre:</strong> ${esc(best.text)}</p>` : ""}
       </li>`;
     }).join("");
     return `<main class="stage layout-review">
@@ -459,6 +479,18 @@
   app.addEventListener("click", (event) => {
     const optionButton = event.target.closest("[data-option]");
     if (optionButton && !optionButton.disabled) {
+      const q = quiz.questions[state.index];
+      if (state.answers[q.id]) {
+        // Umentscheiden nach der Rückmeldung: sofort neue Rückmeldung zeigen
+        const id = optionButton.dataset.option;
+        state.revised[q.id] = id;
+        state.tried[q.id] = [...new Set([...triedOptions(q), id])];
+        if (q.live?.type === "chat") state.chat = [];
+        save();
+        render();
+        app.querySelector(".feedback")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        return;
+      }
       selected = optionButton.dataset.option;
       app.querySelectorAll("[data-option]").forEach((b) => b.setAttribute("aria-pressed", String(b === optionButton)));
       const decide = app.querySelector('[data-action="decide"]');
@@ -476,6 +508,9 @@
       case "decide":
         if (!selected) return;
         state.answers[q.id] = selected;
+        state.tried[q.id] = [selected];
+        delete state.revised[q.id];
+        if (q.live?.type === "chat") state.chat = [];
         selected = null;
         save();
         render();
@@ -483,6 +518,7 @@
         app.querySelector(".feedback")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
         break;
       case "next":
+        if (shownOption(q)?.type === "verboten") return;
         if (state.index < quiz.questions.length - 1) {
           state.index += 1;
           go("question");

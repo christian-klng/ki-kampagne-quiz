@@ -47,7 +47,7 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
 .verdict.v-best { background: var(--color-accent); color: var(--color-inverse); }
 
 .answer.is-dimmed { opacity: 0.55; }
-.answer.is-best, .answer.is-best:hover { border-color: var(--color-accent); opacity: 0.85; }
+.answer.is-tried { opacity: 0.7; }
 .answer.is-chosen { font-weight: 600; color: var(--color-heading); }
 .answer.is-chosen.v-stop, .answer.is-chosen.v-stop:hover { border-color: var(--color-primary); background: var(--color-primary-soft); animation: shake 0.4s ease-in-out; }
 .answer.is-chosen.v-stop::before { content: "!"; background: var(--color-primary); color: var(--color-inverse); }
@@ -66,6 +66,9 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
 .law { font-size: calc(20 * var(--u)); color: var(--color-muted); font-variant-numeric: tabular-nums; }
 .law::before { content: "Rechtsbezug: "; font-weight: 600; }
 .fb-extra { font-weight: 600; color: var(--color-heading); }
+.fb-meta { font-size: calc(20 * var(--u)); color: var(--color-muted); }
+.fb-meta .law + .fb-hint::before { content: " · "; font-weight: 400; color: var(--color-muted); }
+.fb-hint { font-weight: 600; color: var(--color-heading); }
 
 /* ---------- Platzhalter, solange keine Illustration erzeugt ist ---------- */
 .illu-placeholder {
