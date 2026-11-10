@@ -322,7 +322,10 @@ const server = http.createServer(async (req, res) => {
   const route = `${req.method} ${url.pathname}`;
 
   try {
-    if (route === "GET /api/health") return sendJson(res, 200, { ok: true });
+    if (route === "GET /api/health") {
+      // Zeigt, ob die KI angeschlossen ist (ohne den Token preiszugeben)
+      return sendJson(res, 200, { ok: true, ai: llmEnabled ? "replicate" : "demo", llm: llmEnabled ? LLM_MODEL : null, image: imageEnabled ? IMAGE_MODEL : null });
+    }
     if (route === "GET /api/quiz") return sendJson(res, 200, publicQuiz());
 
     const api = API[route];
