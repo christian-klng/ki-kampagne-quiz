@@ -238,7 +238,7 @@
           ${below}
         </section>
       </div>
-      ${footer(`${state.index + 1} / ${quiz.questions.length} · ${points()} Ethik-Punkte`)}
+      ${footer(`${state.index + 1} / ${quiz.questions.length}`)}
     </main>`;
   }
 
