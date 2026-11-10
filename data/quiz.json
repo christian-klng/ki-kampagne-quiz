@@ -16,6 +16,78 @@
     "imageAlt": "Jonas übergibt im Büro der Akademie einen Zettel mit einem Kompass-Symbol",
     "imagePrompt": "A small, cozy continuing-education academy office. The boss Jonas hands the marketing employee a sticky note with a compass symbol; laptops, plants, a whiteboard with a simple course outline drawn as boxes."
   },
+  "briefing": {
+    "title": "Dein Briefing",
+    "question": "Für wen schreibst du, und in welchem Ton?",
+    "text": "Die KI richtet Texte und Bilder deiner Kampagne danach aus.",
+    "audiences": [
+      {
+        "id": "handwerk",
+        "label": "Handwerksbetriebe",
+        "desc": "Elektro, Sanitär, Schreinerei",
+        "hint": "Inhaberinnen, Inhaber und Teams kleiner Handwerksbetriebe (z. B. Elektro, Sanitär, Schreinerei). Wenig Zeit, wollen konkrete Hilfe bei Angeboten, Dokumentation und Kundenkommunikation.",
+        "scene": "a small craft business: a bright workshop with workbenches, tools and a laptop, craftspeople in work clothes"
+      },
+      {
+        "id": "gesundheit",
+        "label": "Arztpraxen & Pflege",
+        "desc": "Praxen, Pflegedienste, Therapie",
+        "hint": "Teams aus Arztpraxen, Pflegediensten und Therapiepraxen. Arbeiten mit sensiblen Gesundheitsdaten, viel Dokumentation, wenig Zeit.",
+        "scene": "a friendly medical practice or care service office, staff in scrubs and casual clothes with tablets"
+      },
+      {
+        "id": "kanzlei",
+        "label": "Kanzleien & Steuerbüros",
+        "desc": "Recht, Steuern, Beratung",
+        "hint": "Mitarbeitende in Kanzleien und Steuerbüros. Verschwiegenheit, viele Dokumente, hoher Anspruch an Genauigkeit.",
+        "scene": "a modern law or tax office with documents, bookshelves and laptops, professionals in business attire"
+      },
+      {
+        "id": "industrie",
+        "label": "Mittelständische Industrie",
+        "desc": "Produktion, Einkauf, Vertrieb",
+        "hint": "Fach- und Führungskräfte in mittelständischen Produktionsunternehmen aus Produktion, Einkauf, Vertrieb und Verwaltung.",
+        "scene": "a mid-sized manufacturing company: a meeting area next to a production hall with machines visible through glass, people in safety vests and office wear"
+      },
+      {
+        "id": "verwaltung",
+        "label": "Kommunen & Verwaltung",
+        "desc": "Bürgerservice, öffentliche Stellen",
+        "hint": "Beschäftigte in Kommunalverwaltungen und öffentlichen Einrichtungen. Bürgerservice, viele Formulare, hohe Anforderungen an Datenschutz und Barrierefreiheit.",
+        "scene": "a bright modern town hall office or citizen service centre, civil servants at desks"
+      }
+    ],
+    "styles": [
+      {
+        "id": "sachlich",
+        "label": "Sachlich & seriös",
+        "desc": "klar, kurz, ohne Floskeln",
+        "hint": "sachlich, seriös und klar; kurze Sätze, keine Ausrufezeichen, keine Werbefloskeln",
+        "mood": "calm, trustworthy, professional mood, clean and orderly composition"
+      },
+      {
+        "id": "nahbar",
+        "label": "Locker & nahbar",
+        "desc": "freundlich, Alltagssprache",
+        "hint": "locker, freundlich und nahbar; Alltagssprache, spricht die Leserinnen und Leser direkt an",
+        "mood": "warm, friendly, relaxed mood, people smiling naturally"
+      },
+      {
+        "id": "humor",
+        "label": "Mit Humor",
+        "desc": "Augenzwinkern, nicht albern",
+        "hint": "mit einem Augenzwinkern und leichtem Humor, aber respektvoll und nie albern",
+        "mood": "light-hearted, slightly playful mood with a small humorous detail"
+      },
+      {
+        "id": "inspirierend",
+        "label": "Inspirierend",
+        "desc": "macht Mut, zeigt Chancen",
+        "hint": "inspirierend und zukunftsgewandt; macht Mut, zeigt Chancen und bleibt trotzdem konkret",
+        "mood": "uplifting, optimistic, forward-looking mood with bright, warm light"
+      }
+    ]
+  },
   "special": {
     "stopp": {
       "imageAlt": "Mira hebt freundlich, aber bestimmt die Hand zum Stopp",

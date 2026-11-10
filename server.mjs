@@ -133,6 +133,13 @@ function publicQuiz() {
     results: quiz.results,
     maxPoints: MAX_POINTS,
     intro: { ...quiz.intro, imagePrompt: undefined, image: storyImage("intro") },
+    briefing: {
+      title: quiz.briefing.title,
+      question: quiz.briefing.question,
+      text: quiz.briefing.text,
+      audiences: quiz.briefing.audiences.map(({ id, label, desc }) => ({ id, label, desc })),
+      styles: quiz.briefing.styles.map(({ id, label, desc }) => ({ id, label, desc })),
+    },
     special: Object.fromEntries(
       Object.entries(quiz.special).map(([key, s]) => [key, { imageAlt: s.imageAlt, image: storyImage(key) }]),
     ),
@@ -154,6 +161,22 @@ function publicQuiz() {
   };
 }
 
+// ---------- Briefing: Zielgruppe und Schreibstil ----------
+
+/** Liest Zielgruppe und Schreibstil aus der Anfrage (nur bekannte IDs, sonst die erste Option). */
+function briefingOf(body) {
+  const { audiences, styles } = quiz.briefing;
+  return {
+    audience: audiences.find((a) => a.id === body?.briefing?.audience) || audiences[0],
+    style: styles.find((s) => s.id === body?.briefing?.style) || styles[0],
+  };
+}
+
+const briefingText = ({ audience, style }) =>
+  `Zielgruppe der Kampagne: ${audience.label}. ${audience.hint}\n` +
+  `Grundton der Kampagne: ${style.hint}. Das gilt, soweit die Vorgabe zur Variante keinen anderen Ton verlangt.\n` +
+  "Nutze passende Beispiele aus dem Arbeitsalltag der Zielgruppe. Kommen Personen vor, etwa in Kommentaren oder Reaktionen, gehören sie zur Zielgruppe.";
+
 // ---------- Live-Texte ----------
 
 const TEXT_SYSTEM =
@@ -170,7 +193,7 @@ async function handleText(body) {
   try {
     const text = await generateText({
       system: TEXT_SYSTEM,
-      messages: [{ role: "user", content: `${question.live.task}\n\n${option.style}` }],
+      messages: [{ role: "user", content: `${question.live.task}\n\n${briefingText(briefingOf(body))}\n\nVorgabe zur Variante: ${option.style}` }],
       maxTokens: 4096,
     });
     return { text, source: "ai" };
@@ -207,7 +230,7 @@ async function handleChat(body) {
   }
   try {
     const text = await generateText({
-      system: `${CHAT_BASE}\n\n${option.system}`,
+      system: `${CHAT_BASE}\n\n${briefingText(briefingOf(body))}\nDie Besucherinnen und Besucher der Kursseite gehören meist zu dieser Zielgruppe.\n\n${option.system}`,
       messages: messages.map((m) => ({ role: m.role, content: m.content.trim() })),
       maxTokens: 4096,
     });
@@ -234,7 +257,8 @@ async function handleImage(body) {
     throw Object.assign(new Error("Für diese Option gibt es kein Live-Bild"), { status: 400 });
   }
   // Live-Bilder haben einen eigenen Stil, damit sie sich von den Story-Illustrationen abheben
-  const prompt = `${quiz.liveImageStyle || quiz.imageStyle}\n\n${option.imagePrompt}`;
+  const { audience, style } = briefingOf(body);
+  const prompt = `${quiz.liveImageStyle || quiz.imageStyle}\n\n${option.imagePrompt}\nSetting and people: ${audience.scene}. Mood: ${style.mood}.`;
   // Der Prompt-Hash im Dateinamen sorgt dafür, dass nach einer Prompt-Änderung neue Bilder entstehen
   const key = `q${question.id}-${option.id}-${createHash("sha256").update(prompt).digest("hex").slice(0, 8)}`;
   const cached = cachedImages(key);
@@ -299,6 +323,7 @@ async function handleSummary(body) {
         role: "user",
         content:
           `Ethik-Punkte: ${points} von ${MAX_POINTS}. Bewertungen: verboten (Mira hat gestoppt), grau (fragwürdig), gut, sehrgut.\n` +
+          `${briefingText(briefingOf(body))}\nDer Steckbrief selbst ist in diesem Ton geschrieben und nennt die Zielgruppe.\n` +
           `Entscheidungen:\n${lines.join("\n")}\n\n` +
           "Schreibe einen Kampagnen-Steckbrief: Wie lief die Kampagne? Nenne eine konkrete Stärke und eine Lernerfahrung. " +
           "Ende positiv: Die Kampagne ist online, und es gibt Anmeldungen.",

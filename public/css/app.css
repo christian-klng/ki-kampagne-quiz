@@ -291,3 +291,29 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
 .button.is-download::after, .button.is-secondary.is-download::after { content: "↓"; font-weight: 500; display: inline-block; }
 .button.is-busy::after { animation: pdf-busy 1s ease-in-out infinite; }
 @keyframes pdf-busy { 50% { transform: translateY(20%); opacity: 0.4; } }
+
+/* ---------- Briefing: Zielgruppe und Schreibstil ---------- */
+.layout-briefing .content { display: flex; align-items: center; min-height: 0; }
+.briefing { width: 100%; }
+.briefing h1 { margin-bottom: calc(14 * var(--u)); }
+.briefing > .muted { font-size: var(--text-small); }
+.choices { margin: calc(30 * var(--u)) 0 0; padding: 0; border: 0; min-width: 0; }
+.choices legend { padding: 0; margin-bottom: calc(14 * var(--u)); font-size: calc(22 * var(--u)); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); }
+.choice-list { display: flex; flex-wrap: wrap; gap: calc(14 * var(--u)); }
+.choice { position: relative; cursor: pointer; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice span { display: flex; flex-direction: column; gap: calc(4 * var(--u)); padding: calc(14 * var(--u)) calc(24 * var(--u)); border: calc(3 * var(--u)) solid var(--color-line); border-radius: var(--radius-small); background: var(--color-bg); font-size: calc(26 * var(--u)); line-height: 1.2; transition: border-color 0.15s, background 0.15s; }
+.choice small { font-size: calc(19 * var(--u)); color: var(--color-muted); }
+.choice:hover span { border-color: var(--color-primary); }
+.choice input:checked + span { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.choice input:focus-visible + span { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+.briefing .actions { margin-top: calc(36 * var(--u)); }
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
+  .choices { margin-top: 20px; }
+  .choices legend { font-size: 12px; margin-bottom: 8px; }
+  .choice-list { gap: 8px; }
+  .choice { flex: 1 1 140px; }
+  .choice span { height: 100%; padding: 10px 12px; border-width: 2px; font-size: 15px; }
+  .choice small { font-size: 12px; }
+  .briefing .actions { margin-top: 24px; }
+}

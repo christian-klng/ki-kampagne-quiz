@@ -150,6 +150,11 @@
     const colX = visual ? m + visualW + 7 : m;
     const colW = visual ? WIDTH - visualW - 7 : WIDTH;
     let cy = y;
+    if (plan.briefing) {
+      cy += label(doc, "Briefing", colX, cy);
+      cy += drawLines(doc, wrap(doc, [{ text: "Zielgruppe: ", bold: true }, { text: plan.briefing.audience }, { text: " · Schreibstil: ", bold: true }, { text: plan.briefing.style }], 10, colW), colX, cy, 10, C.text);
+      cy += 3.5;
+    }
     cy += label(doc, "Claim", colX, cy);
     cy += drawLines(doc, wrap(doc, [{ text: plan.claim, bold: true }], 14, colW), colX, cy, 14, C.heading, 1.25) + 1;
     if (plan.sub) cy += drawLines(doc, wrap(doc, [{ text: plan.sub }], 10, colW), colX, cy, 10, C.text);

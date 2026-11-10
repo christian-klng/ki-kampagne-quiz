@@ -31,6 +31,7 @@
   let quiz = null;
   let state = null;
   let selected = null; // gewählte, noch nicht bestätigte Option
+  let draft = {}; // Briefing-Auswahl, bevor sie bestätigt ist
 
   // ---------- Hilfsfunktionen ----------
 
@@ -39,7 +40,7 @@
 
   // answers: erste Wahl (zählt für die Punkte) · revised: aktuell angezeigte Wahl nach dem Umentscheiden
   // tried: alle schon ausprobierten Optionen · liveCache: Live-Ergebnisse pro Frage und Option
-  const freshState = () => ({ screen: "start", index: 0, answers: {}, revised: {}, tried: {}, order: {}, live: {}, liveCache: {}, chat: [], summary: null });
+  const freshState = () => ({ screen: "start", index: 0, briefing: null, answers: {}, revised: {}, tried: {}, order: {}, live: {}, liveCache: {}, chat: [], summary: null });
 
   function loadState() {
     try {
@@ -100,6 +101,15 @@
         return m ? `<p><strong>${esc(m[1])}</strong> ${esc(m[2])}</p>` : `<p>${esc(line)}</p>`;
       })
       .join("");
+  }
+
+  /** Gewählte Zielgruppe und Schreibstil als Klartext, z. B. für Rückblick und PDF. */
+  function briefingLabels() {
+    const b = state.briefing;
+    if (!b) return null;
+    const audience = quiz.briefing.audiences.find((a) => a.id === b.audience);
+    const style = quiz.briefing.styles.find((x) => x.id === b.style);
+    return audience && style ? { audience: audience.label, style: style.label } : null;
   }
 
   function claimFromState() {
@@ -178,11 +188,38 @@
           <h1>${esc(i.title)}</h1>
           <div class="intro-text">${i.paragraphs.map((p) => `<p>${p}</p>`).join("")}</div>
           <div class="actions">
-            <button type="button" class="button" data-action="begin">Los geht’s</button>
+            <button type="button" class="button" data-action="begin">Weiter zum Briefing</button>
           </div>
         </section>
       </div>
       ${footer("Intro")}
+    </main>`;
+  }
+
+  /** Briefing: Zielgruppe und Schreibstil per Einfachauswahl, steuert alle KI-Inhalte. */
+  function renderBriefing() {
+    const b = quiz.briefing;
+    const group = (name, legend, items) => `<fieldset class="choices">
+        <legend>${legend}</legend>
+        <div class="choice-list">${items.map((item) => `<label class="choice">
+          <input type="radio" name="${name}" value="${esc(item.id)}" ${draft[name] === item.id ? "checked" : ""}>
+          <span><strong>${esc(item.label)}</strong><small>${esc(item.desc)}</small></span>
+        </label>`).join("")}</div>
+      </fieldset>`;
+    return `<main class="stage layout-briefing">
+      <div class="content">
+        <section class="briefing mark">
+          <p class="kicker">${esc(b.title)}</p>
+          <h1>${esc(b.question)}</h1>
+          <p class="muted">${esc(b.text)}</p>
+          ${group("audience", "a) Zielgruppe", b.audiences)}
+          ${group("style", "b) Schreibstil", b.styles)}
+          <div class="actions">
+            <button type="button" class="button" data-action="briefing-done" ${draft.audience && draft.style ? "" : "disabled"}>Los geht’s</button>
+          </div>
+        </section>
+      </div>
+      ${footer("Briefing")}
     </main>`;
   }
 
@@ -304,7 +341,7 @@
     let result = state.liveCache[key] || (state.live[q.id]?.option === chosen.id ? state.live[q.id] : null);
     if (!result) {
       try {
-        const data = await api(q.live.type === "image" ? "/api/image" : "/api/text", { q: q.id, option: chosen.id });
+        const data = await api(q.live.type === "image" ? "/api/image" : "/api/text", { q: q.id, option: chosen.id, briefing: state.briefing });
         result = { option: chosen.id, ...data };
       } catch (error) {
         result = { option: chosen.id, text: null, url: null, source: "fallback", error: error.message };
@@ -359,7 +396,7 @@
     state.chatPending = true;
     renderChat(q, chosen);
     try {
-      const data = await api("/api/chat", { option: chosen.id, messages: state.chat });
+      const data = await api("/api/chat", { option: chosen.id, messages: state.chat, briefing: state.briefing });
       state.chat.push({ role: "assistant", content: data.text });
       if (data.source !== "ai") document.getElementById("live-note").textContent = SOURCE_NOTES[data.source];
     } catch (error) {
@@ -409,7 +446,7 @@
   async function fillSummary() {
     if (state.summary) return;
     try {
-      const data = await api("/api/summary", { answers: state.answers });
+      const data = await api("/api/summary", { answers: state.answers, briefing: state.briefing });
       state.summary = data.text;
       save();
       const el = document.getElementById("summary");
@@ -456,6 +493,7 @@
           <p class="kicker">Rückblick</p>
           <h1>Deine 20 Entscheidungen</h1>
           <p>Lade deinen Kampagnenplan als PDF herunter und besprich ihn mit Jonas.</p>
+          ${briefingLabels() ? `<p class="muted">Zielgruppe: ${esc(briefingLabels().audience)} · Schreibstil: ${esc(briefingLabels().style)}</p>` : ""}
           <p class="muted">Die Rechtsbezüge sind vereinfacht dargestellt und ersetzen keine Rechtsberatung. Stand: November 2026.</p>
           <div class="actions">
             ${pdfButton("")}
@@ -498,6 +536,7 @@
     return {
       filename: `Kampagnenplan-KI-Kompass-${today.toISOString().slice(0, 10)}.pdf`,
       date: today.toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" }),
+      briefing: briefingLabels(),
       claim: claimFromState(),
       sub: state.live[2]?.text?.match(/Unterzeile:\s*(.+)/)?.[1] || "",
       summary: state.summary || result.text,
@@ -554,7 +593,7 @@
   // ---------- Steuerung ----------
 
   function render() {
-    const screens = { start: renderStart, intro: renderIntro, question: renderQuestion, result: renderResult, review: renderReview };
+    const screens = { start: renderStart, intro: renderIntro, briefing: renderBriefing, question: renderQuestion, result: renderResult, review: renderReview };
     app.innerHTML = (screens[state.screen] || renderStart)();
     document.querySelector('meta[name="theme-color"]').content = state.screen === "result" ? "#121217" : "#ffffff";
     bindImageFallbacks();
@@ -597,7 +636,16 @@
     switch (action) {
       case "home": go("start"); break;
       case "intro": go("intro"); break;
-      case "begin": state.index = 0; go("question"); break;
+      case "begin":
+        draft = { ...(state.briefing || {}) };
+        go("briefing");
+        break;
+      case "briefing-done":
+        if (!draft.audience || !draft.style) return;
+        state.briefing = { audience: draft.audience, style: draft.style };
+        state.index = 0;
+        go("question");
+        break;
       case "continue": go("question"); break;
       case "decide":
         if (!selected) return;
@@ -625,6 +673,14 @@
       case "pdf": downloadPlan(event.target.closest("[data-action]")); break;
       case "restart": state = freshState(); go("intro"); break;
     }
+  });
+
+  app.addEventListener("change", (event) => {
+    const input = event.target;
+    if (input.type !== "radio" || !["audience", "style"].includes(input.name)) return;
+    draft[input.name] = input.value;
+    const done = app.querySelector('[data-action="briefing-done"]');
+    if (done) done.disabled = !(draft.audience && draft.style);
   });
 
   app.addEventListener("submit", (event) => {

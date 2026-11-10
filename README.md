@@ -18,6 +18,8 @@ Bei acht Entscheidungen und am Ende zeigt eine Live-KI direkt das Ergebnis der W
 
 Bei verbotenen Optionen wird bewusst nichts erzeugt, also keine Promi-Deepfakes und keine erfundenen Bewertungen.
 
+Vor der ersten Entscheidung wählen die Teilnehmenden im **Briefing** eine Zielgruppe (z. B. Handwerksbetriebe, Kanzleien) und einen Schreibstil (z. B. sachlich, mit Humor). Beides fließt in alle Live-Texte, den Chatbot, den Steckbrief und die Live-Bilder (Umgebung und Stimmung) ein und steht im Rückblick und im PDF. Die Auswahl ist in `data/quiz.json` unter `briefing` gepflegt; der Server nimmt nur dort bekannte IDs an.
+
 ## KI über Replicate
 
 Sprachmodell und Bild-KI laufen über [Replicate](https://replicate.com) mit einem gemeinsamen Token (`REPLICATE_API_TOKEN`).
