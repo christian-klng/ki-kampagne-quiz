@@ -232,6 +232,9 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
 }
 .review-best { color: var(--color-muted); }
 .review-best strong { color: var(--color-accent); }
+.review-live { margin-top: calc(12 * var(--u)); padding: calc(12 * var(--u)) calc(18 * var(--u)); border-left: 3px solid var(--color-accent); border-radius: 0 var(--radius-small) var(--radius-small) 0; background: var(--color-bg); font-size: calc(22 * var(--u)); }
+.review-live-label { font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent); }
+.review-live-img { width: calc(240 * var(--u)); max-width: 100%; border-radius: var(--radius-small); }
 
 /* ---------- Handy und Tablet hochkant ---------- */
 @media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
@@ -279,6 +282,9 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .review { overflow: visible; padding: 0; gap: 10px; }
   .review-item { font-size: 15px; padding: 14px 16px; }
   .review-num { width: 28px; height: 28px; font-size: 13px; border-radius: 8px; }
+  .review-live { font-size: 14px; padding: 10px 12px; }
+  .review-live-label { font-size: 11px; }
+  .review-live-img { width: 160px; }
 }
 
 /* Download-Knopf: Pfeil nach unten, auch in der sekundären Variante */

@@ -419,6 +419,22 @@
     }
   }
 
+  /** KI-Ergebnis der zuletzt gewählten Option für den Rückblick (wie im PDF). */
+  function reviewLive(q, shown) {
+    if (!q.live || shown.type === "verboten") return "";
+    const live = state.live[q.id];
+    let body = "";
+    if (q.live.type === "text" && live?.text) body = formatLiveText(live.text);
+    if (q.live.type === "image" && live?.url) {
+      body = `<img class="review-live-img" src="${esc(live.url)}" alt="${esc(q.live.label)}: von der Bild-KI erzeugtes Motiv" data-label="${esc(q.live.label)}">`;
+    }
+    if (q.live.type === "chat" && state.chat.length) {
+      body = [{ role: "assistant", content: shown.greeting }, ...state.chat]
+        .map((m) => `<p><strong>${m.role === "user" ? "Test:" : "Chatbot:"}</strong> ${esc(m.content)}</p>`).join("");
+    }
+    return body ? `<div class="review-live"><p class="review-live-label">${esc(q.live.label)} · KI-generiert</p>${body}</div>` : "";
+  }
+
   function renderReview() {
     const items = quiz.questions.map((q) => {
       const o = chosenOption(q);
@@ -433,6 +449,7 @@
         ${o.law ? `<p class="law">${esc(o.law)}</p>` : ""}
         ${changed ? `<p class="review-best"><strong>Umentschieden zu (${TYPES[last.type].label}):</strong> ${esc(last.text)}</p>` : ""}
         ${o.type !== "sehrgut" && last.type !== "sehrgut" ? `<p class="review-best"><strong>Sehr gut wäre:</strong> ${esc(best.text)}</p>` : ""}
+        ${reviewLive(q, last)}
       </li>`;
     }).join("");
     return `<main class="stage layout-review">
