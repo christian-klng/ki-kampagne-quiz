@@ -459,8 +459,6 @@
     const claim = claimFromState();
     const sub = state.live[2]?.text?.match(/Unterzeile:\s*(.+)/)?.[1] || "";
     const visual = state.live[11]?.url;
-    const counts = { verboten: 0, grau: 0, gut: 0, sehrgut: 0 };
-    quiz.questions.forEach((q) => { const o = chosenOption(q); if (o) counts[o.type] += 1; });
 
     const liveBlock = (q) => {
       if (!q.live) return "";
@@ -511,7 +509,7 @@
           <p class="plan-label">Steckbrief</p>
           <p>${esc(state.summary || result.text)}</p>
           <p class="plan-label">Ethik-Punkte</p>
-          <p><strong>${score} von ${quiz.maxPoints}</strong> · ${counts.sehrgut}× sehr gut · ${counts.gut}× gut · ${counts.grau}× Grauzone · ${counts.verboten}× gestoppt</p>
+          <p><strong>${score} von ${quiz.maxPoints}</strong></p>
         </div>
       </section>
       ${chapters}
