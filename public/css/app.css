@@ -66,9 +66,6 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
 .law { font-size: calc(20 * var(--u)); color: var(--color-muted); font-variant-numeric: tabular-nums; }
 .law::before { content: "Rechtsbezug: "; font-weight: 600; }
 .fb-extra { font-weight: 600; color: var(--color-heading); }
-.fb-meta { font-size: calc(20 * var(--u)); color: var(--color-muted); }
-.fb-meta .law + .fb-hint::before { content: " · "; font-weight: 400; color: var(--color-muted); }
-.fb-hint { font-weight: 600; color: var(--color-heading); }
 
 /* ---------- Platzhalter, solange keine Illustration erzeugt ist ---------- */
 .illu-placeholder {

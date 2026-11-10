@@ -214,14 +214,12 @@
       const t = TYPES[shown.type];
       const stop = shown.type === "verboten";
       const title = stop ? `${t.title} – wähle eine rechtssichere Variante` : t.title;
-      // Bei „verboten“ sagt es schon der Titel, bei „sehr gut“ gibt es nichts Besseres
-      const hint = stop || shown.type === "sehrgut" ? "" : "Umentscheiden? Klick oben eine andere Option an.";
       const last = state.index === quiz.questions.length - 1;
       below = `<div class="feedback fb-${t.cls}" role="status">
         <div class="box">
           <h2>${title}</h2>
           <p>${esc(shown.feedback)}</p>
-          ${shown.law || hint ? `<p class="fb-meta">${shown.law ? `<span class="law">${esc(shown.law)}</span>` : ""}${hint ? `<span class="fb-hint">${esc(hint)}</span>` : ""}</p>` : ""}
+          ${shown.law ? `<p class="law">${esc(shown.law)}</p>` : ""}
         </div>
         <button type="button" class="button" data-action="next" ${stop ? "disabled" : ""}>${last ? "Zum Launch" : "Weiter"}</button>
       </div>`;
