@@ -26,10 +26,10 @@ Sprachmodell und Bild-KI laufen über [Replicate](https://replicate.com) mit ein
 
 | Zweck | Standardmodell | Umstellen mit |
 |---|---|---|
-| Texte, Chatbot, Steckbrief | `anthropic/claude-opus-5.5` (mit `effort: low`) | `LLM_MODEL`, `LLM_EFFORT`, `LLM_INPUT_JSON` |
+| Texte, Chatbot, Steckbrief | `qwen/qwen3-235b-a22b-instruct-2507` (Temperatur 0,7) | `LLM_MODEL`, `LLM_TEMPERATURE`, `LLM_EFFORT`, `LLM_INPUT_JSON` |
 | Live-Bilder und Illustrationen | `black-forest-labs/flux-2-pro` (1:1, WebP) | `IMAGE_MODEL`, `IMAGE_INPUT_JSON` |
 
-Modelle lassen sich als `owner/name` (aktuelle Version) oder `owner/name:version` (fest angepinnt) angeben. Andere Sprachmodelle müssen `prompt` und `system_prompt` verstehen; der Chatverlauf wird für sie in einen Prompt umgewandelt. Bildmodelle müssen `prompt` verstehen und eine Bild-URL liefern; abweichende Parameter kommen in `IMAGE_INPUT_JSON`.
+Modelle lassen sich als `owner/name` (aktuelle Version) oder `owner/name:version` (fest angepinnt) angeben. Sprachmodelle müssen `prompt` verstehen. Die App liest beim ersten Aufruf das Eingabeschema des Modells: Kennt es `system_prompt`, kommt die Systemanweisung dorthin, sonst wird sie vor den Prompt gestellt. `temperature`, `max_tokens` und `effort` werden nur geschickt, wenn das Modell sie kennt. Der Chatverlauf wird in einen Prompt umgewandelt. Bildmodelle müssen `prompt` verstehen und eine Bild-URL liefern; abweichende Parameter kommen in `IMAGE_INPUT_JSON`.
 
 Bildstile stehen in `data/quiz.json`: `imageStyle` für die Story-Illustrationen (flach, illustriert) und `liveImageStyle` für die Live-Bilder der Fragen 11 und 14 (fotografischer Kampagnen-Look), damit sich das Ergebnis der eigenen Entscheidung sichtbar abhebt. Ändert sich ein Prompt, erzeugt der Server automatisch neue Bilder statt alte aus dem Cache zu zeigen.
 
