@@ -318,8 +318,6 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .plan-verdict.v-grey { background: var(--color-grey-soft); color: var(--color-grey); }
   .plan-verdict.v-good { background: var(--color-accent-soft); color: var(--color-accent); }
   .plan-verdict.v-best { background: var(--color-accent); color: #fff; }
-  .plan-law, .plan-note { font-size: 9pt; color: var(--color-muted); }
-  .plan-note { font-style: italic; }
   .plan-live { margin-top: 5pt; padding: 6pt 9pt; border-left: 2pt solid var(--color-accent); background: var(--color-surface); }
   .plan-live .plan-label { margin-top: 0 !important; color: var(--color-accent); }
   .plan-live img { width: 55mm; border-radius: 4pt; }
