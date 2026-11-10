@@ -370,8 +370,6 @@
   function renderResult() {
     const score = points();
     const result = [...quiz.results].reverse().find((r) => score >= r.min);
-    const counts = { verboten: 0, grau: 0, gut: 0, sehrgut: 0 };
-    quiz.questions.forEach((q) => { const o = chosenOption(q); if (o) counts[o.type] += 1; });
     const visual = state.live[11]?.url || quiz.questions[10].image || quiz.special.ende.image;
 
     return `<main class="stage layout-result layout-final">
@@ -390,12 +388,6 @@
           <p class="score">${score}<small> / ${quiz.maxPoints} Ethik-Punkte</small></p>
           <h1 class="mark">${esc(result.title)}</h1>
           <p class="subtitle" id="summary">${esc(state.summary || result.text)}</p>
-          <ul class="stats">
-            <li class="v-best">${counts.sehrgut}× sehr gut</li>
-            <li class="v-good">${counts.gut}× gut</li>
-            <li class="v-grey">${counts.grau}× Grauzone</li>
-            <li class="v-stop">${counts.verboten}× gestoppt</li>
-          </ul>
           <div class="actions">
             <button type="button" class="button" data-action="review">Rückblick</button>
             <button type="button" class="button is-secondary no-arrow" data-action="pdf">Kampagnenplan als PDF</button>

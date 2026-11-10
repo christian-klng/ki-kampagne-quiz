@@ -211,12 +211,6 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   font-size: calc(17 * var(--u));
 }
 
-.stats { display: flex; flex-wrap: wrap; gap: calc(10 * var(--u)); margin: calc(28 * var(--u)) 0 0; padding: 0; list-style: none; }
-.stats li { padding: calc(6 * var(--u)) calc(16 * var(--u)); border-radius: 999px; font-size: calc(21 * var(--u)); font-weight: 600; }
-.stats .v-best { background: var(--color-accent); color: var(--color-inverse); }
-.stats .v-good { background: rgba(79, 70, 229, 0.28); color: #d6d4ff; }
-.stats .v-grey { background: rgba(255, 193, 77, 0.2); color: #ffd27a; }
-.stats .v-stop { background: rgba(255, 87, 34, 0.2); color: #ffab91; }
 
 /* ---------- Rückblick ---------- */
 .layout-review .content { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: calc(80 * var(--u)); min-height: 0; }
@@ -279,7 +273,6 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .layout-final .score { font-size: 64px; }
   .layout-final h1 { font-size: 30px; }
   .layout-final .subtitle { font-size: 17px; }
-  .stats li { font-size: 13px; padding: 4px 10px; }
 
   .layout-review .content { display: flex; flex-direction: column; gap: 20px; }
   .review-intro .muted { font-size: 14px; }
