@@ -160,7 +160,7 @@
         </div>
         <img class="title-logo" src="img/ai-up.png" alt="ai up">
       </div>
-      <footer><span>KI-Verordnung · DSGVO · UWG · Urheberrecht · KUG</span></footer>
+      <footer><span>KI-Verordnung · Datenschutz · Wettbewerbsrecht · Urheberrecht · Recht am eigenen Bild</span></footer>
     </main>`;
   }
 
