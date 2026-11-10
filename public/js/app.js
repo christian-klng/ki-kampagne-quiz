@@ -398,13 +398,13 @@
           </ul>
           <div class="actions">
             <button type="button" class="button" data-action="review">Rückblick</button>
-            <button type="button" class="button is-secondary" data-action="restart">Noch einmal</button>
+            <button type="button" class="button is-secondary no-arrow" data-action="pdf">Kampagnenplan als PDF</button>
+            <button type="button" class="button is-secondary no-arrow" data-action="restart">Noch einmal</button>
           </div>
         </div>
       </div>
       <footer>
         <button type="button" class="brand" data-action="home">ai up</button>
-        <span>Akademie Morgenrot und alle Personen sind frei erfunden.</span>
         <span class="page">${quiz.questions.length} / ${quiz.questions.length}</span>
       </footer>
     </main>`;
@@ -444,15 +444,105 @@
         <div class="review-intro mark">
           <p class="kicker">Rückblick</p>
           <h1>Deine 20 Entscheidungen</h1>
+          <p>Speichere deinen Kampagnenplan als PDF und besprich ihn mit Jonas.</p>
           <p class="muted">Die Rechtsbezüge sind vereinfacht dargestellt und ersetzen keine Rechtsberatung. Stand: November 2026.</p>
           <div class="actions">
-            <button type="button" class="button" data-action="result">Zum Ergebnis</button>
+            <button type="button" class="button no-arrow" data-action="pdf">Kampagnenplan als PDF</button>
+            <button type="button" class="button is-secondary" data-action="result">Zum Ergebnis</button>
           </div>
         </div>
         <ol class="review">${items}</ol>
       </div>
       ${footer("Rückblick")}
     </main>`;
+  }
+
+  // ---------- Kampagnenplan (PDF über den Druckdialog) ----------
+
+  /** Baut das Dokument für die Besprechung mit Jonas: Plakat, Steckbrief und alle Entscheidungen. */
+  function renderPlan() {
+    const score = points();
+    const result = [...quiz.results].reverse().find((r) => score >= r.min);
+    const date = new Date().toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" });
+    const claim = claimFromState();
+    const sub = state.live[2]?.text?.match(/Unterzeile:\s*(.+)/)?.[1] || "";
+    const visual = state.live[11]?.url;
+    const counts = { verboten: 0, grau: 0, gut: 0, sehrgut: 0 };
+    quiz.questions.forEach((q) => { const o = chosenOption(q); if (o) counts[o.type] += 1; });
+
+    const liveBlock = (q) => {
+      if (!q.live) return "";
+      const shown = shownOption(q);
+      if (!shown || shown.type === "verboten") return "";
+      const live = state.live[q.id];
+      let body = "";
+      if (q.live.type === "text" && live?.text) body = formatLiveText(live.text);
+      if (q.live.type === "image" && live?.url && q.id !== 11) body = `<img src="${esc(live.url)}" alt="${esc(q.live.label)}">`;
+      if (q.live.type === "chat" && state.chat.length) {
+        body = [{ role: "assistant", content: shown.greeting }, ...state.chat]
+          .map((m) => `<p><strong>${m.role === "user" ? "Test" : "Chatbot"}:</strong> ${esc(m.content)}</p>`).join("");
+      }
+      return body ? `<div class="plan-live"><p class="plan-label">${esc(q.live.label)} · KI-generiert</p>${body}</div>` : "";
+    };
+
+    const chapters = quiz.chapters.map((name, i) => {
+      const items = quiz.questions.filter((q) => q.chapter === i + 1).map((q) => {
+        const first = chosenOption(q);
+        if (!first) return "";
+        const shown = shownOption(q);
+        const t = TYPES[shown.type];
+        const best = q.options.find((o) => o.type === "sehrgut");
+        return `<article class="plan-item">
+          <h3><span>${q.id}</span> ${esc(q.title)} <em class="plan-verdict v-${t.cls}">${t.label}</em></h3>
+          <p><strong>Maßnahme:</strong> ${esc(shown.text)}</p>
+          <p class="plan-why">${esc(shown.feedback)}</p>
+          ${shown.law ? `<p class="plan-law">Rechtsbezug: ${esc(shown.law)}</p>` : ""}
+          ${first.id !== shown.id ? `<p class="plan-note">Zuerst gewählt (${TYPES[first.type].label}): ${esc(first.text)}</p>` : ""}
+          ${shown.type !== "sehrgut" ? `<p class="plan-note">Noch besser: ${esc(best.text)}</p>` : ""}
+          ${liveBlock(q)}
+        </article>`;
+      }).join("");
+      return `<section class="plan-chapter"><h2>Kapitel ${i + 1} · ${esc(name)}</h2>${items}</section>`;
+    }).join("");
+
+    return `<header class="plan-head">
+        <p class="plan-kicker">Akademie Morgenrot · Interne Kampagnenplanung</p>
+        <h1>Kampagnenplan „KI-Kompass für Teams“</h1>
+        <p class="plan-meta">Stand ${esc(date)} · zur Besprechung mit Jonas</p>
+      </header>
+      <section class="plan-summary${visual ? " has-visual" : ""}">
+        ${visual ? `<img class="plan-visual" src="${esc(visual)}" alt="Key Visual der Kampagne">` : ""}
+        <div>
+          <p class="plan-label">Claim</p>
+          <p class="plan-claim">${esc(claim)}</p>
+          ${sub ? `<p>${esc(sub)}</p>` : ""}
+          <p class="plan-label">Steckbrief</p>
+          <p>${esc(state.summary || result.text)}</p>
+          <p class="plan-label">Ethik-Punkte</p>
+          <p><strong>${score} von ${quiz.maxPoints}</strong> · ${counts.sehrgut}× sehr gut · ${counts.gut}× gut · ${counts.grau}× Grauzone · ${counts.verboten}× gestoppt</p>
+        </div>
+      </section>
+      ${chapters}
+      <p class="plan-foot">Lernspiel „Die KI-Kampagne“ von ai up. Rechtsbezüge vereinfacht, keine Rechtsberatung, Stand November 2026. Texte und Bilder mit „KI-generiert“ hat eine KI erstellt.</p>`;
+  }
+
+  async function printPlan() {
+    let root = document.getElementById("print-root");
+    if (!root) {
+      root = document.createElement("div");
+      root.id = "print-root";
+      document.body.append(root);
+    }
+    root.innerHTML = renderPlan();
+    // Bilder müssen geladen sein, bevor der Druckdialog das Dokument erfasst
+    await Promise.all([...root.querySelectorAll("img")].map((img) => img.complete ? (img.naturalWidth || img.remove(), null) : new Promise((resolve) => {
+      img.addEventListener("load", resolve, { once: true });
+      img.addEventListener("error", () => { img.remove(); resolve(); }, { once: true });
+    })));
+    const title = document.title;
+    document.title = `Kampagnenplan KI-Kompass ${new Date().toISOString().slice(0, 10)}`;
+    window.addEventListener("afterprint", () => { document.title = title; }, { once: true });
+    window.print();
   }
 
   // ---------- Steuerung ----------
@@ -526,6 +616,7 @@
         break;
       case "result": go("result"); break;
       case "review": go("review"); break;
+      case "pdf": printPlan(); break;
       case "restart": state = freshState(); go("intro"); break;
     }
   });

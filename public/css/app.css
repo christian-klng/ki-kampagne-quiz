@@ -287,3 +287,49 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .review-item { font-size: 15px; padding: 14px 16px; }
   .review-num { width: 28px; height: 28px; font-size: 13px; border-radius: 8px; }
 }
+
+/* ---------- Kampagnenplan: nur im Druck bzw. als PDF sichtbar ---------- */
+#print-root { display: none; }
+@media print {
+  @page { size: A4; margin: 16mm 16mm 18mm; }
+  html, body { height: auto; min-height: 0; display: block; padding: 0; background: #fff; }
+  body > *:not(#print-root) { display: none !important; }
+  #print-root {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 10pt;
+    line-height: 1.45;
+    color: var(--color-text);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #print-root h1, #print-root h2, #print-root h3 { color: var(--color-heading); line-height: 1.2; }
+  #print-root p { margin: 0 0 4pt; }
+  .plan-head { border-bottom: 2pt solid var(--color-primary); padding-bottom: 8pt; margin-bottom: 12pt; }
+  .plan-head h1 { font-size: 20pt; margin: 2pt 0 4pt; }
+  .plan-kicker, .plan-label { font-size: 8pt; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); }
+  .plan-label { margin-top: 8pt !important; }
+  .plan-meta { color: var(--color-muted); }
+  .plan-summary { margin-bottom: 10pt; break-inside: avoid; }
+  .plan-summary.has-visual { display: grid; grid-template-columns: 62mm 1fr; gap: 8mm; align-items: start; }
+  .plan-summary > div > .plan-label:first-child { margin-top: 0 !important; }
+  .plan-visual { width: 100%; border-radius: 6pt; }
+  .plan-claim { font-size: 14pt; font-weight: 600; color: var(--color-heading); }
+  .plan-chapter h2 { font-size: 12pt; margin: 14pt 0 6pt; padding-top: 6pt; border-top: 1pt solid var(--color-line); break-after: avoid; }
+  .plan-item { break-inside: avoid; margin-bottom: 9pt; }
+  .plan-item h3 { font-size: 10.5pt; margin: 0 0 3pt; display: flex; align-items: baseline; gap: 6pt; }
+  .plan-item h3 > span { color: var(--color-primary); font-variant-numeric: tabular-nums; min-width: 14pt; }
+  .plan-item > p, .plan-live { margin-left: 20pt !important; }
+  .plan-verdict { margin-left: auto; font-style: normal; font-size: 7.5pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 1pt 6pt; border-radius: 10pt; white-space: nowrap; }
+  .plan-verdict.v-stop { background: var(--color-primary-soft); color: var(--color-primary); }
+  .plan-verdict.v-grey { background: var(--color-grey-soft); color: var(--color-grey); }
+  .plan-verdict.v-good { background: var(--color-accent-soft); color: var(--color-accent); }
+  .plan-verdict.v-best { background: var(--color-accent); color: #fff; }
+  .plan-why { color: var(--color-muted); }
+  .plan-law, .plan-note { font-size: 9pt; color: var(--color-muted); }
+  .plan-note { font-style: italic; }
+  .plan-live { margin-top: 5pt; padding: 6pt 9pt; border-left: 2pt solid var(--color-accent); background: var(--color-surface); }
+  .plan-live .plan-label { margin-top: 0 !important; color: var(--color-accent); }
+  .plan-live img { width: 55mm; border-radius: 4pt; }
+  .plan-foot { margin-top: 14pt; padding-top: 6pt; border-top: 1pt solid var(--color-line); font-size: 8pt; color: var(--color-muted); }
+}
