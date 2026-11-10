@@ -442,13 +442,11 @@
       const t = TYPES[o.type];
       const last = shownOption(q);
       const changed = last.id !== o.id;
-      const best = q.options.find((x) => x.type === "sehrgut");
       return `<li class="review-item">
         <p class="review-head"><span class="review-num">${q.id}</span> <strong>${esc(q.title)}</strong> <span class="verdict v-${t.cls}">${t.label}</span></p>
         <p>${esc(o.text)}</p>
         ${o.law ? `<p class="law">${esc(o.law)}</p>` : ""}
         ${changed ? `<p class="review-best"><strong>Umentschieden zu (${TYPES[last.type].label}):</strong> ${esc(last.text)}</p>` : ""}
-        ${o.type !== "sehrgut" && last.type !== "sehrgut" ? `<p class="review-best"><strong>Sehr gut wäre:</strong> ${esc(best.text)}</p>` : ""}
         ${reviewLive(q, last)}
       </li>`;
     }).join("");
