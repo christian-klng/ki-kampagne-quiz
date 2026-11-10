@@ -88,7 +88,7 @@ Kostenschutz: Pro Antwortoption erzeugt die Bild-KI höchstens `IMAGE_VARIANTS` 
 ## Datenschutz der App selbst
 
 - Das Quiz speichert den Fortschritt nur im Browser (`localStorage`) und setzt keine Cookies. Auf dem Server werden keine Antworten gespeichert.
-- Am Ende können die Teilnehmenden ihren Kampagnenplan als PDF sichern (Ergebnis- oder Rückblickseite, Knopf „Kampagnenplan als PDF“). Das läuft über den Druckdialog des Browsers („Als PDF speichern“) und verlässt das Gerät nicht.
+- Am Ende können die Teilnehmenden ihren Kampagnenplan als PDF herunterladen (Ergebnis- oder Rückblickseite, Knopf „Kampagnenplan herunterladen“). Das PDF entsteht im Browser mit jsPDF (`public/js/plan-pdf.js`) und verlässt das Gerät nicht.
 - Chat-Eingaben gehen zur Antwort an Replicate und werden auf dem eigenen Server nicht gespeichert. Die App bittet im Chat darum, keine persönlichen Daten einzugeben.
 - Für den Einsatz mit echten Teilnehmenden braucht ihr ein Impressum, eine Datenschutzerklärung und einen Auftragsverarbeitungsvertrag mit Replicate. Das ist genau das, was das Quiz lehrt.
 
@@ -96,4 +96,4 @@ Kostenschutz: Pro Antwortoption erzeugt die Bild-KI höchstens `IMAGE_VARIANTS` 
 
 Stand November 2026, inklusive KI-Omnibus (VO (EU) 2026/1744). Die Rechtsbezüge sind für ein Lernspiel vereinfacht und vor dem Einsatz juristisch gegenzulesen. Offene Punkte stehen am Ende von `story/entscheidungen.md`.
 
-Bilder der Vorlage: `turing-test.jpg` KI-generiert; `diffusion-schritt-08.jpg` Benlisquare, Stable Diffusion 1.5, Wikimedia Commons, CC BY-SA 4.0. Schrift Geist: SIL Open Font License, siehe `public/fonts/geist/LICENSE.md`.
+Bilder der Vorlage: `turing-test.jpg` KI-generiert; `diffusion-schritt-08.jpg` Benlisquare, Stable Diffusion 1.5, Wikimedia Commons, CC BY-SA 4.0. Schrift Geist: SIL Open Font License, siehe `public/fonts/geist/LICENSE.md`. jsPDF 4.2.1 (`public/vendor/`): MIT-Lizenz, siehe `public/vendor/jspdf.LICENSE.txt`.
