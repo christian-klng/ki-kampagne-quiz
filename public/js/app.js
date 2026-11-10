@@ -485,7 +485,6 @@
         return `<article class="plan-item">
           <h3><span>${q.id}</span> ${esc(q.title)} <em class="plan-verdict v-${t.cls}">${t.label}</em></h3>
           <p><strong>Maßnahme:</strong> ${esc(shown.text)}</p>
-          <p class="plan-why">${esc(shown.feedback)}</p>
           ${shown.law ? `<p class="plan-law">Rechtsbezug: ${esc(shown.law)}</p>` : ""}
           ${first.id !== shown.id ? `<p class="plan-note">Zuerst gewählt (${TYPES[first.type].label}): ${esc(first.text)}</p>` : ""}
           ${shown.type !== "sehrgut" ? `<p class="plan-note">Noch besser: ${esc(best.text)}</p>` : ""}
