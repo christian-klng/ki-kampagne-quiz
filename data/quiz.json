@@ -1,15 +1,15 @@
 {
   "title": "Die KI-Kampagne",
   "subtitle": "Du arbeitest im Marketing eines kleinen Weiterbildungsanbieters und sollst einen neuen Kurs bewerben – mit KI, aber im Rahmen von EU-Vorgaben und deutschem Recht.",
-  "meta": "20 Entscheidungen · etwa 15 Minuten · Ethik-Punkte statt Noten",
+  "meta": "20 Entscheidungen · etwa 15 Minuten",
   "imageStyle": "Flat editorial illustration, clean geometric shapes, subtle paper grain, warm off-white background, limited palette of vivid orange (#ff5722), deep indigo (#4f46e5), charcoal and light grey. Friendly, slightly humorous office scenes. Recurring characters: the marketing employee (gender-neutral person, short dark hair, orange sweater), the boss Jonas (tall man, grey beard, blue blazer), the legal advisor Mira (woman with curly black hair, round glasses, indigo blazer). No text, no letters, no logos, no real or famous persons.",
   "intro": {
     "kicker": "Dein Auftrag",
     "title": "Jonas braucht Anmeldungen. Wie, ist deine Sache.",
     "paragraphs": [
       "Du arbeitest seit einem Jahr im Marketing der <strong>Akademie Morgenrot</strong>, einem Weiterbildungsanbieter mit zwölf Leuten. Geschäftsführer <strong>Jonas</strong> hat einen neuen Kurs: den <strong>„KI-Kompass für Teams“</strong>, eine Firmenschulung zur KI-Kompetenz nach der KI-Verordnung.",
-      "„Wir brauchen bis Monatsende Anmeldungen. Nimm KI, das geht schneller.“ Bei jeder Entscheidung gibt es vier Wege: einen verbotenen, einen fragwürdigen, einen guten (+1) und einen sehr guten (+2 Ethik-Punkte).",
-      "Keine Sorge: Wählst du etwas Verbotenes, greift <strong>Mira</strong> ein, die Datenschutzbeauftragte und Justiziarin, und du suchst dir eine rechtssichere Variante aus. Umentscheiden darfst du dich immer, die Ethik-Punkte zählen für deine erste Wahl."
+      "„Wir brauchen bis Monatsende Anmeldungen. Nimm KI, das geht schneller.“ Du hast jeweils 4 Möglichkeiten zur Auswahl.",
+      "Keine Sorge: Wählst du etwas Verbotenes, greift <strong>Mira</strong> ein, die Datenschutzbeauftragte und Justiziarin, und du suchst dir eine rechtssichere Variante aus. Umentscheiden darfst du dich immer."
     ],
     "image": "intro",
     "imageAlt": "Jonas übergibt im Büro der Akademie einen Zettel mit einem Kompass-Symbol",
