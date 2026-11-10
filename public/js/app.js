@@ -17,8 +17,8 @@
   };
 
   const PDF_LABEL = "Kampagnenplan als PDF herunterladen";
-  const DOWNLOAD_ICON = '<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const pdfButton = (variant) => `<button type="button" class="button ${variant} is-icon" data-action="pdf" aria-label="${PDF_LABEL}" title="${PDF_LABEL}">${DOWNLOAD_ICON}</button>`;
+  // Sichtbar „Kampagnenplan ↓“, für Screenreader und Tooltip ausführlich
+  const pdfButton = (variant) => `<button type="button" class="button ${variant} is-download" data-action="pdf" aria-label="${PDF_LABEL}" title="${PDF_LABEL}">Kampagnenplan</button>`;
 
   const SOURCE_NOTES = {
     ai: "Live mit KI erzeugt – Ergebnisse können jedes Mal anders ausfallen.",
