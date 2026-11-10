@@ -26,7 +26,7 @@ Sprachmodell und Bild-KI laufen über [Replicate](https://replicate.com) mit ein
 
 | Zweck | Standardmodell | Umstellen mit |
 |---|---|---|
-| Texte, Chatbot, Steckbrief | `qwen/qwen3-235b-a22b-instruct-2507` (Temperatur 0,7) | `LLM_MODEL`, `LLM_TEMPERATURE`, `LLM_EFFORT`, `LLM_INPUT_JSON` |
+| Texte, Chatbot, Steckbrief | `deepseek-ai/deepseek-v3` (Temperatur 0,7) | `LLM_MODEL`, `LLM_TEMPERATURE`, `LLM_EFFORT`, `LLM_INPUT_JSON` |
 | Live-Bilder und Illustrationen | `black-forest-labs/flux-2-pro` (1:1, WebP) | `IMAGE_MODEL`, `IMAGE_INPUT_JSON` |
 
 Modelle lassen sich als `owner/name` (aktuelle Version) oder `owner/name:version` (fest angepinnt) angeben. Sprachmodelle müssen `prompt` verstehen. Die App liest beim ersten Aufruf das Eingabeschema des Modells: Kennt es `system_prompt`, kommt die Systemanweisung dorthin, sonst wird sie vor den Prompt gestellt. `temperature`, `max_tokens` und `effort` werden nur geschickt, wenn das Modell sie kennt. Der Chatverlauf wird in einen Prompt umgewandelt. Bildmodelle müssen `prompt` verstehen und eine Bild-URL liefern; abweichende Parameter kommen in `IMAGE_INPUT_JSON`.
