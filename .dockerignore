@@ -1,0 +1,10 @@
+node_modules
+cache
+.env
+.env.*
+!.env.example
+.git
+design
+story
+scripts
+*.md

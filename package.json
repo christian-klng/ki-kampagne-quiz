@@ -1,0 +1,15 @@
+{
+  "name": "ki-kampagne-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quiz „Die KI-Kampagne“: KI im Beruf, EU-Vorgaben und deutsches Recht",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch --env-file-if-exists=.env server.mjs",
+    "illustrations": "node --env-file-if-exists=.env scripts/generate-illustrations.mjs"
+  }
+}

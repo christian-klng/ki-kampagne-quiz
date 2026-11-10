@@ -1,0 +1,523 @@
+/* quiz-app/css/style.css – Vorlage für die Quiz-Web-App zum Seminar „Generative Künstliche Intelligenz“.
+   Design aus dem Folien-Theme „ai up“ (themes/ai-up/theme.css): Orange #ff5722 auf Weiß,
+   Schrift Geist, kurzer orangefarbener Balken als Marke, Kicker als Pille, gerundete Flächen
+   ohne Rahmen, Indigo als zweite Farbe für „richtig“, dunkle Abschlussseite.
+
+   Zwei Darstellungen:
+   1. Desktop und Tablet quer: eine 16:9-Bühne wie eine Folie. Alle Maße stehen in „u“,
+      einem Pixel der 1920×1080-Folie (--u = Breite der Bühne / 1920). Werte aus dem
+      Folien-Theme lassen sich so direkt übernehmen: 38px auf der Folie = calc(38 * var(--u)).
+   2. Handy und Tablet hochkant: normale Seite, die nach unten wächst, Bild oben,
+      Maße in px (Abschnitt „Handy“ am Ende).
+
+   Aufbau jeder Seite:
+   <body class="page-…"> <div class="screen"> <main class="stage layout-…"> … </main> </div> </body>
+   .screen ist der Container (16:9, zentriert), .stage die Folie darin. */
+
+/* ---------- Schrift ---------- */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist/geist-sans.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist/geist-sans-italic.woff2") format("woff2");
+}
+
+/* ---------- Farben und Grundwerte ---------- */
+:root {
+  --color-bg: #ffffff;
+  --color-text: #26272b;
+  --color-heading: #121217;
+  --color-muted: #6b7280;
+  --color-primary: #ff5722;          /* Orange aus dem Logo */
+  --color-primary-hover: #f04a16;
+  --color-primary-soft: #ffeae2;
+  --color-accent: #4f46e5;           /* Indigo: richtige Antwort */
+  --color-accent-soft: #e7e6ff;
+  --color-surface: #f5f5f7;          /* helle Fläche für Karten und Seitenhintergrund */
+  --color-line: #e4e5ea;
+  --color-inverse: #ffffff;
+  --color-ink: #121217;              /* Grund der Ergebnisseite */
+
+  --font-body: "Geist", "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { height: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+
+/* ---------- Bühne 16:9 ---------- */
+.screen {
+  container-type: inline-size;
+  width: min(100%, calc((100dvh - 48px) * 16 / 9));
+  aspect-ratio: 16 / 9;
+}
+
+.stage {
+  /* 1 u = 1 px der Folie */
+  --u: calc(100cqw / 1920);
+
+  /* Maße wie im Folien-Theme */
+  --text-small: calc(26 * var(--u));
+  --text-base: calc(38 * var(--u));
+  --text-lg: calc(48 * var(--u));
+  --text-h1: calc(64 * var(--u));     /* Frage: etwas kleiner als eine Folienüberschrift (80), weil Fragen länger sind */
+  --text-display: calc(120 * var(--u));
+  --text-answer: calc(32 * var(--u));
+  --mark-width: calc(64 * var(--u));
+  --mark-height: calc(10 * var(--u));
+  --radius: calc(24 * var(--u));
+  --radius-small: calc(12 * var(--u));
+  --pad-top: calc(64 * var(--u));
+  --pad-x: calc(90 * var(--u));
+  --pad-bottom: calc(54 * var(--u));
+  --gap: calc(22 * var(--u));
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 calc(30 * var(--u)) calc(80 * var(--u)) rgba(18, 18, 23, 0.08);
+  font-size: var(--text-base);
+  overflow: hidden;
+}
+
+/* ---------- Typografie ---------- */
+.stage h1, .stage h2, .stage h3 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.08;
+  color: var(--color-heading);
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+.stage h1 { font-size: var(--text-h1); }
+.stage p { margin: 0 0 0.6em; }
+.stage p:last-child { margin-bottom: 0; }
+.stage strong { font-weight: 600; color: var(--color-heading); }
+.stage .muted { color: var(--color-muted); }
+
+/* Marke: kurzer orangefarbener Balken über der Überschrift */
+.mark::before {
+  content: "";
+  display: block;
+  width: var(--mark-width);
+  height: var(--mark-height);
+  border-radius: 999px;
+  background: var(--color-primary);
+  margin: 0 0 calc(26 * var(--u));
+}
+
+/* Kicker als Pille (Thema der Frage, „Quiz“, „Ergebnis“) */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin: 0 0 calc(20 * var(--u));
+  padding: calc(8 * var(--u)) calc(20 * var(--u));
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: calc(22 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* ---------- Knöpfe ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: calc(76 * var(--u));
+  padding: calc(16 * var(--u)) calc(40 * var(--u));
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-inverse);
+  font-size: calc(30 * var(--u));
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.button:hover { background: var(--color-primary-hover); }
+.button:active { transform: scale(0.98); }
+.button:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+.button::after { content: "→"; font-weight: 500; }
+.button.is-secondary { background: var(--color-surface); color: var(--color-heading); }
+.button.is-secondary:hover { background: var(--color-line); }
+.button.is-secondary::after, .button.no-arrow::after { content: none; }
+.button[disabled], .button[aria-disabled="true"] { opacity: 0.35; pointer-events: none; }
+
+.actions { display: flex; flex-wrap: wrap; gap: calc(20 * var(--u)); }
+
+/* ---------- Fußzeile ---------- */
+.stage > footer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: calc(28 * var(--u));
+  padding-top: calc(20 * var(--u));
+  font-size: calc(24 * var(--u));
+  color: var(--color-muted);
+}
+.brand {
+  font-size: calc(28 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.page {
+  justify-self: end;
+  padding: calc(6 * var(--u)) calc(18 * var(--u));
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-size: calc(22 * var(--u));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fortschritt als dünner Balken: <progress value="3" max="10"> */
+.progress {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  max-width: calc(560 * var(--u));
+  height: calc(8 * var(--u));
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-surface);
+  overflow: hidden;
+  color: var(--color-primary);
+}
+.progress::-webkit-progress-bar { background: var(--color-surface); border-radius: 999px; }
+.progress::-webkit-progress-value { background: var(--color-primary); border-radius: 999px; }
+.progress::-moz-progress-bar { background: var(--color-primary); border-radius: 999px; }
+
+/* ---------- Bild ---------- */
+/* <figure class="quiz-image"><img …><figcaption>…</figcaption></figure>
+   Das Bild füllt die Spalte und wird zugeschnitten. Die Bildunterschrift (Quelle) steht
+   darunter in festem Platz; bewusst ohne Raster in der Abbildung, weil Safari Bilder in
+   Rasterzellen sonst zu hoch macht (wie bei .gallery im Folien-Theme). */
+.quiz-image {
+  --caption: 0px;
+  position: relative;
+  margin: 0;
+  min-height: 0;
+  height: 100%;
+}
+.quiz-image:has(figcaption) { --caption: calc(26 * var(--u) * 1.35 + 14 * var(--u)); }
+.quiz-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - var(--caption));
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+.quiz-image figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: calc(22 * var(--u));
+  line-height: 1.35;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Layout „question“: Bild und Frage nebeneinander ---------- */
+/* Standard: Bild links. .is-image-right setzt das Bild nach rechts. */
+.layout-question .content {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: calc(80 * var(--u));
+  min-height: 0;
+}
+.layout-question.is-image-right .content { grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr); }
+.layout-question.is-image-right .quiz-image { order: 2; }
+
+/* Senkrecht mittig über automatische Ränder statt justify-content: center. Wird eine Frage
+   doch zu lang, läuft sie so nach unten aus und lässt sich scrollen, statt oben abgeschnitten zu werden. */
+.question {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+.question.mark::before, .question:not(.mark) > :first-child { margin-top: auto; }
+.question > :last-child { margin-bottom: auto; }
+.question h1 { margin-bottom: calc(40 * var(--u)); }
+.question .actions { margin-top: calc(36 * var(--u)); }
+
+/* Antworten: <ol class="answers"><li><button type="button" class="answer">…</button></li></ol>
+   Buchstaben A–D kommen aus CSS. Zustände am Knopf:
+   aria-pressed="true"  ausgewählt
+   .is-correct          richtige Antwort (nach dem Prüfen)
+   .is-wrong            gewählt, aber falsch
+   .is-dimmed           nicht gewählt und falsch, zurückgenommen
+   Nach dem Prüfen alle Knöpfe mit disabled sperren. */
+.answers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: calc(14 * var(--u));
+  counter-reset: answer;
+}
+.answers li { counter-increment: answer; margin: 0; }
+.answer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: calc(54 * var(--u)) 1fr;
+  align-items: center;
+  gap: calc(20 * var(--u));
+  padding: calc(12 * var(--u)) calc(28 * var(--u)) calc(12 * var(--u)) calc(14 * var(--u));
+  border: calc(2 * var(--u)) solid var(--color-line);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  font-size: var(--text-answer);
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, opacity 0.3s;
+}
+.answer::before {
+  content: counter(answer, upper-alpha);
+  width: calc(54 * var(--u));
+  height: calc(54 * var(--u));
+  display: grid;
+  place-items: center;
+  border-radius: calc(14 * var(--u));
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: calc(26 * var(--u));
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.answer:hover { border-color: var(--color-primary); }
+.answer:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+.answer[aria-pressed="true"] { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.answer[aria-pressed="true"]::before { background: var(--color-primary); color: var(--color-inverse); }
+
+.answer[disabled] { cursor: default; }
+.answer[disabled]:hover { border-color: var(--color-line); }
+.answer.is-correct, .answer.is-correct:hover { border-color: var(--color-accent); background: var(--color-accent-soft); font-weight: 600; color: var(--color-heading); }
+.answer.is-correct::before { content: "✓"; background: var(--color-accent); color: var(--color-inverse); }
+.answer.is-wrong, .answer.is-wrong:hover { border-color: var(--color-primary); background: var(--color-bg); animation: shake 0.4s ease-in-out; }
+.answer.is-wrong::before { content: "✗"; background: var(--color-primary); color: var(--color-inverse); }
+.answer.is-dimmed { opacity: 0.4; }
+
+@keyframes shake { 20%, 60% { transform: translateX(calc(-8 * var(--u))); } 40%, 80% { transform: translateX(calc(8 * var(--u))); } }
+
+/* Rückmeldung nach dem Prüfen: Erklärung links, Knopf „Nächste Frage“ rechts.
+   <div class="feedback is-correct|is-wrong"><div class="box">…</div><a class="button">…</a></div> */
+.feedback {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: calc(28 * var(--u));
+  margin-top: calc(28 * var(--u));
+}
+.box {
+  padding: calc(22 * var(--u)) calc(30 * var(--u));
+  border-radius: var(--radius);
+  background: var(--color-primary-soft);
+  font-size: calc(26 * var(--u));
+  line-height: 1.35;
+}
+.box h2 {
+  margin: 0 0 calc(6 * var(--u));
+  font-size: calc(20 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.feedback.is-correct .box { background: var(--color-accent-soft); }
+.feedback.is-correct .box h2 { color: var(--color-accent); }
+
+/* ---------- Layout „title“: Startseite wie die Titelfolie ---------- */
+.layout-title .content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: calc(120 * var(--u));
+}
+.layout-title .intro { display: flex; flex-direction: column; align-items: flex-start; }
+.layout-title .kicker { margin-bottom: calc(44 * var(--u)); }
+.layout-title h1 { font-size: var(--text-display); line-height: 1.02; letter-spacing: -0.035em; max-width: calc(1300 * var(--u)); }
+.layout-title .subtitle { margin: calc(34 * var(--u)) 0 0; max-width: calc(1150 * var(--u)); font-size: var(--text-lg); line-height: 1.28; letter-spacing: -0.01em; color: var(--color-muted); }
+.layout-title .meta { margin: calc(40 * var(--u)) 0 0; font-size: calc(28 * var(--u)); color: var(--color-muted); }
+.layout-title .actions { margin-top: calc(56 * var(--u)); }
+.layout-title > footer { display: block; }
+.title-logo { width: calc(168 * var(--u)); height: calc(168 * var(--u)); margin-top: calc(-40 * var(--u)); }
+
+/* ---------- Layout „result“: Ergebnis wie die dunkle Abschlussfolie ---------- */
+.layout-result {
+  --color-surface: #1f1f26;
+  background: var(--color-ink);
+  color: #c9cad3;
+}
+.layout-result .content {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: calc(110 * var(--u));
+}
+.layout-result .score {
+  margin: 0;
+  font-size: calc(300 * var(--u));
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+.layout-result .score small { font-size: 0.4em; color: #8e90a0; letter-spacing: -0.03em; }
+.layout-result .kicker { background: rgba(255, 87, 34, 0.18); }
+.layout-result h1 { font-size: calc(96 * var(--u)); color: var(--color-inverse); letter-spacing: -0.035em; }
+.layout-result .subtitle { margin: calc(26 * var(--u)) 0 0; font-size: calc(40 * var(--u)); line-height: 1.3; }
+.layout-result .actions { margin-top: calc(56 * var(--u)); }
+.layout-result .button.is-secondary { color: var(--color-inverse); }
+.layout-result .button.is-secondary:hover { background: #33343d; }
+.layout-result > footer { color: #8e90a0; }
+.layout-result .page { color: var(--color-inverse); }
+
+/* ---------- Handy und Tablet hochkant ---------- */
+/* Keine 16:9-Bühne mehr: die Seite wächst nach unten, Bild oben, Maße in px. */
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
+  body { display: block; padding: 0; background: var(--color-bg); }
+  .screen { container-type: normal; width: 100%; aspect-ratio: auto; min-height: 100dvh; display: flex; }
+
+  .stage {
+    --u: 0.5px;                       /* Rest-Maße aus der Folie halbiert */
+    --text-small: 14px;
+    --text-base: 17px;
+    --text-lg: 20px;
+    --text-h1: 26px;
+    --text-display: 40px;
+    --text-answer: 17px;
+    --radius: 18px;
+    --radius-small: 12px;
+    --pad-top: 16px;
+    --pad-x: 16px;
+    --pad-bottom: max(16px, env(safe-area-inset-bottom));
+
+    flex: 1;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .stage > .content { flex: 1; }
+
+  .kicker { font-size: 12px; padding: 5px 12px; margin-bottom: 12px; }
+  .mark::before { width: 40px; height: 6px; margin-bottom: 16px; }
+  .button { width: 100%; min-height: 52px; padding: 14px 24px; font-size: 17px; }
+  .actions { gap: 10px; }
+
+  .stage > footer { column-gap: 14px; padding-top: 20px; font-size: 13px; }
+  .brand { font-size: 17px; }
+  .page { padding: 4px 12px; font-size: 13px; }
+  .progress { height: 6px; max-width: none; }
+
+  /* Frage: Bild oben, darunter Frage und Antworten */
+  .layout-question .content,
+  .layout-question.is-image-right .content { display: flex; flex-direction: column; gap: 20px; }
+  .layout-question.is-image-right .quiz-image { order: 0; }
+  .quiz-image { height: auto; }
+  .quiz-image img { position: static; width: 100%; height: auto; aspect-ratio: 4 / 3; max-height: 38dvh; }
+  .quiz-image figcaption { position: static; margin-top: 6px; font-size: 12px; white-space: normal; }
+  .question { justify-content: flex-start; }
+  .question h1 { margin-bottom: 20px; }
+  .question .actions { margin-top: 20px; }
+  .answers { gap: 10px; }
+  .answer { grid-template-columns: 36px 1fr; gap: 12px; min-height: 56px; padding: 10px 16px 10px 10px; border-width: 2px; }
+  .answer::before { width: 36px; height: 36px; border-radius: 10px; font-size: 15px; }
+  .feedback { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+  .box { padding: 14px 18px; font-size: 15px; }
+  .box h2 { font-size: 12px; margin-bottom: 4px; }
+
+  /* Start */
+  .layout-title .content { display: flex; flex-direction: column-reverse; justify-content: center; align-items: flex-start; gap: 32px; }
+  .title-logo { width: 72px; height: 72px; margin: 0; }
+  .layout-title .kicker { margin-bottom: 20px; }
+  .layout-title .subtitle { margin-top: 16px; }
+  .layout-title .meta { margin-top: 20px; font-size: 15px; }
+  .layout-title .actions { margin-top: 32px; width: 100%; }
+
+  /* Ergebnis */
+  .layout-result .content { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 24px; }
+  .layout-result .score { font-size: 96px; }
+  .layout-result h1 { font-size: 34px; }
+  .layout-result .subtitle { margin-top: 12px; font-size: 18px; }
+  .layout-result .actions { margin-top: 32px; width: 100%; }
+}
+
+/* Tablet hochkant: etwas größer als am Handy */
+@media (orientation: portrait) and (min-width: 600px) and (max-width: 1100px) {
+  .stage {
+    --text-base: 20px;
+    --text-lg: 26px;
+    --text-h1: 36px;
+    --text-display: 64px;
+    --text-answer: 20px;
+    --pad-top: 40px;
+    --pad-x: 48px;
+    --pad-bottom: 32px;
+  }
+  .layout-question .content { gap: 32px; }
+  .quiz-image img { aspect-ratio: 16 / 10; max-height: 40dvh; }
+  .answer { min-height: 64px; }
+  .button { width: auto; }
+  .feedback { grid-template-columns: minmax(0, 1fr) auto; }
+  .box { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

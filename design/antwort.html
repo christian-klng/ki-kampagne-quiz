@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Frage 4 von 10 · Quiz Generative KI</title>
+  <link rel="icon" href="../public/img/ai-up.png">
+  <link rel="preload" href="../public/fonts/geist/geist-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+  <div class="screen">
+    <!-- Bild rechts, Antwort geprüft: richtige Antwort .is-correct, eigene falsche .is-wrong, übrige .is-dimmed, alle disabled -->
+    <main class="stage layout-question is-image-right">
+      <div class="content">
+        <figure class="quiz-image">
+          <img src="../public/img/diffusion-schritt-08.jpg" alt="Schloss im Nebel, Details noch unscharf">
+          <figcaption>Bild: Benlisquare, Stable Diffusion 1.5, Wikimedia Commons, CC BY-SA 4.0</figcaption>
+        </figure>
+        <section class="question mark">
+          <p class="kicker">Bild-KI</p>
+          <h1>Womit beginnt ein Diffusionsmodell, wenn es ein Bild erzeugt?</h1>
+          <ol class="answers">
+            <li><button type="button" class="answer is-wrong" aria-pressed="true" disabled>Mit einer groben Skizze</button></li>
+            <li><button type="button" class="answer is-correct" aria-pressed="false" disabled>Mit reinem Rauschen</button></li>
+            <li><button type="button" class="answer is-dimmed" aria-pressed="false" disabled>Mit einem Foto aus dem Internet</button></li>
+            <li><button type="button" class="answer is-dimmed" aria-pressed="false" disabled>Mit einem leeren weißen Bild</button></li>
+          </ol>
+          <div class="feedback is-wrong" role="status">
+            <div class="box">
+              <h2>Leider falsch</h2>
+              <p>Das Modell hat gelernt, Rauschen schrittweise zu entfernen. Euer Prompt gibt die Richtung vor.</p>
+            </div>
+            <a class="button" href="ergebnis.html">Nächste Frage</a>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <a class="brand" href="index.html">ai up</a>
+        <progress class="progress" value="4" max="10">4 von 10</progress>
+        <span class="page">4 / 10</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

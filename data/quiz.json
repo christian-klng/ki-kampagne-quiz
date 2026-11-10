@@ -1,0 +1,384 @@
+{
+  "title": "Die KI-Kampagne",
+  "subtitle": "Du arbeitest im Marketing eines kleinen Weiterbildungsanbieters und sollst einen neuen Kurs bewerben – mit KI, aber im Rahmen von EU-Vorgaben und deutschem Recht.",
+  "meta": "20 Entscheidungen · etwa 15 Minuten · Ethik-Punkte statt Noten",
+  "imageStyle": "Flat editorial illustration, clean geometric shapes, subtle paper grain, warm off-white background, limited palette of vivid orange (#ff5722), deep indigo (#4f46e5), charcoal and light grey. Friendly, slightly humorous office scenes. Recurring characters: the marketing employee (gender-neutral person, short dark hair, orange sweater), the boss Jonas (tall man, grey beard, blue blazer), the legal advisor Mira (woman with curly black hair, round glasses, indigo blazer). No text, no letters, no logos, no real or famous persons.",
+  "intro": {
+    "kicker": "Dein Auftrag",
+    "title": "Jonas braucht Anmeldungen. Wie, ist deine Sache.",
+    "paragraphs": [
+      "Du arbeitest seit einem Jahr im Marketing der <strong>Akademie Morgenrot</strong>, einem Weiterbildungsanbieter mit zwölf Leuten. Geschäftsführer <strong>Jonas</strong> hat einen neuen Kurs: den <strong>„KI-Kompass für Teams“</strong>, eine Firmenschulung zur KI-Kompetenz nach der KI-Verordnung.",
+      "„Wir brauchen bis Monatsende Anmeldungen. Nimm KI, das geht schneller.“ Bei jeder Entscheidung gibt es vier Wege: einen verbotenen, einen fragwürdigen, einen guten (+1) und einen sehr guten (+2 Ethik-Punkte).",
+      "Keine Sorge: Wählst du etwas Verbotenes, greift <strong>Mira</strong> ein, die Datenschutzbeauftragte und Justiziarin. Die Kampagne läuft dann mit der rechtssicheren Variante weiter."
+    ],
+    "image": "intro",
+    "imageAlt": "Jonas übergibt im Büro der Akademie einen Zettel mit einem Kompass-Symbol",
+    "imagePrompt": "A small, cozy continuing-education academy office. The boss Jonas hands the marketing employee a sticky note with a compass symbol; laptops, plants, a whiteboard with a simple course outline drawn as boxes."
+  },
+  "special": {
+    "stopp": {
+      "imageAlt": "Mira hebt freundlich, aber bestimmt die Hand zum Stopp",
+      "imagePrompt": "Mira, the legal advisor, raises her hand in a friendly but firm stop gesture while holding a thick law book, standing in front of a desk with a laptop."
+    },
+    "grau": {
+      "imageAlt": "Ein Weg schlängelt sich durch eine nebelige graue Landschaft, ein Wegweiser mit Fragezeichen",
+      "imagePrompt": "A foggy grey-zone landscape with a winding path and a wooden signpost with question marks; the marketing employee walks along the path, unsure."
+    },
+    "ende": {
+      "imageAlt": "Das Team feiert im Büro den Kampagnenstart vor einem großen Bildschirm",
+      "imagePrompt": "Launch day celebration in the small academy office: Jonas, Mira and the marketing employee toast with coffee cups, a large screen shows a campaign poster and a rising registration chart."
+    }
+  },
+  "chapters": [
+    "Der Auftrag",
+    "Die Zielgruppe",
+    "Die Inhalte",
+    "Bilder & Stimmen",
+    "Der Launch",
+    "Nach dem Launch"
+  ],
+  "results": [
+    { "min": 0, "title": "Kampagne gerettet!", "text": "Mira hatte ordentlich zu tun – aber genau dafür ist sie da. Die Kampagne ist online, und du weißt jetzt, worauf es ankommt." },
+    { "min": 15, "title": "Solide Kampagne!", "text": "Rechtssicher und mit gutem Gewissen: Deine Kampagne läuft, und die ersten Firmen haben gebucht." },
+    { "min": 30, "title": "Vorbild-Kampagne!", "text": "Jonas ist begeistert und möchte, dass du die interne KI-Richtlinie schreibst. Deine Kampagne ist das beste Beispiel für den Kurs." }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "chapter": 1,
+      "title": "Das richtige Werkzeug",
+      "situation": "Jonas: „Fang einfach an, nimm KI.“ Du willst wissen, was frühere Teilnehmende an den Kursen geschätzt haben.",
+      "question": "Wie wertest du die Rückmeldungen aus?",
+      "imageAlt": "Schreibtisch mit Feedbackbögen vor zwei Türen: eine offen, eine mit Schloss",
+      "imagePrompt": "The marketing employee at a desk with a stack of feedback forms, choosing between two doors: one wide-open door leading to a messy chat window full of paper sheets, and one sturdy door with a padlock and a signed contract.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ich lade die komplette Teilnehmerliste mit Namen, E-Mails und Feedback in einen kostenlosen KI-Chat mit privatem Account.", "feedback": "Personenbezogene Daten gehen ohne Rechtsgrundlage und ohne Auftragsverarbeitungsvertrag an einen fremden Anbieter.", "law": "Art. 5, 6, 28 DSGVO" },
+        { "id": "b", "type": "grau", "text": "Ich lösche die Namen, lasse aber Firma, Position und Freitext stehen und nutze das kostenlose Tool.", "feedback": "„HR-Leiterin bei Firma X“ ist eindeutig zuordenbar. Pseudonymisierte Daten bleiben personenbezogen.", "law": "ErwG 26 DSGVO" },
+        { "id": "c", "type": "gut", "text": "Ich nutze den Firmen-Account mit Auftragsverarbeitungsvertrag und gebe nur zusammengefasste, anonyme Auswertungen ein.", "feedback": "Sauber: geprüftes Tool, vertraglich abgesichert, keine Personen erkennbar." },
+        { "id": "d", "type": "sehrgut", "text": "Firmen-Account, nur anonyme Auswertungen – und ich schlage vor, mit Mira eine kurze KI-Nutzungsregel fürs Team aufzuschreiben.", "feedback": "Welche Tools, welche Daten, wer prüft: Das schützt das ganze Team und ist gelebte KI-Kompetenz.", "law": "Art. 4 KI-VO" }
+      ]
+    },
+    {
+      "id": 2,
+      "chapter": 1,
+      "title": "Die Kernbotschaft",
+      "situation": "Der „KI-Kompass für Teams“ vermittelt KI-Kompetenz nach Art. 4 KI-Verordnung. Die KI liefert dir Vorschläge für den Claim.",
+      "question": "Welchen Claim nimmst du?",
+      "imageAlt": "Eine leere Plakatwand, davor hält eine Person drei Schilder in Sprechblasenform hoch",
+      "imagePrompt": "A big blank billboard on a city wall with a ladder leaning against it; the marketing employee holds up three speech-bubble shaped blank signs, one of them with a warning triangle.",
+      "live": {
+        "type": "text",
+        "label": "Dein Claim",
+        "task": "Schreibe einen Werbe-Claim (höchstens 10 Wörter) und eine Unterzeile (höchstens 20 Wörter) für den Kurs „KI-Kompass für Teams“ der Akademie Morgenrot. Format genau so:\nClaim: …\nUnterzeile: …"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "„Pflichtzertifikat nach KI-Verordnung! Ohne Schulung drohen Bußgelder bis 35 Mio. €.“", "feedback": "Es gibt kein amtliches Pflichtzertifikat, und die 35 Mio. € gelten für verbotene KI-Praktiken – nicht für fehlende Schulungen. Das ist irreführende Werbung.", "law": "§ 5 UWG; Art. 99 Abs. 3 KI-VO" },
+        { "id": "b", "type": "grau", "text": "„Die Behörden kommen. Ist Ihr Team vorbereitet?“", "feedback": "Nicht direkt falsch, aber Angstwerbung. Zudem hat der KI-Omnibus Art. 4 abgeschwächt: Verlangt werden Maßnahmen, kein garantierter Wissensstand.", "law": "Art. 4 KI-VO i. d. F. der VO (EU) 2026/1744", "style": "Ton: dramatisch und angstbetont, deutet Behörden und Zeitdruck an – aber ohne falsche Tatsachen und ohne Bußgeldzahlen.", "fallback": "Claim: Die Behörden kommen. Ist Ihr Team bereit?\nUnterzeile: Jetzt den KI-Kompass buchen – bevor es zu spät ist." },
+        { "id": "c", "type": "gut", "text": "„KI sicher im Arbeitsalltag nutzen – kompakt, praxisnah, auf Basis der KI-Verordnung.“", "feedback": "Sachlich, attraktiv, ehrlich.", "style": "Ton: sachlich, positiv, praxisnah.", "fallback": "Claim: KI sicher im Arbeitsalltag nutzen.\nUnterzeile: Kompakt, praxisnah und auf Basis der KI-Verordnung: der KI-Kompass für Teams." },
+        { "id": "d", "type": "sehrgut", "text": "Der sachliche Claim – plus eine Info-Box: was Art. 4 verlangt, dass es kein amtliches Zertifikat gibt, und eine kostenlose Checkliste.", "feedback": "Wer ehrlich informiert, gewinnt Vertrauen und muss keine Angst schüren.", "style": "Ton: sachlich, vertrauensvoll, transparent. Die Unterzeile erwähnt eine kostenlose Checkliste.", "fallback": "Claim: Mit KI arbeiten – kompetent und gelassen.\nUnterzeile: Praxisnah zur KI-Verordnung, plus kostenlose Checkliste für Ihr Team." }
+      ]
+    },
+    {
+      "id": 3,
+      "chapter": 2,
+      "title": "Neue Kontakte",
+      "situation": "Du willst Personalverantwortliche aus mittelständischen Unternehmen erreichen.",
+      "question": "Wie gehst du vor?",
+      "imageAlt": "Ein Greifarm zieht Briefumschläge aus einem Netz von Profilkarten, daneben eine offene Tür",
+      "imagePrompt": "A huge net of profile cards; a robotic grabber arm pulls envelopes out of it, while next to it an inviting open door with a webinar screen welcomes a few curious people.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ein KI-Tool liest LinkedIn-Profile von HR-Leitungen aus, ermittelt ihre E-Mail-Adressen und verschickt automatisch Werbemails.", "feedback": "Werbe-E-Mails brauchen auch zwischen Unternehmen eine vorherige ausdrückliche Einwilligung. Dazu kommt das unzulässige Auslesen der Profile.", "law": "§ 7 Abs. 2 Nr. 2 UWG; Art. 6, 14 DSGVO" },
+        { "id": "b", "type": "grau", "text": "Die KI analysiert Profile und schreibt Kontaktanfragen, die persönlich wirken – in Wahrheit ein vorformulierter Verkaufspitch.", "feedback": "Rechtlich ein Graubereich, aber es wirkt manipulativ – und die Empfänger merken es meistens." },
+        { "id": "c", "type": "gut", "text": "Ich veröffentliche Fachbeiträge und schalte Anzeigen auf LinkedIn.", "feedback": "Wer sich interessiert, kommt von selbst zu dir." },
+        { "id": "d", "type": "sehrgut", "text": "Ich biete ein kostenloses Webinar „Was die KI-VO für Ihr Team bedeutet“ an – Newsletter nur per Double-Opt-in.", "feedback": "Du lieferst erst Nutzen und fragst dann sauber um Erlaubnis." }
+      ]
+    },
+    {
+      "id": 4,
+      "chapter": 2,
+      "title": "Der Newsletter",
+      "situation": "Im CRM stehen 2.000 Kontakte: Newsletter-Abos, Bestandskunden und Visitenkarten von Messen. Die KI schreibt den Newsletter.",
+      "question": "Wer bekommt ihn?",
+      "imageAlt": "Aus einem Laptop fliegen Briefumschläge auf eine Menschenmenge zu",
+      "imagePrompt": "A flood of envelopes flying out of a laptop toward a small crowd; some people hold up business cards in surprise, others happily open their mail.",
+      "live": {
+        "type": "text",
+        "label": "Dein Newsletter",
+        "task": "Schreibe eine Newsletter-Betreffzeile (höchstens 8 Wörter) und einen Teaser (höchstens 35 Wörter) für den Kurs „KI-Kompass für Teams“ der Akademie Morgenrot. Format genau so:\nBetreff: …\nTeaser: …"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Alle 2.000 – auch die Messekontakte. Die haben uns ja ihre Visitenkarte gegeben.", "feedback": "Eine Visitenkarte ist keine ausdrückliche Einwilligung in Werbe-E-Mails.", "law": "§ 7 Abs. 2 Nr. 2 UWG" },
+        { "id": "b", "type": "grau", "text": "Alle Bestandskunden – auch die, die vor fünf Jahren einmal einen Excel-Kurs gebucht haben.", "feedback": "Die Bestandskunden-Ausnahme gilt nur für ähnliche Angebote und mit Hinweis auf das Widerspruchsrecht. Ein alter Excel-Kurs ist ein Grenzfall.", "law": "§ 7 Abs. 3 UWG", "style": "Ton: vertraulich, als würde man sich gut kennen. Füge danach eine dritte Zeile hinzu: eine kurze, leicht verärgerte Antwort eines Empfängers, der seit Jahren nichts mehr gebucht hat. Format: Antwort: …", "fallback": "Betreff: Lange nicht gesehen – das müssen Sie wissen!\nTeaser: Die KI-Verordnung betrifft auch Ihr Team. Mit dem KI-Kompass sind Sie auf der sicheren Seite.\nAntwort: Ich habe 2021 einen Excel-Kurs gebucht. Warum bekomme ich jetzt Werbung für KI?" },
+        { "id": "c", "type": "gut", "text": "Nur Abonnentinnen und Abonnenten, die eingewilligt haben.", "feedback": "Rechtssicher – und bei Menschen, die es wirklich lesen wollen.", "style": "Ton: freundlich und informativ.", "fallback": "Betreff: Neu: der KI-Kompass für Teams\nTeaser: Wie nutzt Ihr Team KI sicher und sinnvoll? Unser neuer Kurs vermittelt das Wichtigste zur KI-Verordnung – kompakt an einem Tag." },
+        { "id": "d", "type": "sehrgut", "text": "Nur Abonnenten – die KI personalisiert nur nach selbst angegebenen Themen, und im Footer steht „Mit KI-Unterstützung erstellt“.", "feedback": "Einwilligung, Datensparsamkeit und Transparenz in einem.", "style": "Ton: freundlich und informativ. Der Teaser greift das selbst angegebene Interessengebiet „KI im Personalwesen“ auf. Füge eine dritte Zeile hinzu: Footer: Mit KI-Unterstützung erstellt.", "fallback": "Betreff: KI im Personalwesen – sicher und kompetent\nTeaser: Sie interessieren sich für KI in HR? Der KI-Kompass zeigt Ihrem Team an einem Tag, wie es KI verantwortungsvoll nutzt.\nFooter: Mit KI-Unterstützung erstellt." }
+      ]
+    },
+    {
+      "id": 5,
+      "chapter": 2,
+      "title": "Website-Besucher",
+      "situation": "Die KI könnte auswerten, wer die Kursseite besucht und wie sich die Leute dort verhalten.",
+      "question": "Wie misst du den Erfolg der Seite?",
+      "imageAlt": "Ein Lupen-Roboter folgt Fußspuren über eine Website, daneben eine Keksdose mit Schloss",
+      "imagePrompt": "A website on a giant screen with tiny footprints of visitors; a robot with a magnifying glass follows the footprints; a cookie jar with a padlock stands next to it.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Tracking-Pixel und KI-Besucheranalyse ohne Cookie-Einwilligung – das machen doch alle.", "feedback": "Für nicht notwendige Zugriffe auf das Endgerät braucht es eine Einwilligung.", "law": "§ 25 TDDDG" },
+        { "id": "b", "type": "grau", "text": "Mit Einwilligung – aber die KI erstellt Profile wie „ängstlich“ oder „impulsiv“ und spielt passende Druckbotschaften aus.", "feedback": "Formal eingewilligt, aber gezielt Schwächen ausgenutzt. Das ist ethisch heikel und nähert sich den Manipulationsverboten der KI-VO.", "law": "vgl. Art. 5 Abs. 1 lit. a, b KI-VO" },
+        { "id": "c", "type": "gut", "text": "Tracking nur mit Einwilligung, ausgewertet werden nur zusammengefasste Zahlen.", "feedback": "Solide und rechtskonform." },
+        { "id": "d", "type": "sehrgut", "text": "Datensparsame Statistik ohne Cookies – und in der Datenschutzerklärung steht verständlich, was gemessen wird.", "feedback": "Weniger Daten, weniger Risiko – und die Besucher verstehen, was passiert." }
+      ]
+    },
+    {
+      "id": 6,
+      "chapter": 2,
+      "title": "Social-Media-Anzeigen",
+      "situation": "Die Plattform bietet „Custom Audiences“ an: Du lädst eine Kontaktliste hoch und erreichst genau diese Personen.",
+      "question": "Wie richtest du die Anzeigen aus?",
+      "imageAlt": "Eine Dartscheibe, um die verschiedene Menschen stehen, darüber schweben Zahlencodes",
+      "imagePrompt": "Social media ad targeting visualized as a giant dartboard with diverse people of different ages standing around it; strings of abstract code symbols float above like confetti.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ich lade die gesamte Kundenliste mit E-Mails hoch – wird ja verschlüsselt (gehasht).", "feedback": "Hashing ist keine Anonymisierung. Die deutschen Datenschutzbehörden verlangen für diesen Abgleich eine Einwilligung.", "law": "Art. 6 DSGVO" },
+        { "id": "b", "type": "grau", "text": "Die KI empfiehlt, nur unter 40-Jährige anzusprechen – die seien KI-affiner.", "feedback": "Nicht verboten, aber es bedient Altersklischees und schließt genau die aus, die oft am meisten profitieren." },
+        { "id": "c", "type": "gut", "text": "Breites Targeting nach Branche und Berufsrolle.", "feedback": "Zielgenau genug, ohne persönliche Listen." },
+        { "id": "d", "type": "sehrgut", "text": "Anzeigen in Fachmedien und passenden Themenumfeldern statt nach Profilen – mit vielfältiger Bildsprache.", "feedback": "Du erreichst Interessierte über Inhalte statt über Profile – und alle fühlen sich angesprochen." }
+      ]
+    },
+    {
+      "id": 7,
+      "chapter": 3,
+      "title": "Der Blogartikel",
+      "situation": "Für Suchmaschinen brauchst du Fachartikel. Ein Mitbewerber hat einen richtig guten geschrieben.",
+      "question": "Wie entsteht dein Artikel?",
+      "imageAlt": "Ein Roboter kopiert Seiten von einem Laptop auf einen anderen, eine Person hebt die Hand",
+      "imagePrompt": "Two laptops side by side; a robot copies pages from one to the other with a photocopier light beam; the marketing employee raises a hand to stop it.",
+      "live": {
+        "type": "text",
+        "label": "Dein Blogartikel",
+        "task": "Schreibe eine Blog-Überschrift (höchstens 10 Wörter) und einen ersten Absatz (höchstens 50 Wörter) zum Thema „Was bedeutet KI-Kompetenz für Teams?“. Format genau so:\nTitel: …\nText: …"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Die KI soll den Artikel des Mitbewerbers „umschreiben“ – inklusive seiner Grafiken.", "feedback": "Fast wörtliche Übernahme und fremde Grafiken: Vervielfältigung und Bearbeitung ohne Zustimmung.", "law": "§§ 16, 19a, 23 UrhG" },
+        { "id": "b", "type": "grau", "text": "Die KI schreibt jede Woche zehn Artikel, die ungeprüft unter Jonas’ Namen erscheinen.", "feedback": "Für Marketingtexte gibt es meist keine Kennzeichnungspflicht. Aber Fehler und erfundene Fakten landen unter seinem Namen.", "law": "vgl. Art. 50 Abs. 4 KI-VO", "style": "Stil: generischer SEO-Text mit vielen Schlagwörtern und Floskeln, ohne Quellen. Baue eine plausibel klingende, aber unbelegte Prozentzahl ein und markiere sie mit [ungeprüft].", "fallback": "Titel: KI-Kompetenz: Der ultimative Erfolgsfaktor für Teams 2026\nText: In der modernen Arbeitswelt ist KI-Kompetenz wichtiger denn je. Studien zeigen, dass 87 % [ungeprüft] der Unternehmen ohne KI-Schulung Wettbewerbsnachteile haben. Jetzt ist der perfekte Zeitpunkt, Ihr Team fit zu machen!" },
+        { "id": "c", "type": "gut", "text": "Die KI liefert einen Entwurf, ich prüfe Fakten und Quellen und überarbeite ihn.", "feedback": "KI als Werkzeug, du als Redaktion.", "style": "Stil: klar und fachlich korrekt, ohne erfundene Zahlen.", "fallback": "Titel: Was KI-Kompetenz für Teams wirklich bedeutet\nText: KI-Kompetenz heißt nicht, Programmieren zu lernen. Es geht darum, KI-Werkzeuge sinnvoll einzusetzen, ihre Grenzen zu kennen und Ergebnisse kritisch zu prüfen. Die KI-Verordnung verlangt von Unternehmen Maßnahmen, damit Beschäftigte genau das können." },
+        { "id": "d", "type": "sehrgut", "text": "Entwurf mit KI, von mir geprüft – mit Quellenlinks, Stand-Datum und dem Hinweis „mit KI-Unterstützung erstellt“.", "feedback": "Leser sehen, woher die Infos kommen und wie der Text entstanden ist.", "style": "Stil: klar und fachlich korrekt, ohne erfundene Zahlen. Füge eine dritte Zeile hinzu: Hinweis: Quelle: Verordnung (EU) 2024/1689, Art. 4 · Mit KI-Unterstützung erstellt, redaktionell geprüft.", "fallback": "Titel: Was KI-Kompetenz für Teams wirklich bedeutet\nText: KI-Kompetenz heißt, KI-Werkzeuge sinnvoll einzusetzen, ihre Grenzen zu kennen und Ergebnisse kritisch zu prüfen. Die KI-Verordnung verlangt von Unternehmen Maßnahmen, damit ihre Beschäftigten genau das können.\nHinweis: Quelle: Verordnung (EU) 2024/1689, Art. 4 · Mit KI-Unterstützung erstellt, redaktionell geprüft." }
+      ]
+    },
+    {
+      "id": 8,
+      "chapter": 3,
+      "title": "Die KI halluziniert",
+      "situation": "Im Entwurf steht: „Laut KI-Schulungsverordnung müssen alle Beschäftigten bis 31.12. zertifiziert sein.“ Eine solche Verordnung gibt es nicht.",
+      "question": "Was machst du?",
+      "imageAlt": "Ein Roboter hält stolz ein Paragraphenzeichen hoch, das sich in Rauch auflöst",
+      "imagePrompt": "A cheerful robot proudly holds up a large paragraph sign (§) that turns out to be made of smoke and is dissolving into the air; the marketing employee looks at it skeptically.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Klingt gut und hilft beim Verkauf – ich veröffentliche den Satz.", "feedback": "Eine erfundene Rechtspflicht in der Werbung ist irreführend. Auf Absicht kommt es dabei nicht an.", "law": "§ 5 UWG" },
+        { "id": "b", "type": "grau", "text": "Ich mache daraus: „Neue Gesetze verlangen bald strengere Schulungen.“", "feedback": "Vage genug, um nicht falsch zu sein – aber bewusst nebulös und angstmachend." },
+        { "id": "c", "type": "gut", "text": "Ich prüfe den Originaltext der KI-VO auf EUR-Lex und korrigiere den Satz.", "feedback": "Richtig: Rechtsaussagen immer gegen die Quelle prüfen." },
+        { "id": "d", "type": "sehrgut", "text": "Ich korrigiere, lasse die Dozentin gegenlesen und nehme „Rechtsaussagen gegen Quelle prüfen“ in die KI-Nutzungsregel auf.", "feedback": "Du behebst nicht nur den Fehler, sondern verhinderst auch den nächsten." }
+      ]
+    },
+    {
+      "id": 9,
+      "chapter": 3,
+      "title": "Kundenstimmen",
+      "situation": "Die Landingpage wirkt leer. Bisher gibt es erst vier echte Bewertungen.",
+      "question": "Was zeigst du?",
+      "imageAlt": "Eine Wand mit Bewertungskarten, manche zeigen leere Masken, andere handgeschriebene Notizen",
+      "imagePrompt": "A landing page wall covered with review cards; some cards show hollow smiling masks made of pixels, others are genuine handwritten notes pinned with tape.",
+      "live": {
+        "type": "text",
+        "label": "Reaktionen auf deine Seite",
+        "task": "Erzeuge drei kurze, realistische Kommentare (je höchstens 20 Wörter) von fiktiven HR-Verantwortlichen, die die Kundenstimmen auf der Landingpage der Akademie Morgenrot lesen. Format: je Zeile „Vorname, Rolle: Kommentar“."
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Die KI erfindet zehn Kundenstimmen mit Namen, Positionen und fotorealistischen Porträts.", "feedback": "Erfundene Bewertungen täuschen Interessenten. Gegenüber Verbrauchern stehen sie sogar ausdrücklich auf der „schwarzen Liste“.", "law": "§ 5 UWG; Anhang Nr. 23b, 23c UWG" },
+        { "id": "b", "type": "grau", "text": "Nur die positiven Stimmen – von der KI „aufpoliert“, ohne Rückfrage bei den Personen.", "feedback": "Zitate, die so nie gesagt wurden, sind unehrlich. Ändert sich dabei der Sinn, wird es irreführend.", "style": "Die Kundenstimmen wurden ohne Rückfrage geschönt. Einer der Kommentare stammt von einer zitierten Teilnehmerin, die sich wundert, dass sie das so nie gesagt hat.", "fallback": "Sabine, Personalleiterin: Klingt alles sehr begeistert. Fast zu begeistert?\nTim, HR-Referent: Gute Stimmen, aber kein einziger Kritikpunkt? Hm.\nAnja, Teilnehmerin: Moment – so habe ich das nie formuliert! Wer hat mein Zitat geändert?" },
+        { "id": "c", "type": "gut", "text": "Die vier echten Stimmen, wörtlich und mit schriftlicher Freigabe.", "feedback": "Vier echte Stimmen überzeugen mehr als zehn erfundene.", "style": "Es sind vier echte, wörtlich zitierte Kundenstimmen. Die Kommentare sind sachlich interessiert.", "fallback": "Sabine, Personalleiterin: Vier Stimmen, aber alle konkret. Das wirkt echt.\nTim, HR-Referent: Gut, dass man sieht, welche Firmen dabei waren.\nMarkus, Geschäftsführer: Ich melde mal zwei Leute für den nächsten Termin an." },
+        { "id": "d", "type": "sehrgut", "text": "Echte Stimmen mit Freigabe, dazu eine Gesamtbewertung inklusive Kritik – und meiner Antwort darauf.", "feedback": "Ehrlichkeit macht glaubwürdig – gerade auch mit Kritik.", "style": "Es gibt echte Stimmen und eine offene Gesamtbewertung mit Kritik und der Antwort der Akademie. Die Kommentare loben die Transparenz.", "fallback": "Sabine, Personalleiterin: Dass auch Kritik zu sehen ist, macht das Ganze glaubwürdig.\nTim, HR-Referent: Die Antwort auf die Kritik zeigt, dass die zuhören.\nMarkus, Geschäftsführer: So eine offene Seite sieht man selten. Wir buchen." }
+      ]
+    },
+    {
+      "id": 10,
+      "chapter": 3,
+      "title": "Der Mitbewerber",
+      "situation": "Die KI schlägt vor, dich gegen eine bekannte Konkurrenz-Akademie abzugrenzen.",
+      "question": "Wie positionierst du dich?",
+      "imageAlt": "Zwei kleine Akademiegebäude stehen sich gegenüber, ein Megafon zeigt mit einer Gewitterwolke auf das andere",
+      "imagePrompt": "Two small academy buildings facing each other across a street; a megaphone points from one to the other with a small thundercloud above it.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Anzeige: „Anders als die Akademie XY verkaufen wir keine wertlosen Zertifikate.“", "feedback": "Das setzt einen Mitbewerber herab und behauptet Unbewiesenes über ihn.", "law": "§ 4 Nr. 1, 2 UWG; § 6 Abs. 2 Nr. 5 UWG" },
+        { "id": "b", "type": "grau", "text": "Ich buche den Markennamen des Mitbewerbers als Suchbegriff für meine Anzeigen.", "feedback": "Grundsätzlich zulässig, wenn die Anzeige klar als deine erkennbar ist. Fair ist es nicht unbedingt." },
+        { "id": "c", "type": "gut", "text": "Ich stelle nur unsere eigenen Stärken heraus.", "feedback": "Du überzeugst mit Inhalt statt mit Seitenhieben." },
+        { "id": "d", "type": "sehrgut", "text": "Eigene Stärken plus eine transparente Leistungs- und Preisübersicht, damit Firmen selbst vergleichen können.", "feedback": "Du traust deinen Kunden eine eigene Entscheidung zu." }
+      ]
+    },
+    {
+      "id": 11,
+      "chapter": 4,
+      "title": "Das Key Visual",
+      "situation": "Die Kampagne braucht ein starkes Titelbild. Die Bild-KI steht bereit.",
+      "question": "Was soll das Bild zeigen?",
+      "imageAlt": "Eine Staffelei im Büro, daneben ein Bildschirm mit einem Bildgenerator",
+      "imagePrompt": "An artist's easel in the office next to a large screen showing an image generator; the marketing employee thinks, while a generic faceless TV presenter silhouette appears as a cardboard cutout in the corner.",
+      "live": {
+        "type": "image",
+        "label": "Dein Key Visual"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Einen bekannten TV-Moderator, der scheinbar unseren Kurs empfiehlt.", "feedback": "Werbung mit dem Gesicht einer Person ohne Einwilligung verletzt ihr Recht am eigenen Bild. Ein ungekennzeichneter Deepfake ist seit 2.8.2026 zudem nach KI-VO unzulässig.", "law": "§ 22 KUG; § 5 UWG; Art. 50 Abs. 4 KI-VO" },
+        { "id": "b", "type": "grau", "text": "Ein Motiv „im Stil von“ einer bekannten, lebenden Illustratorin.", "feedback": "Ein Stil ist urheberrechtlich nicht geschützt – aber du nutzt die Handschrift einer Künstlerin, ohne zu fragen oder zu bezahlen.", "imagePrompt": "Generic trendy corporate flat illustration of an office team with laptops and a floating AI chat bubble, interchangeable stock look, slightly soulless.", "caption": "Die App kopiert keine echte Künstlerin. Stattdessen siehst du ein austauschbares Trend-Motiv – genau das, was „im Stil von“ oft hervorbringt." },
+        { "id": "c", "type": "gut", "text": "Ein eigenes KI-Motiv ohne reale Personen, gekennzeichnet mit „Bild KI-generiert“.", "feedback": "Kreativ, transparent, ohne die Rechte Dritter zu verletzen.", "imagePrompt": "Campaign key visual: a small team in a bright modern office learning together, a large friendly compass symbol made of glowing network lines points the way above them, warm light, optimistic mood." },
+        { "id": "d", "type": "sehrgut", "text": "Ein eigenes, gekennzeichnetes KI-Motiv – und ich prüfe die Ergebnisse bewusst auf Klischees und Vielfalt.", "feedback": "Die erste Runde zeigte nur Männer im Anzug als „Führungskräfte“. Du hast nachgebessert.", "imagePrompt": "Campaign key visual: a diverse team of different ages, genders and backgrounds, including an older woman and a person using a wheelchair, learning together in a bright modern office; a large friendly compass symbol made of glowing network lines points the way above them, warm light, optimistic mood." }
+      ]
+    },
+    {
+      "id": 12,
+      "chapter": 4,
+      "title": "Das Erklärvideo",
+      "situation": "Ein 60-Sekunden-Video soll den Kurs vorstellen. Es braucht eine Stimme.",
+      "question": "Wer spricht?",
+      "imageAlt": "Ein Studiomikrofon, daneben ein Roboter mit einer Schallwelle im Glas",
+      "imagePrompt": "A recording studio microphone with colorful sound waves; a robot holds a sound waveform trapped in a glass jar; the course trainer stands next to it wearing headphones.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ich klone die Stimme eines bekannten Synchronsprechers aus Filmausschnitten.", "feedback": "Auch die eigene Stimme ist durch das Persönlichkeitsrecht geschützt. Ein Klon für Werbung ohne Einwilligung ist unzulässig.", "law": "Art. 2 Abs. 1 i. V. m. Art. 1 Abs. 1 GG; §§ 823, 1004 BGB" },
+        { "id": "b", "type": "grau", "text": "Eine generische KI-Stimme, die wie ein echter Sprecher klingt – ohne Hinweis.", "feedback": "Keine Kennzeichnungspflicht, weil die Stimme keiner realen Person ähnelt. Zuschauende fühlen sich trotzdem getäuscht, wenn sie es merken.", "law": "vgl. Art. 50 Abs. 4 KI-VO" },
+        { "id": "c", "type": "gut", "text": "Die Dozentin spricht selbst, die KI hilft beim Schnitt und bei den Untertiteln.", "feedback": "Echt und trotzdem effizient." },
+        { "id": "d", "type": "sehrgut", "text": "Ein Avatar der Dozentin – mit ihrer schriftlichen, widerrufbaren Einwilligung, klar gekennzeichnet und mit Untertiteln.", "feedback": "Einwilligung, Transparenz und Barrierefreiheit: So geht KI-Video richtig." }
+      ]
+    },
+    {
+      "id": 13,
+      "chapter": 4,
+      "title": "Echte Teilnehmende",
+      "situation": "Aus früheren Online-Kursen gibt es Aufzeichnungen. Darin sieht man viele begeisterte Gesichter.",
+      "question": "Nutzt du das Material?",
+      "imageAlt": "Ein Bildschirm mit einer Videokonferenz, davor Schere und Filmstreifen",
+      "imagePrompt": "A video conference grid of happy learners on a screen; a pair of scissors and a film strip lie in front of it; small question marks float above the faces.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ich schneide Ausschnitte daraus zu einem Werbeclip zusammen.", "feedback": "Die Aufnahmen entstanden für den Kurs, nicht für Werbung. Ohne Einwilligung verstößt das gegen die Zweckbindung und das Recht am eigenen Bild.", "law": "Art. 5 Abs. 1 lit. b, Art. 6 DSGVO; § 22 KUG" },
+        { "id": "b", "type": "grau", "text": "Ich frage nach der Einwilligung und biete dafür 20 % Rabatt auf den nächsten Kurs.", "feedback": "Ist eine Einwilligung noch freiwillig, wenn sie an einen Vorteil gekoppelt ist? Das ist umstritten.", "law": "Art. 7 Abs. 4 DSGVO" },
+        { "id": "c", "type": "gut", "text": "Freiwillige drehen ein kurzes Interview – mit separater Einwilligung.", "feedback": "Echte Begeisterung, sauber eingeholt." },
+        { "id": "d", "type": "sehrgut", "text": "Freiwilliges Interview mit Einwilligung – die Personen geben den Schnitt frei und können jederzeit widerrufen.", "feedback": "Die Menschen behalten die Kontrolle über ihr Bild." }
+      ]
+    },
+    {
+      "id": 14,
+      "chapter": 5,
+      "title": "Die Landingpage",
+      "situation": "Ein KI-Website-Baukasten erstellt die Kursseite in zehn Minuten.",
+      "question": "Wann geht sie online?",
+      "imageAlt": "Roboterarme bauen eine Website wie eine Baustelle, ein Stein mit Paragraphenzeichen fehlt",
+      "imagePrompt": "A website being assembled by robotic arms like a construction site; one brick with a paragraph sign is missing in the wall; a small ramp leads up to the entrance.",
+      "live": {
+        "type": "image",
+        "label": "Das Titelbild deiner Landingpage"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Sofort – Impressum und Datenschutzerklärung kommen nächste Woche.", "feedback": "Impressum und Datenschutzinformationen sind ab dem ersten Tag Pflicht.", "law": "§ 5 DDG; Art. 13 DSGVO" },
+        { "id": "b", "type": "grau", "text": "Sofort, mit der KI-generierten Datenschutzerklärung – ungeprüft.", "feedback": "Besser als nichts. Aber sie nennt Tools, die du nicht nutzt, und vergisst die, die du nutzt.", "imagePrompt": "Website hero illustration in a generic template look: a laptop with a stock-like rocket launching, cluttered and busy composition.", "caption": "Schnell gebaut, aber austauschbar – wie die ungeprüfte Datenschutzerklärung." },
+        { "id": "c", "type": "gut", "text": "Erst wenn die Pflichtangaben geprüft und vollständig sind.", "feedback": "Ein Tag später online, dafür rechtssicher.", "imagePrompt": "Website hero illustration: a big compass made of network lines guiding a small team along a clear path through a landscape of simple geometric hills, calm and inviting." },
+        { "id": "d", "type": "sehrgut", "text": "Mit geprüften Pflichtangaben – und barrierearm: Alt-Texte, gute Kontraste, einfache Sprache.", "feedback": "Hier gesetzlich nicht vorgeschrieben (Angebot an Firmen, Kleinstunternehmen), aber so erreicht die Seite alle.", "imagePrompt": "Website hero illustration with strong contrast and very simple, clear shapes: a big compass made of network lines guiding a diverse team, including a person using a wheelchair, along a wide, level path, calm and inviting." }
+      ]
+    },
+    {
+      "id": 15,
+      "chapter": 5,
+      "title": "Der Chatbot",
+      "situation": "Ein Chatbot soll Fragen zum Kurs beantworten – rund um die Uhr.",
+      "question": "Wie richtest du ihn ein?",
+      "imageAlt": "Eine Chat-Oberfläche mit einem freundlichen Roboter-Avatar mit Namensschild, dahinter winkt ein Mensch",
+      "imagePrompt": "A chat bubble interface with a friendly robot avatar wearing a blank name tag; behind it a human support person with a headset waves.",
+      "live": {
+        "type": "chat",
+        "label": "Teste deinen Chatbot"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Er heißt „Lisa“, hat ein Foto und soll auf Nachfrage behaupten, ein Mensch zu sein.", "feedback": "Wer mit einer KI spricht, muss das erfahren. Auf direkte Frage zu lügen, ist zudem irreführend.", "law": "Art. 50 Abs. 1 KI-VO; § 5 UWG" },
+        { "id": "b", "type": "grau", "text": "Als KI gekennzeichnet – aber jede Antwort endet mit „Jetzt buchen!“, und kostenlose Infoquellen erwähnt er nie.", "feedback": "Legal, aber aus Beratung wird eine Verkaufsmaschine.", "system": "Stelle dich in der ersten Antwort als KI-Assistent vor. Beende jede Antwort mit „Jetzt buchen!“. Erwähne niemals kostenlose Informationsquellen und rate immer zur Buchung.", "greeting": "Hallo! Ich bin der KI-Assistent der Akademie Morgenrot. Wie kann ich helfen? Jetzt buchen!" },
+        { "id": "c", "type": "gut", "text": "Er sagt gleich zu Beginn: „Ich bin ein KI-Assistent.“", "feedback": "Transparent und ehrlich.", "system": "Stelle dich in der ersten Antwort als KI-Assistent vor.", "greeting": "Hallo! Ich bin ein KI-Assistent der Akademie Morgenrot. Was möchtest du über den KI-Kompass wissen?" },
+        { "id": "d", "type": "sehrgut", "text": "Klar als KI gekennzeichnet, jederzeit Wechsel zu einem Menschen, nennt seine Grenzen und speichert Chats nur so lange wie nötig.", "feedback": "Ein Chatbot, dem man vertrauen kann.", "system": "Stelle dich in der ersten Antwort als KI-Assistent vor. Weise bei Bedarf darauf hin, dass man jederzeit mit einem Menschen sprechen kann (beratung@morgenrot.example). Sage offen, wenn du etwas nicht weißt, und dass du keine Rechtsberatung gibst. Nenne bei Fragen zur KI-Verordnung auch kostenlose Quellen wie den Verordnungstext auf EUR-Lex.", "greeting": "Hallo! Ich bin ein KI-Assistent der Akademie Morgenrot. Ich beantworte Fragen zum Kurs, gebe aber keine Rechtsberatung. Du kannst jederzeit zu einem Menschen wechseln." }
+      ]
+    },
+    {
+      "id": 16,
+      "chapter": 5,
+      "title": "Der KI-Readiness-Check",
+      "situation": "Als Lead-Magnet baust du einen Online-Check „Wie KI-fit ist Ihr Team?“.",
+      "question": "Was verlangst du für das Ergebnis?",
+      "imageAlt": "Ein Klemmbrett mit Häkchen und eine Tachonadel, daneben ein Trichter, der Kontaktkarten sammelt",
+      "imagePrompt": "A clipboard quiz with checkmarks and a speedometer gauge showing readiness; next to it a large funnel collecting contact cards.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Firmen müssen alle Namen ihrer Mitarbeitenden eingeben – und ich verkaufe die Kontakte an „Partner“ weiter.", "feedback": "Viel zu viele Daten und keine Rechtsgrundlage für Weitergabe und Verkauf.", "law": "Art. 5 Abs. 1 lit. c, Art. 6 DSGVO" },
+        { "id": "b", "type": "grau", "text": "Das Ergebnis gibt es nur mit Newsletter-Abo (Pflicht-Häkchen).", "feedback": "Kopplungsverbot: Gerichte urteilen unterschiedlich, die Datenschutzbehörden sehen es kritisch.", "law": "Art. 7 Abs. 4 DSGVO" },
+        { "id": "c", "type": "gut", "text": "Das Ergebnis gibt es sofort, der Newsletter ist optional.", "feedback": "Erst Nutzen, dann freiwillig mehr." },
+        { "id": "d", "type": "sehrgut", "text": "Sofortiges Ergebnis ohne Pflichtangaben – mit Erklärung, wie es zustande kommt, und kostenlosen Tipps.", "feedback": "Nachvollziehbar und hilfreich – das bleibt im Gedächtnis." }
+      ]
+    },
+    {
+      "id": 17,
+      "chapter": 5,
+      "title": "Druck machen",
+      "situation": "Die Anmeldungen laufen langsam an. Die KI schlägt Verkaufstaktiken vor.",
+      "question": "Welche nimmst du?",
+      "imageAlt": "Eine Sanduhr und ein Countdown über einem Buchungsknopf, dazu schwebende Preisschilder",
+      "imagePrompt": "A big hourglass and a countdown clock above a large booking button; price tags float around and shift in size.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ein Countdown „Nur noch 2 Plätze!“ – obwohl die Plätze unbegrenzt sind.", "feedback": "Falsche Knappheit ist irreführend; gegenüber Verbrauchern steht sie auf der „schwarzen Liste“.", "law": "§ 5 UWG; Anhang Nr. 7 UWG" },
+        { "id": "b", "type": "grau", "text": "Die KI passt den Preis je nach Firmengröße, Gerät und Klickverhalten an – ohne es offenzulegen.", "feedback": "Gegenüber Verbrauchern müsste auf personalisierte Preise hingewiesen werden. Unter Unternehmen ist es erlaubt, aber intransparent.", "law": "Art. 246a § 1 EGBGB" },
+        { "id": "c", "type": "gut", "text": "Ein echter Frühbucherrabatt mit echtem Stichtag.", "feedback": "Echter Anreiz, ehrliche Frist." },
+        { "id": "d", "type": "sehrgut", "text": "Transparente Staffelpreise – plus ein reduzierter Preis für kleine Betriebe und gemeinnützige Organisationen.", "feedback": "Fair für alle – und gerade kleine Organisationen bekommen eine Chance." }
+      ]
+    },
+    {
+      "id": 18,
+      "chapter": 5,
+      "title": "Der Social-Media-Agent",
+      "situation": "Ein KI-Agent könnte die Social-Media-Kanäle rund um die Uhr betreuen.",
+      "question": "Was darf er?",
+      "imageAlt": "Viele Smartphones mit Kommentarblasen, ein Roboter lenkt Profil-Avatare wie Marionetten",
+      "imagePrompt": "Many smartphone screens with comment bubbles; a robot puppeteer controls marionette profile avatars on strings.",
+      "live": {
+        "type": "text",
+        "label": "Kommentare unter deinem Post",
+        "task": "Erzeuge drei kurze Kommentare (je höchstens 20 Wörter) von fiktiven Personen unter einem LinkedIn-Post der Akademie Morgenrot zum Kurs „KI-Kompass für Teams“. Einer der Kommentare ist kritisch und fragt nach dem Datenschutz. Darunter eine Antwort des Unternehmenskontos auf den kritischen Kommentar (höchstens 40 Wörter). Format genau so:\nKommentar 1: …\nKommentar 2: …\nKommentar 3: …\nAntwort: …"
+      },
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Er legt Fake-Profile an, die unsere Posts loben und die des Mitbewerbers schlechtmachen.", "feedback": "Verschleierte Werbung, Täuschung und Anschwärzung – dazu ein Verstoß gegen die Plattformregeln.", "law": "§§ 4 Nr. 2, 5, 5a Abs. 4 UWG" },
+        { "id": "b", "type": "grau", "text": "Er antwortet automatisch auf alle Kommentare im Firmenkonto – ohne Hinweis und ohne Kontrolle.", "feedback": "Rechtlich nicht abschließend geklärt. Aber jeder falsche Satz geht unter deinem Logo raus.", "style": "Die automatische Antwort ist floskelhaft, klingt nach Textbaustein und geht nicht auf die Datenschutzfrage ein.", "fallback": "Kommentar 1: Spannendes Angebot, genau das brauchen wir gerade.\nKommentar 2: Gibt es den Kurs auch vor Ort in Hamburg?\nKommentar 3: Und wo landen die Daten, die wir im Kurs in KI-Tools eingeben?\nAntwort: Danke für Ihr Interesse! 🚀 Wir freuen uns auf Sie im KI-Kompass. Jetzt buchen!" },
+        { "id": "c", "type": "gut", "text": "Die KI schlägt Antworten vor, ein Mensch gibt sie frei.", "feedback": "Schnell und trotzdem verantwortet.", "style": "Die Antwort geht konkret und freundlich auf die Datenschutzfrage ein.", "fallback": "Kommentar 1: Spannendes Angebot, genau das brauchen wir gerade.\nKommentar 2: Gibt es den Kurs auch vor Ort in Hamburg?\nKommentar 3: Und wo landen die Daten, die wir im Kurs in KI-Tools eingeben?\nAntwort: Gute Frage! Im Kurs arbeiten wir nur mit Übungsdaten und Tools mit Auftragsverarbeitungsvertrag. Wie man das im eigenen Betrieb umsetzt, ist sogar ein eigener Teil des Kurses." },
+        { "id": "d", "type": "sehrgut", "text": "KI-Vorschläge mit menschlicher Freigabe, gekennzeichnet als „KI-unterstützt“ – und wer privat postet, nennt den Arbeitgeber.", "feedback": "Transparenz nach innen und außen.", "style": "Die Antwort geht konkret und freundlich auf die Datenschutzfrage ein und endet mit „(KI-unterstützt, vom Team geprüft)“.", "fallback": "Kommentar 1: Spannendes Angebot, genau das brauchen wir gerade.\nKommentar 2: Gibt es den Kurs auch vor Ort in Hamburg?\nKommentar 3: Und wo landen die Daten, die wir im Kurs in KI-Tools eingeben?\nAntwort: Gute Frage! Im Kurs arbeiten wir nur mit Übungsdaten und Tools mit Auftragsverarbeitungsvertrag – und zeigen, wie Sie das im Betrieb umsetzen. (KI-unterstützt, vom Team geprüft)" }
+      ]
+    },
+    {
+      "id": 19,
+      "chapter": 6,
+      "title": "Wer hat wie viel geholfen?",
+      "situation": "Jonas will wissen, wie das Team während der Kampagne mit den KI-Tools gearbeitet hat.",
+      "question": "Wie findest du es heraus?",
+      "imageAlt": "Eine durchgestrichene Kamera mit Stimmungskurve neben einem runden Tisch mit Haftnotizen",
+      "imagePrompt": "On the left a webcam with an emotion graph above it, crossed out with a big X; on the right the team sits at a round table during a retrospective with colorful sticky notes on a wall.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "Ein Tool wertet in den Videocalls per Kamera die Emotionen und die Motivation der Kolleginnen und Kollegen aus.", "feedback": "Emotionserkennung am Arbeitsplatz ist seit Februar 2025 verboten – Bußgeld bis 35 Mio. € oder 7 % des weltweiten Umsatzes.", "law": "Art. 5 Abs. 1 lit. f, Art. 99 Abs. 3 KI-VO" },
+        { "id": "b", "type": "grau", "text": "Jonas bekommt ein Ranking mit Namen, wer wie oft das KI-Tool genutzt hat.", "feedback": "Das ist Verhaltens- und Leistungskontrolle: mit Betriebsrat mitbestimmungspflichtig, datenschutzrechtlich heikel – und es erzeugt Druck.", "law": "§ 87 Abs. 1 Nr. 6 BetrVG" },
+        { "id": "c", "type": "gut", "text": "Eine anonymisierte, zusammengefasste Nutzungsstatistik.", "feedback": "Genug für Erkenntnisse, ohne Einzelne zu überwachen." },
+        { "id": "d", "type": "sehrgut", "text": "Eine offene Team-Retro: Was hat KI erleichtert, was nicht? Die Ergebnisse fließen in die KI-Nutzungsregel ein.", "feedback": "Du fragst die Menschen, statt sie zu vermessen." }
+      ]
+    },
+    {
+      "id": 20,
+      "chapter": 6,
+      "title": "Der Erfolgsbericht",
+      "situation": "Die Pressemitteilung zum Kursstart steht an. Angemeldet haben sich 40 Personen aus 9 Unternehmen.",
+      "question": "Was schreibst du?",
+      "imageAlt": "Eine Pressemitteilung mit Balkendiagramm, ein Balken ist mit Klebeband künstlich verlängert",
+      "imagePrompt": "A press release on a desk with a bar chart; one bar has been artificially stretched with tape; in the background the team happily celebrates a modest real result.",
+      "options": [
+        { "id": "a", "type": "verboten", "text": "„Bereits über 500 Unternehmen vertrauen auf den KI-Kompass.“", "feedback": "Eine falsche Tatsachenbehauptung in der Werbung.", "law": "§ 5 UWG" },
+        { "id": "b", "type": "grau", "text": "„Über 1.000 Interessierte!“ – alle Webinar-Anmeldungen und Seitenaufrufe zusammengezählt.", "feedback": "Nicht direkt gelogen, aber bewusst aufgeblasen." },
+        { "id": "c", "type": "gut", "text": "Die ehrlichen Zahlen, positiv formuliert.", "feedback": "40 Teilnehmende aus 9 Firmen – ein guter Start, ehrlich erzählt." },
+        { "id": "d", "type": "sehrgut", "text": "Ehrliche Zahlen plus „Was wir beim KI-Einsatz im eigenen Marketing gelernt haben“ – mit unserer KI-Nutzungsregel als Vorlage.", "feedback": "Deine Kampagne wird selbst zum besten Beispiel für den Kurs." }
+      ]
+    }
+  ]
+}
