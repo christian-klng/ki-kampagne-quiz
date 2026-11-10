@@ -9,6 +9,7 @@ import { readFileSync, existsSync, mkdirSync, readdirSync, createReadStream, sta
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import {
   generateText, describeLlmError, generateImage,
   llmEnabled, imageEnabled, LLM_MODEL, IMAGE_MODEL,
@@ -232,7 +233,10 @@ async function handleImage(body) {
   if (question.live?.type !== "image" || option.type === "verboten" || !option.imagePrompt) {
     throw Object.assign(new Error("Für diese Option gibt es kein Live-Bild"), { status: 400 });
   }
-  const key = `q${question.id}-${option.id}`;
+  // Live-Bilder haben einen eigenen Stil, damit sie sich von den Story-Illustrationen abheben
+  const prompt = `${quiz.liveImageStyle || quiz.imageStyle}\n\n${option.imagePrompt}`;
+  // Der Prompt-Hash im Dateinamen sorgt dafür, dass nach einer Prompt-Änderung neue Bilder entstehen
+  const key = `q${question.id}-${option.id}-${createHash("sha256").update(prompt).digest("hex").slice(0, 8)}`;
   const cached = cachedImages(key);
   const pending = inflight.get(key);
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
@@ -251,7 +255,7 @@ async function handleImage(body) {
 
   imagesToday += 1;
   const job = (async () => {
-    const { buffer, ext } = await generateImage(`${quiz.imageStyle}\n\n${option.imagePrompt}`);
+    const { buffer, ext } = await generateImage(prompt);
     const file = `${key}-${Date.now()}.${ext}`;
     await writeFile(path.join(IMAGE_CACHE, file), buffer);
     return `generated/${file}`;

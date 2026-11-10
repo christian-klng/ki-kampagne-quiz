@@ -29,6 +29,8 @@ Sprachmodell und Bild-KI laufen über [Replicate](https://replicate.com) mit ein
 
 Modelle lassen sich als `owner/name` (aktuelle Version) oder `owner/name:version` (fest angepinnt) angeben. Andere Sprachmodelle müssen `prompt` und `system_prompt` verstehen; der Chatverlauf wird für sie in einen Prompt umgewandelt. Bildmodelle müssen `prompt` verstehen und eine Bild-URL liefern; abweichende Parameter kommen in `IMAGE_INPUT_JSON`.
 
+Bildstile stehen in `data/quiz.json`: `imageStyle` für die Story-Illustrationen (flach, illustriert) und `liveImageStyle` für die Live-Bilder der Fragen 11 und 14 (fotografischer Kampagnen-Look), damit sich das Ergebnis der eigenen Entscheidung sichtbar abhebt. Ändert sich ein Prompt, erzeugt der Server automatisch neue Bilder statt alte aus dem Cache zu zeigen.
+
 Datenschutz: Replicate ist ein US-Anbieter. Für den Einsatz mit echten Teilnehmenden braucht ihr einen Auftragsverarbeitungsvertrag (DPA) mit Replicate. In den Chat sollten keine personenbezogenen Daten eingegeben werden; die App weist darauf hin.
 
 ## Aufbau
