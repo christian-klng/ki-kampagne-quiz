@@ -88,7 +88,7 @@ Kostenschutz: Pro Antwortoption erzeugt die Bild-KI höchstens `IMAGE_VARIANTS` 
 ## Datenschutz der App selbst
 
 - Das Quiz speichert den Fortschritt nur im Browser (`localStorage`) und setzt keine Cookies. Auf dem Server werden keine Antworten gespeichert.
-- Am Ende können die Teilnehmenden ihren Kampagnenplan als PDF herunterladen (Ergebnis- oder Rückblickseite, Knopf „Kampagnenplan herunterladen“). Das PDF entsteht im Browser mit jsPDF (`public/js/plan-pdf.js`) und verlässt das Gerät nicht.
+- Am Ende können die Teilnehmenden ihren Kampagnenplan als PDF herunterladen (Ergebnis- oder Rückblickseite, runder Knopf mit Download-Symbol). Das PDF entsteht im Browser mit jsPDF (`public/js/plan-pdf.js`) und verlässt das Gerät nicht.
 - Chat-Eingaben gehen zur Antwort an Replicate und werden auf dem eigenen Server nicht gespeichert. Die App bittet im Chat darum, keine persönlichen Daten einzugeben.
 - Für den Einsatz mit echten Teilnehmenden braucht ihr ein Impressum, eine Datenschutzerklärung und einen Auftragsverarbeitungsvertrag mit Replicate. Das ist genau das, was das Quiz lehrt.
 

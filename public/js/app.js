@@ -16,6 +16,10 @@
     sehrgut: { label: "Sehr gut · +2", points: 2, title: "Sehr gut · +2 Ethik-Punkte", cls: "best" },
   };
 
+  const PDF_LABEL = "Kampagnenplan als PDF herunterladen";
+  const DOWNLOAD_ICON = '<svg viewBox="0 0 24 24" width="1.1em" height="1.1em" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const pdfButton = (variant) => `<button type="button" class="button ${variant} is-icon" data-action="pdf" aria-label="${PDF_LABEL}" title="${PDF_LABEL}">${DOWNLOAD_ICON}</button>`;
+
   const SOURCE_NOTES = {
     ai: "Live mit KI erzeugt – Ergebnisse können jedes Mal anders ausfallen.",
     cache: "Dieses Motiv hat die Bild-KI bereits für andere Spielende erzeugt.",
@@ -390,7 +394,7 @@
           <p class="subtitle" id="summary">${esc(state.summary || result.text)}</p>
           <div class="actions">
             <button type="button" class="button" data-action="review">Rückblick</button>
-            <button type="button" class="button is-secondary is-download" data-action="pdf">Kampagnenplan herunterladen</button>
+            ${pdfButton("is-secondary")}
             <button type="button" class="button is-secondary no-arrow" data-action="restart">Noch einmal</button>
           </div>
         </div>
@@ -439,7 +443,7 @@
           <p>Lade deinen Kampagnenplan als PDF herunter und besprich ihn mit Jonas.</p>
           <p class="muted">Die Rechtsbezüge sind vereinfacht dargestellt und ersetzen keine Rechtsberatung. Stand: November 2026.</p>
           <div class="actions">
-            <button type="button" class="button is-download" data-action="pdf">Kampagnenplan herunterladen</button>
+            ${pdfButton("")}
             <button type="button" class="button is-secondary" data-action="result">Zum Ergebnis</button>
           </div>
         </div>
@@ -512,20 +516,22 @@
   async function downloadPlan(button) {
     if (pdfBusy) return;
     pdfBusy = true;
-    const label = button.textContent;
-    button.disabled = true;
-    button.textContent = "PDF wird erstellt …";
+    const setLabel = (text) => { button.setAttribute("aria-label", text); button.title = text; };
+    button.classList.add("is-busy");
+    button.setAttribute("aria-busy", "true");
+    setLabel("PDF wird erstellt …");
     try {
       // jsPDF (ca. 400 KB) erst bei Bedarf laden
       await loadScript("vendor/jspdf.umd.min.js");
       await loadScript("js/plan-pdf.js");
       await window.KampagnenPlan.download(planData());
-      button.textContent = label;
+      setLabel(PDF_LABEL);
     } catch (error) {
       console.error(error);
-      button.textContent = "Fehlgeschlagen – noch einmal versuchen";
+      setLabel("PDF fehlgeschlagen – noch einmal versuchen");
     } finally {
-      button.disabled = false;
+      button.classList.remove("is-busy");
+      button.removeAttribute("aria-busy");
       pdfBusy = false;
     }
   }

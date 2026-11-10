@@ -281,5 +281,15 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .review-num { width: 28px; height: 28px; font-size: 13px; border-radius: 8px; }
 }
 
-/* Download-Knopf mit Pfeil nach unten, auch in der sekundären Variante */
-.button.is-download::after, .button.is-secondary.is-download::after { content: "↓"; font-weight: 500; }
+/* Runder Knopf nur mit Symbol (PDF-Download) */
+.button.is-icon { width: calc(76 * var(--u)); min-width: 0; padding: 0; flex: none; }
+.button.is-icon::after { content: none; }
+.button.is-icon svg { width: calc(34 * var(--u)); height: calc(34 * var(--u)); }
+.button.is-busy svg { animation: pdf-busy 1s ease-in-out infinite; }
+@keyframes pdf-busy { 50% { transform: translateY(15%); opacity: 0.5; } }
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
+  .button.is-icon { width: 52px; min-height: 52px; padding: 0; }
+  /* Symbol-Knopf teilt sich die Zeile mit dem Nachbarknopf statt allein zu stehen */
+  .actions:has(.is-icon) .button:not(.is-icon) { width: auto; flex: 1 1 calc(100% - 62px); }
+  .button.is-icon svg { width: 22px; height: 22px; }
+}
