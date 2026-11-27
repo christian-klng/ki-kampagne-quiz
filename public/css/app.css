@@ -317,3 +317,18 @@ button.brand:focus-visible { outline: 3px solid var(--color-accent); outline-off
   .choice small { font-size: 12px; }
   .briefing .actions { margin-top: 24px; }
 }
+
+/* ---------- Sprachauswahl ---------- */
+.layout-language h1 .h1-alt { display: block; color: var(--color-muted); }
+:lang(en) .law::before { content: "Legal basis: "; }
+.lang-switch {
+  margin-top: calc(28 * var(--u)); padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: calc(24 * var(--u)); color: var(--color-muted); text-decoration: underline; text-underline-offset: 0.2em;
+}
+.lang-switch:hover { color: var(--color-heading, #121217); }
+.lang-switch:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; border-radius: 6px; }
+.law-key { font-size: calc(19 * var(--u)) !important; }
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
+  .lang-switch { margin-top: 18px; font-size: 14px; }
+  .law-key { font-size: 12px !important; }
+}

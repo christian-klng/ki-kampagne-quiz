@@ -28,10 +28,49 @@ const IMAGE_DAILY_LIMIT = Number(process.env.IMAGE_DAILY_LIMIT || 50); // neue B
 const RATE_TEXT = Number(process.env.RATE_TEXT_PER_HOUR || 200);      // pro IP (Seminare teilen oft eine IP)
 const RATE_CHAT = Number(process.env.RATE_CHAT_PER_HOUR || 100);
 
-const quiz = JSON.parse(readFileSync(path.join(ROOT, "data", "quiz.json"), "utf8"));
-const questionById = new Map(quiz.questions.map((q) => [q.id, q]));
+// Deutsch ist die Grundfassung (quiz.json). Andere Sprachen liegen als Overlay daneben (quiz.<lang>.json):
+// gleiche Struktur und IDs, aber nur die übersetzten Texte. Bildprompts, Typen und Kapitel kommen aus der Grundfassung.
+const readJson = (file) => JSON.parse(readFileSync(path.join(ROOT, "data", file), "utf8"));
+const LANGS = ["de", "en"];
+const baseQuiz = readJson("quiz.json");
+const quizzes = { de: baseQuiz, en: overlay(baseQuiz, readJson("quiz.en.json")) };
+const langOf = (value) => (LANGS.includes(value) ? value : "de");
 const POINTS = { verboten: 0, grau: 0, gut: 1, sehrgut: 2 };
-const MAX_POINTS = quiz.questions.length * 2;
+const MAX_POINTS = baseQuiz.questions.length * 2;
+
+/** Legt eine Übersetzung über die Grundfassung. Listen mit IDs werden über die ID zugeordnet, andere Objektlisten über die Position. */
+function overlay(base, over) {
+  if (over === undefined) return base;
+  if (Array.isArray(base) && Array.isArray(over)) {
+    const objects = base.every((x) => x && typeof x === "object");
+    if (objects && base.every((x) => "id" in x)) {
+      const byId = new Map(over.map((x) => [x.id, x]));
+      return base.map((x) => overlay(x, byId.get(x.id)));
+    }
+    return objects ? base.map((x, i) => overlay(x, over[i])) : over;
+  }
+  if (base && typeof base === "object" && over && typeof over === "object") {
+    const out = { ...base };
+    for (const [key, value] of Object.entries(over)) out[key] = overlay(base[key], value);
+    return out;
+  }
+  return over;
+}
+
+// Fehlende Übersetzungen beim Start melden, damit nichts unbemerkt auf Deutsch bleibt
+for (const lang of LANGS.filter((l) => l !== "de")) {
+  const missing = [];
+  const check = (de, tr, where) => {
+    for (const [key, value] of Object.entries(de)) {
+      if (["imagePrompt", "scene", "mood", "type", "id", "chapter", "min", "image"].includes(key)) continue;
+      if (typeof value === "string" && tr?.[key] === value) missing.push(`${where}.${key}`);
+      else if (value && typeof value === "object") check(value, tr?.[key], `${where}.${key}`);
+    }
+  };
+  const { imageStyle, liveImageStyle, ...texts } = baseQuiz;
+  check(texts, quizzes[lang], lang);
+  if (missing.length) console.warn(`Unübersetzt (${lang}): ${missing.join(", ")}`);
+}
 
 // ---------- Hilfsfunktionen ----------
 
@@ -106,8 +145,8 @@ setInterval(() => {
   for (const [key, entry] of buckets) if (entry.reset < now) buckets.delete(key);
 }, 600_000).unref();
 
-function findOption(qId, optionId) {
-  const question = questionById.get(Number(qId));
+function findOption(quiz, qId, optionId) {
+  const question = quiz.questions.find((q) => q.id === Number(qId));
   const option = question?.options.find((o) => o.id === optionId);
   if (!question || !option) throw Object.assign(new Error("Unbekannte Frage oder Option"), { status: 400 });
   return { question, option };
@@ -123,9 +162,11 @@ function storyImage(name) {
 }
 
 /** Quizdaten für den Browser: ohne Prompts und Fallback-Texte, mit aufgelösten Bildpfaden. */
-function publicQuiz() {
+function publicQuiz(lang) {
+  const quiz = quizzes[lang];
   const pad = (n) => String(n).padStart(2, "0");
   return {
+    lang,
     title: quiz.title,
     subtitle: quiz.subtitle,
     meta: quiz.meta,
@@ -164,7 +205,7 @@ function publicQuiz() {
 // ---------- Briefing: Zielgruppe und Schreibstil ----------
 
 /** Liest Zielgruppe und Schreibstil aus der Anfrage (nur bekannte IDs, sonst die erste Option). */
-function briefingOf(body) {
+function briefingOf(quiz, body) {
   const { audiences, styles } = quiz.briefing;
   return {
     audience: audiences.find((a) => a.id === body?.briefing?.audience) || audiences[0],
@@ -172,29 +213,89 @@ function briefingOf(body) {
   };
 }
 
-const briefingText = ({ audience, style }) =>
-  `Zielgruppe der Kampagne: ${audience.label}. ${audience.hint}\n` +
-  `Grundton der Kampagne: ${style.hint}. Das gilt, soweit die Vorgabe zur Variante keinen anderen Ton verlangt.\n` +
-  "Nutze passende Beispiele aus dem Arbeitsalltag der Zielgruppe. Kommen Personen vor, etwa in Kommentaren oder Reaktionen, gehören sie zur Zielgruppe.";
+// ---------- Prompts je Sprache ----------
+
+const PROMPTS = {
+  de: {
+    briefing: ({ audience, style }) =>
+      `Zielgruppe der Kampagne: ${audience.label}. ${audience.hint}\n` +
+      `Grundton der Kampagne: ${style.hint}. Das gilt, soweit die Vorgabe zur Variante keinen anderen Ton verlangt.\n` +
+      "Nutze passende Beispiele aus dem Arbeitsalltag der Zielgruppe. Kommen Personen vor, etwa in Kommentaren oder Reaktionen, gehören sie zur Zielgruppe.",
+    textSystem:
+      "Du schreibst Beispieltexte für ein Lernspiel über KI und Recht im Marketing. " +
+      "Die Akademie Morgenrot, ihr Kurs „KI-Kompass für Teams“ und alle Personen sind fiktiv. " +
+      "Halte dich exakt an das verlangte Format. Schreibe auf Deutsch, ohne Einleitung, ohne Markdown.",
+    variant: "Vorgabe zur Variante",
+    chatBase:
+      "Du bist der Chatbot auf der Kursseite der fiktiven Akademie Morgenrot. Kurs „KI-Kompass für Teams“: " +
+      "ein Tag, online oder vor Ort, 490 € netto pro Person, vermittelt KI-Kompetenz nach Art. 4 der KI-Verordnung " +
+      "(sicherer Umgang mit KI-Tools, Datenschutz, Urheberrecht, Kennzeichnung, Grenzen von KI). " +
+      "Antworte auf Deutsch in höchstens 60 Wörtern, ohne Markdown. Beantworte nur Fragen zum Kurs, zur Akademie und zu KI-Kompetenz; " +
+      "lenke andere Themen freundlich zum Kurs zurück. Gib keine verbindliche Rechtsberatung.",
+    chatVisitors: "Die Besucherinnen und Besucher der Kursseite gehören meist zu dieser Zielgruppe.",
+    chatDemo: "Im Demo-Modus ist keine Live-KI angeschlossen. Mit einem API-Schlüssel antwortet hier der Chatbot so, wie du ihn eingerichtet hast.",
+    chatDown: "Die Live-KI ist gerade nicht erreichbar. Versuch es gleich noch einmal.",
+    summarySystem:
+      "Du schreibst kurze, warmherzige Abschlusstexte für ein Lernspiel über KI und Recht im Marketing. " +
+      "Die Spielerin oder der Spieler hat eine Kampagne für den fiktiven Kurs „KI-Kompass für Teams“ der Akademie Morgenrot geplant. " +
+      "Antworte auf Deutsch, duze, 3 bis 4 Sätze, höchstens 80 Wörter, ohne Markdown, ohne Überschrift.",
+    summaryUser: ({ points, lines, briefing }) =>
+      `Ethik-Punkte: ${points} von ${MAX_POINTS}. Bewertungen: verboten (Mira hat gestoppt), grau (fragwürdig), gut, sehrgut.\n` +
+      `${briefing}\nDer Steckbrief selbst ist in diesem Ton geschrieben und nennt die Zielgruppe.\n` +
+      `Entscheidungen:\n${lines.join("\n")}\n\n` +
+      "Schreibe einen Kampagnen-Steckbrief: Wie lief die Kampagne? Nenne eine konkrete Stärke und eine Lernerfahrung. " +
+      "Ende positiv: Die Kampagne ist online, und es gibt Anmeldungen.",
+    tooMany: "Zu viele Anfragen. Bitte später noch einmal versuchen.",
+  },
+  en: {
+    briefing: ({ audience, style }) =>
+      `Target audience of the campaign: ${audience.label}. ${audience.hint}\n` +
+      `Overall tone of the campaign: ${style.hint}. This applies unless the instructions for the variant ask for a different tone.\n` +
+      "Use fitting examples from the audience's everyday work. If people appear, for example in comments or reactions, they belong to the target audience.",
+    textSystem:
+      "You write sample texts for a learning game about AI and law in marketing. " +
+      "Morgenrot Academy, its course “AI Compass for Teams” and all people are fictional. The academy is based in Germany. " +
+      "Follow the requested format exactly. Write in English, without an introduction, without Markdown.",
+    variant: "Instructions for this variant",
+    chatBase:
+      "You are the chatbot on the course page of the fictional Morgenrot Academy in Germany. Course “AI Compass for Teams”: " +
+      "one day, online or on site, €490 net per person, teaches AI literacy under Art. 4 of the EU AI Act " +
+      "(safe use of AI tools, data protection, copyright, labelling, limits of AI). " +
+      "Answer in English in no more than 60 words, without Markdown. Only answer questions about the course, the academy and AI literacy; " +
+      "steer other topics back to the course in a friendly way. Do not give binding legal advice.",
+    chatVisitors: "Visitors to the course page mostly belong to this target audience.",
+    chatDemo: "Demo mode: no live AI is connected. With an API key, the chatbot answers here the way you set it up.",
+    chatDown: "The live AI can’t be reached right now. Please try again in a moment.",
+    summarySystem:
+      "You write short, warm closing texts for a learning game about AI and law in marketing. " +
+      "The player has planned a campaign for the fictional course “AI Compass for Teams” by Morgenrot Academy. " +
+      "Answer in English, address the player as “you”, 3 to 4 sentences, no more than 80 words, no Markdown, no heading.",
+    summaryUser: ({ points, lines, briefing }) =>
+      `Ethics points: ${points} of ${MAX_POINTS}. Ratings: verboten (prohibited, Mira stopped it), grau (questionable), gut (good), sehrgut (very good).\n` +
+      `${briefing}\nThe summary itself is written in this tone and names the target audience.\n` +
+      `Decisions:\n${lines.join("\n")}\n\n` +
+      "Write a campaign summary: How did the campaign go? Name one concrete strength and one lesson learned. " +
+      "End on a positive note: the campaign is live and there are sign-ups.",
+    tooMany: "Too many requests. Please try again later.",
+  },
+};
 
 // ---------- Live-Texte ----------
 
-const TEXT_SYSTEM =
-  "Du schreibst Beispieltexte für ein Lernspiel über KI und Recht im Marketing. " +
-  "Die Akademie Morgenrot, ihr Kurs „KI-Kompass für Teams“ und alle Personen sind fiktiv. " +
-  "Halte dich exakt an das verlangte Format. Schreibe auf Deutsch, ohne Einleitung, ohne Markdown.";
-
-async function handleText(body) {
-  const { question, option } = findOption(body.q, body.option);
+async function handleText(body, lang) {
+  const quiz = quizzes[lang];
+  const P = PROMPTS[lang];
+  const { question, option } = findOption(quiz, body.q, body.option);
   if (question.live?.type !== "text" || option.type === "verboten") {
     throw Object.assign(new Error("Für diese Option gibt es keinen Live-Text"), { status: 400 });
   }
   if (!llmEnabled) return { text: option.fallback, source: "demo" };
   try {
     const text = await generateText({
-      system: TEXT_SYSTEM,
-      messages: [{ role: "user", content: `${question.live.task}\n\n${briefingText(briefingOf(body))}\n\nVorgabe zur Variante: ${option.style}` }],
+      system: P.textSystem,
+      messages: [{ role: "user", content: `${question.live.task}\n\n${P.briefing(briefingOf(quiz, body))}\n\n${P.variant}: ${option.style}` }],
       maxTokens: 4096,
+      lang,
     });
     return { text, source: "ai" };
   } catch (error) {
@@ -205,15 +306,10 @@ async function handleText(body) {
 
 // ---------- Chatbot (Frage 15) ----------
 
-const CHAT_BASE =
-  "Du bist der Chatbot auf der Kursseite der fiktiven Akademie Morgenrot. Kurs „KI-Kompass für Teams“: " +
-  "ein Tag, online oder vor Ort, 490 € netto pro Person, vermittelt KI-Kompetenz nach Art. 4 der KI-Verordnung " +
-  "(sicherer Umgang mit KI-Tools, Datenschutz, Urheberrecht, Kennzeichnung, Grenzen von KI). " +
-  "Antworte auf Deutsch in höchstens 60 Wörtern, ohne Markdown. Beantworte nur Fragen zum Kurs, zur Akademie und zu KI-Kompetenz; " +
-  "lenke andere Themen freundlich zum Kurs zurück. Gib keine verbindliche Rechtsberatung.";
-
-async function handleChat(body) {
-  const { option } = findOption(15, body.option);
+async function handleChat(body, lang) {
+  const quiz = quizzes[lang];
+  const P = PROMPTS[lang];
+  const { option } = findOption(quiz, 15, body.option);
   if (option.type === "verboten") throw Object.assign(new Error("Diese Variante wurde gestoppt"), { status: 400 });
   const messages = Array.isArray(body.messages) ? body.messages : [];
   const valid =
@@ -226,18 +322,19 @@ async function handleChat(body) {
   if (!valid) throw Object.assign(new Error("Ungültiger Chatverlauf"), { status: 400 });
 
   if (!llmEnabled) {
-    return { text: "Im Demo-Modus ist keine Live-KI angeschlossen. Mit einem API-Schlüssel antwortet hier der Chatbot so, wie du ihn eingerichtet hast.", source: "demo" };
+    return { text: P.chatDemo, source: "demo" };
   }
   try {
     const text = await generateText({
-      system: `${CHAT_BASE}\n\n${briefingText(briefingOf(body))}\nDie Besucherinnen und Besucher der Kursseite gehören meist zu dieser Zielgruppe.\n\n${option.system}`,
+      system: `${P.chatBase}\n\n${P.briefing(briefingOf(quiz, body))}\n${P.chatVisitors}\n\n${option.system}`,
       messages: messages.map((m) => ({ role: m.role, content: m.content.trim() })),
       maxTokens: 4096,
+      lang,
     });
     return { text, source: "ai" };
   } catch (error) {
     console.warn(`Chat: ${describeLlmError(error)}`);
-    return { text: "Die Live-KI ist gerade nicht erreichbar. Versuch es gleich noch einmal.", source: "fallback" };
+    return { text: P.chatDown, source: "fallback" };
   }
 }
 
@@ -251,13 +348,15 @@ function cachedImages(key) {
   return readdirSync(IMAGE_CACHE).filter((f) => f.startsWith(`${key}-`)).map((f) => `generated/${f}`);
 }
 
-async function handleImage(body) {
-  const { question, option } = findOption(body.q, body.option);
+async function handleImage(body, lang) {
+  // Bildprompts sind in allen Sprachen gleich (Englisch), der Cache wird also geteilt
+  const quiz = quizzes[lang];
+  const { question, option } = findOption(quiz, body.q, body.option);
   if (question.live?.type !== "image" || option.type === "verboten" || !option.imagePrompt) {
     throw Object.assign(new Error("Für diese Option gibt es kein Live-Bild"), { status: 400 });
   }
   // Live-Bilder haben einen eigenen Stil, damit sie sich von den Story-Illustrationen abheben
-  const { audience, style } = briefingOf(body);
+  const { audience, style } = briefingOf(quiz, body);
   const prompt = `${quiz.liveImageStyle || quiz.imageStyle}\n\n${option.imagePrompt}\nSetting and people: ${audience.scene}. Mood: ${style.mood}.`;
   // Der Prompt-Hash im Dateinamen sorgt dafür, dass nach einer Prompt-Änderung neue Bilder entstehen
   const key = `q${question.id}-${option.id}-${createHash("sha256").update(prompt).digest("hex").slice(0, 8)}`;
@@ -297,11 +396,13 @@ async function handleImage(body) {
 
 // ---------- Abschluss ----------
 
-function resultFor(points) {
+function resultFor(quiz, points) {
   return [...quiz.results].reverse().find((r) => points >= r.min);
 }
 
-async function handleSummary(body) {
+async function handleSummary(body, lang) {
+  const quiz = quizzes[lang];
+  const P = PROMPTS[lang];
   const answers = body.answers && typeof body.answers === "object" ? body.answers : {};
   const lines = [];
   let points = 0;
@@ -311,24 +412,14 @@ async function handleSummary(body) {
     points += POINTS[option.type];
     lines.push(`${q.id}. ${q.title}: ${option.text} (${option.type})`);
   }
-  const result = resultFor(points);
+  const result = resultFor(quiz, points);
   if (!llmEnabled || lines.length < 5) return { text: result.text, source: "demo" };
   try {
     const text = await generateText({
-      system:
-        "Du schreibst kurze, warmherzige Abschlusstexte für ein Lernspiel über KI und Recht im Marketing. " +
-        "Die Spielerin oder der Spieler hat eine Kampagne für den fiktiven Kurs „KI-Kompass für Teams“ der Akademie Morgenrot geplant. " +
-        "Antworte auf Deutsch, duze, 3 bis 4 Sätze, höchstens 80 Wörter, ohne Markdown, ohne Überschrift.",
-      messages: [{
-        role: "user",
-        content:
-          `Ethik-Punkte: ${points} von ${MAX_POINTS}. Bewertungen: verboten (Mira hat gestoppt), grau (fragwürdig), gut, sehrgut.\n` +
-          `${briefingText(briefingOf(body))}\nDer Steckbrief selbst ist in diesem Ton geschrieben und nennt die Zielgruppe.\n` +
-          `Entscheidungen:\n${lines.join("\n")}\n\n` +
-          "Schreibe einen Kampagnen-Steckbrief: Wie lief die Kampagne? Nenne eine konkrete Stärke und eine Lernerfahrung. " +
-          "Ende positiv: Die Kampagne ist online, und es gibt Anmeldungen.",
-      }],
+      system: P.summarySystem,
+      messages: [{ role: "user", content: P.summaryUser({ points, lines, briefing: P.briefing(briefingOf(quiz, body)) }) }],
       maxTokens: 4096,
+      lang,
     });
     return { text, source: "ai" };
   } catch (error) {
@@ -349,20 +440,21 @@ const API = {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://localhost");
   const route = `${req.method} ${url.pathname}`;
+  const lang = langOf(url.searchParams.get("lang"));
 
   try {
     if (route === "GET /api/health") {
       // Zeigt, ob die KI angeschlossen ist (ohne den Token preiszugeben)
       return sendJson(res, 200, { ok: true, ai: llmEnabled ? "replicate" : "demo", llm: llmEnabled ? LLM_MODEL : null, image: imageEnabled ? IMAGE_MODEL : null });
     }
-    if (route === "GET /api/quiz") return sendJson(res, 200, publicQuiz());
+    if (route === "GET /api/quiz") return sendJson(res, 200, publicQuiz(lang));
 
     const api = API[route];
     if (api) {
       if (rateLimited(api.bucket, clientIp(req), api.max)) {
-        return sendJson(res, 429, { error: "Zu viele Anfragen. Bitte später noch einmal versuchen." });
+        return sendJson(res, 429, { error: PROMPTS[lang].tooMany });
       }
-      return sendJson(res, 200, await api.handler(await readBody(req)));
+      return sendJson(res, 200, await api.handler(await readBody(req), lang));
     }
     if (url.pathname.startsWith("/api/")) return sendJson(res, 404, { error: "Nicht gefunden" });
 

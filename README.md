@@ -20,6 +20,16 @@ Bei verbotenen Optionen wird bewusst nichts erzeugt, also keine Promi-Deepfakes 
 
 Vor der ersten Entscheidung wählen die Teilnehmenden im **Briefing** eine Zielgruppe (z. B. Handwerksbetriebe, Kanzleien) und einen Schreibstil (z. B. sachlich, mit Humor). Beides fließt in alle Live-Texte, den Chatbot, den Steckbrief und die Live-Bilder (Umgebung und Stimmung) ein und steht im Rückblick und im PDF. Die Auswahl ist in `data/quiz.json` unter `briefing` gepflegt; der Server nimmt nur dort bekannte IDs an.
 
+## Sprachen
+
+Das Quiz gibt es auf Deutsch und Englisch. Der erste Bildschirm ist eine Sprachauswahl, danach folgen Start, Einführung, Briefing und die Fragen. Auf der Startseite lässt sich die Sprache wechseln; KI-Texte, Chat und Steckbrief werden dann in der neuen Sprache neu erzeugt, Live-Bilder bleiben.
+
+- `data/quiz.json` ist die deutsche Grundfassung mit allen Feldern.
+- `data/quiz.en.json` enthält nur die übersetzten Texte mit denselben IDs (Fragen, Optionen, Zielgruppen, Stile). Bildprompts, Typen und Kapitelnummern kommen aus der Grundfassung, Live-Bilder teilen sich deshalb den Cache.
+- Fehlt eine Übersetzung, meldet der Server das beim Start („Unübersetzt (en): …“).
+- Oberflächentexte und PDF-Texte stehen in `public/js/app.js` unter `I18N`, die Systemprompts für die KI in `server.mjs` unter `PROMPTS`.
+- Die Browser-API hängt `?lang=de|en` an jede Anfrage an.
+
 ## KI über Replicate
 
 Sprachmodell und Bild-KI laufen über [Replicate](https://replicate.com) mit einem gemeinsamen Token (`REPLICATE_API_TOKEN`).
@@ -39,7 +49,8 @@ Datenschutz: Replicate ist ein US-Anbieter. Für den Einsatz mit echten Teilnehm
 
 | Pfad | Inhalt |
 |---|---|
-| `data/quiz.json` | Story, Fragen, Optionen, Rechtsbezüge, Prompts und Fallback-Texte |
+| `data/quiz.json` | Story, Fragen, Optionen, Rechtsbezüge, Prompts und Fallback-Texte (Deutsch) |
+| `data/quiz.en.json` | englische Übersetzung derselben Inhalte (nur Texte, gleiche IDs) |
 | `server.mjs` | Node-Server: liefert `public/` aus und stellt die API für die Live-KI bereit |
 | `lib/providers.mjs` | Anbindung an Sprachmodell und Bild-KI über die Replicate-API (ohne Zusatzpakete) |
 | `public/` | App: `index.html`, `js/app.js`, `css/style.css` (Designvorlage), `css/app.css` (Ergänzungen) |

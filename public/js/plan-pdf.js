@@ -1,7 +1,8 @@
 // Kampagnenplan als PDF-Datei: wird erst beim Klick auf „Kampagnenplan herunterladen“ geladen
 // und baut das Dokument mit jsPDF (public/vendor) direkt im Browser. Nichts davon geht an den Server.
 //
-// Erwartet die Daten aus app.js (planData) und lädt die Datei mit doc.save() herunter.
+// Erwartet die Daten aus app.js (planData, inkl. der Texte in plan.t für die gewählte Sprache)
+// und lädt die Datei mit doc.save() herunter.
 
 (() => {
   "use strict";
@@ -107,6 +108,7 @@
   // ---------- Dokument ----------
 
   async function download(plan) {
+    const t = plan.t;
     const [regular, semibold, visual, liveImages] = await Promise.all([
       fontBase64("fonts/geist/geist-sans-regular.ttf"),
       fontBase64("fonts/geist/geist-sans-semibold.ttf"),
@@ -120,10 +122,10 @@
     doc.addFileToVFS("Geist-SemiBold.ttf", semibold);
     doc.addFont("Geist-SemiBold.ttf", "Geist", "bold");
     doc.setProperties({
-      title: "Kampagnenplan „KI-Kompass für Teams“",
-      subject: "Kampagnenplanung aus dem Lernspiel „Die KI-Kampagne“",
-      author: "Akademie Morgenrot",
-      creator: "Die KI-Kampagne · ai up",
+      title: t.docTitle,
+      subject: t.subject,
+      author: t.author,
+      creator: t.creator,
     });
 
     const m = PAGE.margin;
@@ -136,9 +138,9 @@
     };
 
     // Kopf
-    y += label(doc, "Akademie Morgenrot · Interne Kampagnenplanung", m, y) + 0.6;
-    y += drawLines(doc, wrap(doc, [{ text: "Kampagnenplan „KI-Kompass für Teams“", bold: true }], 19, WIDTH), m, y, 19, C.heading, 1.2) + 1.2;
-    y += drawLines(doc, wrap(doc, [{ text: `Stand ${plan.date} · zur Besprechung mit Jonas` }], 9.5, WIDTH), m, y, 9.5, C.muted);
+    y += label(doc, t.header, m, y) + 0.6;
+    y += drawLines(doc, wrap(doc, [{ text: t.docTitle, bold: true }], 19, WIDTH), m, y, 19, C.heading, 1.2) + 1.2;
+    y += drawLines(doc, wrap(doc, [{ text: t.stand(plan.date) }], 9.5, WIDTH), m, y, 9.5, C.muted);
     y += 3.5;
     doc.setDrawColor(C.primary);
     doc.setLineWidth(0.6);
@@ -151,25 +153,25 @@
     const colW = visual ? WIDTH - visualW - 7 : WIDTH;
     let cy = y;
     if (plan.briefing) {
-      cy += label(doc, "Briefing", colX, cy);
-      cy += drawLines(doc, wrap(doc, [{ text: "Zielgruppe: ", bold: true }, { text: plan.briefing.audience }, { text: " · Schreibstil: ", bold: true }, { text: plan.briefing.style }], 10, colW), colX, cy, 10, C.text);
+      cy += label(doc, t.briefing, colX, cy);
+      cy += drawLines(doc, wrap(doc, [{ text: t.audience, bold: true }, { text: plan.briefing.audience }, { text: t.style, bold: true }, { text: plan.briefing.style }], 10, colW), colX, cy, 10, C.text);
       cy += 3.5;
     }
-    cy += label(doc, "Claim", colX, cy);
+    cy += label(doc, t.claim, colX, cy);
     cy += drawLines(doc, wrap(doc, [{ text: plan.claim, bold: true }], 14, colW), colX, cy, 14, C.heading, 1.25) + 1;
     if (plan.sub) cy += drawLines(doc, wrap(doc, [{ text: plan.sub }], 10, colW), colX, cy, 10, C.text);
     cy += 3.5;
-    cy += label(doc, "Steckbrief", colX, cy);
+    cy += label(doc, t.summary, colX, cy);
     cy += drawLines(doc, wrap(doc, [{ text: plan.summary }], 10, colW), colX, cy, 10, C.text);
     cy += 3.5;
-    cy += label(doc, "Ethik-Punkte", colX, cy);
-    cy += drawLines(doc, wrap(doc, [{ text: `${plan.score} von ${plan.max}`, bold: true }], 10, colW), colX, cy, 10, C.heading);
+    cy += label(doc, t.points, colX, cy);
+    cy += drawLines(doc, wrap(doc, [{ text: t.score(plan.score, plan.max), bold: true }], 10, colW), colX, cy, 10, C.heading);
     let vy = y;
     if (visual) {
       const h = visualW * visual.ratio;
       doc.addImage(visual.data, "JPEG", m, y, visualW, h, undefined, "FAST");
       vy = y + h + 3.5;
-      label(doc, "Key Visual · KI-generiert", m, vy, C.muted);
+      label(doc, t.keyVisual, m, vy, C.muted);
       vy += 4.4;
     }
     y = Math.max(cy, vy) + 5;
@@ -181,7 +183,7 @@
     const measureItem = ({ item, image }) => {
       const textW = WIDTH - INDENT;
       const title = wrap(doc, [{ text: item.title, bold: true }], 10.5, textW - 34);
-      const measure = wrap(doc, [{ text: "Maßnahme: ", bold: true }, { text: item.measure }], 9.5, textW);
+      const measure = wrap(doc, [{ text: t.measure, bold: true }, { text: item.measure }], 9.5, textW);
       let liveH = 0;
       let liveLines = [];
       if (item.live) {
@@ -219,7 +221,7 @@
         doc.setFillColor(C.accent);
         doc.rect(x, y, 0.8, layout.liveH, "F");
         let ly = y + 3;
-        ly += label(doc, `${item.live.label} · KI-generiert`, x + 4, ly, C.accent);
+        ly += label(doc, `${item.live.label} · ${t.aiGenerated}`, x + 4, ly, C.accent);
         layout.liveLines.forEach((lines) => {
           ly += drawLines(doc, lines, x + 4, ly, 9, C.text) + 1;
         });
@@ -246,7 +248,7 @@
     });
 
     // Schlussbemerkung
-    const foot = wrap(doc, [{ text: "Lernspiel „Die KI-Kampagne“ von ai up. Keine Rechtsberatung, Stand November 2026. Texte und Bilder mit „KI-generiert“ hat eine KI erstellt." }], 8, WIDTH);
+    const foot = wrap(doc, [{ text: t.foot }], 8, WIDTH);
     ensure(foot.length * lineHeight(8) + 5);
     doc.setDrawColor(C.line);
     doc.line(m, y, m + WIDTH, y);
@@ -258,8 +260,8 @@
     for (let p = 1; p <= pages; p++) {
       doc.setPage(p);
       font(doc, false, 7.5, C.muted);
-      doc.text("Kampagnenplan „KI-Kompass für Teams“ · Akademie Morgenrot", m, PAGE.h - 12, { baseline: "top" });
-      doc.text(`Seite ${p} von ${pages}`, m + WIDTH, PAGE.h - 12, { baseline: "top", align: "right" });
+      doc.text(t.pageFooter, m, PAGE.h - 12, { baseline: "top" });
+      doc.text(t.page(p, pages), m + WIDTH, PAGE.h - 12, { baseline: "top", align: "right" });
     }
 
     doc.save(plan.filename);

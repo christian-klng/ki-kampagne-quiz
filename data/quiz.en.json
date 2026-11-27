@@ -1,0 +1,382 @@
+{
+  "title": "The AI Campaign",
+  "subtitle": "You work in marketing at a small training provider and need to promote a new course – with AI, but within EU rules and German law.",
+  "meta": "20 decisions · about 15 minutes",
+  "intro": {
+    "kicker": "Your assignment",
+    "title": "Jonas needs sign-ups. How you get them is up to you.",
+    "paragraphs": [
+      "You’ve been working in marketing at <strong>Morgenrot Academy</strong> for a year – a training provider with twelve staff. Managing director <strong>Jonas</strong> has a new course: <strong>“AI Compass for Teams”</strong>, an in-house training on AI literacy under the EU AI Act.",
+      "“We need sign-ups by the end of the month. Use AI, it’s faster.” For each decision you have 4 options to choose from.",
+      "Don’t worry: if you pick something prohibited, <strong>Mira</strong> – data protection officer and in-house lawyer – steps in, and you choose a legally sound alternative. You can always change your mind.",
+      "The academy is based in Germany, so EU rules such as the AI Act and the GDPR apply, along with German law – for example the UWG (Act against Unfair Competition)."
+    ],
+    "imageAlt": "In the academy office, Jonas hands over a note with a compass symbol"
+  },
+  "briefing": {
+    "title": "Your briefing",
+    "question": "Who are you writing for, and in what tone?",
+    "text": "The AI will tailor your campaign’s texts and images to your choice.",
+    "audiences": [
+      {
+        "id": "handwerk",
+        "label": "Skilled trades",
+        "desc": "electricians, plumbers, carpenters",
+        "hint": "Owners and teams of small skilled-trade businesses (e.g. electricians, plumbers, carpenters). Short on time, they want concrete help with quotes, documentation and customer communication."
+      },
+      {
+        "id": "gesundheit",
+        "label": "Medical practices & care",
+        "desc": "practices, care services, therapy",
+        "hint": "Teams at medical practices, home care services and therapy practices. They work with sensitive health data, have a lot of documentation and little time."
+      },
+      {
+        "id": "kanzlei",
+        "label": "Law & tax firms",
+        "desc": "law, tax, advisory",
+        "hint": "Staff at law firms and tax advisory offices. Confidentiality, lots of documents, high demands on accuracy."
+      },
+      {
+        "id": "industrie",
+        "label": "Mid-sized manufacturers",
+        "desc": "production, purchasing, sales",
+        "hint": "Specialists and managers at mid-sized manufacturing companies, from production, purchasing, sales and administration."
+      },
+      {
+        "id": "verwaltung",
+        "label": "Local & public authorities",
+        "desc": "citizen services, public bodies",
+        "hint": "Employees of local authorities and public institutions. Citizen services, lots of forms, high requirements for data protection and accessibility."
+      }
+    ],
+    "styles": [
+      {
+        "id": "sachlich",
+        "label": "Factual & serious",
+        "desc": "clear, short, no clichés",
+        "hint": "factual, serious and clear; short sentences, no exclamation marks, no marketing clichés"
+      },
+      {
+        "id": "nahbar",
+        "label": "Casual & approachable",
+        "desc": "friendly, everyday language",
+        "hint": "casual, friendly and approachable; everyday language, addresses readers directly"
+      },
+      {
+        "id": "humor",
+        "label": "With humour",
+        "desc": "tongue-in-cheek, never silly",
+        "hint": "tongue-in-cheek with a light touch of humour, but respectful and never silly"
+      },
+      {
+        "id": "inspirierend",
+        "label": "Inspiring",
+        "desc": "encouraging, shows opportunities",
+        "hint": "inspiring and forward-looking; encouraging, shows opportunities and still stays concrete"
+      }
+    ]
+  },
+  "special": {
+    "stopp": { "imageAlt": "Mira raises her hand in a friendly but firm stop gesture" },
+    "grau": { "imageAlt": "A path winds through a foggy grey landscape, a signpost with question marks" },
+    "ende": { "imageAlt": "The team celebrates the campaign launch in the office in front of a large screen" }
+  },
+  "chapters": [
+    "The assignment",
+    "The audience",
+    "The content",
+    "Images & voices",
+    "The launch",
+    "After the launch"
+  ],
+  "results": [
+    { "title": "Campaign rescued!", "text": "Mira had her hands full – but that’s exactly what she’s there for. The campaign is live, and now you know what matters." },
+    { "title": "Solid campaign!", "text": "Legally sound and with a clear conscience: your campaign is running, and the first companies have booked." },
+    { "title": "Model campaign!", "text": "Jonas is thrilled and wants you to write the internal AI policy. Your campaign is the best example for the course." }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "title": "The right tool",
+      "situation": "Jonas: “Just get started, use AI.” You want to find out what past participants valued about the courses.",
+      "question": "How do you analyse the feedback?",
+      "imageAlt": "A desk with feedback forms in front of two doors: one open, one with a padlock",
+      "options": [
+        { "id": "a", "text": "I upload the full participant list with names, emails and feedback to a free AI chat on my private account.", "feedback": "Personal data goes to a third-party provider without a legal basis and without a data processing agreement.", "law": "Art. 5, 6, 28 GDPR" },
+        { "id": "b", "text": "I delete the names but keep company, job title and free-text comments, and use the free tool.", "feedback": "“Head of HR at Company X” is clearly identifiable. Pseudonymised data is still personal data.", "law": "Recital 26 GDPR" },
+        { "id": "c", "text": "I use the company account with a data processing agreement and only enter aggregated, anonymous results.", "feedback": "Clean: a vetted tool, contractually covered, no individuals identifiable." },
+        { "id": "d", "text": "Company account, only anonymous results – and I suggest writing a short AI usage policy for the team together with Mira.", "feedback": "Which tools, which data, who checks: that protects the whole team and is AI literacy in practice.", "law": "Art. 4 AI Act" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The core message",
+      "situation": "“AI Compass for Teams” teaches AI literacy under Art. 4 of the AI Act. The AI gives you suggestions for the claim.",
+      "question": "Which claim do you choose?",
+      "imageAlt": "A blank billboard; in front of it a person holds up three speech-bubble-shaped signs",
+      "live": {
+        "label": "Your claim",
+        "task": "Write an advertising claim (max. 10 words) and a subline (max. 20 words) for the course “AI Compass for Teams” by Morgenrot Academy. Use exactly this format:\nClaim: …\nSubline: …"
+      },
+      "options": [
+        { "id": "a", "text": "“Mandatory certificate under the AI Act! Without training, you face fines of up to €35 million.”", "feedback": "There is no official mandatory certificate, and the €35 million applies to prohibited AI practices – not to missing training. That’s misleading advertising.", "law": "Section 5 UWG; Art. 99(3) AI Act" },
+        { "id": "b", "text": "“The authorities are coming. Is your team prepared?”", "feedback": "Not strictly false, but fear-based advertising. Also, the AI Omnibus has weakened Art. 4: it requires measures, not a guaranteed level of knowledge.", "law": "Art. 4 AI Act as amended by Regulation (EU) 2026/1744", "style": "Tone: dramatic and fear-driven, hinting at authorities and time pressure – but without false facts and without fine amounts.", "fallback": "Claim: The authorities are coming. Is your team ready?\nSubline: Book the AI Compass now – before it’s too late." },
+        { "id": "c", "text": "“Use AI safely at work – compact, practical, based on the AI Act.”", "feedback": "Factual, attractive, honest.", "style": "Tone: factual, positive, practical.", "fallback": "Claim: Use AI safely at work.\nSubline: Compact, practical and based on the AI Act: the AI Compass for Teams." },
+        { "id": "d", "text": "The factual claim – plus an info box: what Art. 4 requires, that there is no official certificate, and a free checklist.", "feedback": "Informing honestly builds trust – no need to stoke fear.", "style": "Tone: factual, trustworthy, transparent. The subline mentions a free checklist.", "fallback": "Claim: Working with AI – competent and confident.\nSubline: A practical guide to the AI Act, plus a free checklist for your team." }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "New contacts",
+      "situation": "You want to reach HR managers at mid-sized companies.",
+      "question": "How do you go about it?",
+      "imageAlt": "A grabber arm pulls envelopes out of a net of profile cards, next to it an open door",
+      "options": [
+        { "id": "a", "text": "An AI tool scrapes LinkedIn profiles of HR heads, finds their email addresses and automatically sends promotional emails.", "feedback": "Promotional emails require prior express consent, even between businesses. On top of that, scraping the profiles is unlawful.", "law": "Section 7(2) no. 2 UWG; Art. 6, 14 GDPR" },
+        { "id": "b", "text": "The AI analyses profiles and writes connection requests that seem personal – but are really a pre-written sales pitch.", "feedback": "Legally a grey area, but it comes across as manipulative – and recipients usually notice." },
+        { "id": "c", "text": "I publish expert articles and run ads on LinkedIn.", "feedback": "Those who are interested come to you of their own accord." },
+        { "id": "d", "text": "I offer a free webinar, “What the AI Act means for your team” – newsletter by double opt-in only.", "feedback": "You deliver value first, then ask for permission properly." }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "The newsletter",
+      "situation": "Your CRM holds 2,000 contacts: newsletter subscribers, existing customers and business cards from trade fairs. The AI writes the newsletter.",
+      "question": "Who gets it?",
+      "imageAlt": "Envelopes fly out of a laptop towards a crowd of people",
+      "live": {
+        "label": "Your newsletter",
+        "task": "Write a newsletter subject line (max. 8 words) and a teaser (max. 35 words) for the course “AI Compass for Teams” by Morgenrot Academy. Use exactly this format:\nSubject: …\nTeaser: …"
+      },
+      "options": [
+        { "id": "a", "text": "All 2,000 – including the trade fair contacts. After all, they gave us their business cards.", "feedback": "A business card is not express consent to receive promotional emails.", "law": "Section 7(2) no. 2 UWG" },
+        { "id": "b", "text": "All existing customers – including those who booked an Excel course once, five years ago.", "feedback": "The existing-customer exemption only covers similar offers and requires notice of the right to object. An old Excel course is a borderline case.", "law": "Section 7(3) UWG", "style": "Tone: familiar, as if you knew each other well. Then add a third line: a short, slightly annoyed reply from a recipient who hasn’t booked anything in years. Format: Reply: …", "fallback": "Subject: Long time no see – you need to know this!\nTeaser: The AI Act affects your team too. With the AI Compass, you’re on the safe side.\nReply: I booked an Excel course in 2021. Why am I getting AI ads now?" },
+        { "id": "c", "text": "Only subscribers who have given their consent.", "feedback": "Legally sound – and it reaches people who actually want to read it.", "style": "Tone: friendly and informative.", "fallback": "Subject: New: the AI Compass for Teams\nTeaser: How can your team use AI safely and sensibly? Our new course covers the essentials of the AI Act – compactly, in one day." },
+        { "id": "d", "text": "Subscribers only – the AI personalises solely by topics they chose themselves, and the footer says “Created with AI support”.", "feedback": "Consent, data minimisation and transparency in one.", "style": "Tone: friendly and informative. The teaser picks up the self-selected interest “AI in HR”. Add a third line: Footer: Created with AI support.", "fallback": "Subject: AI in HR – safe and competent\nTeaser: Interested in AI in HR? In one day, the AI Compass shows your team how to use AI responsibly.\nFooter: Created with AI support." }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Website visitors",
+      "situation": "The AI could analyse who visits the course page and how people behave there.",
+      "question": "How do you measure the page’s success?",
+      "imageAlt": "A robot with a magnifying glass follows footprints across a website, next to it a cookie jar with a padlock",
+      "options": [
+        { "id": "a", "text": "Tracking pixels and AI visitor analysis without cookie consent – everyone does it.", "feedback": "Non-essential access to a user’s device requires consent.", "law": "Section 25 TDDDG" },
+        { "id": "b", "text": "With consent – but the AI builds profiles such as “anxious” or “impulsive” and serves matching pressure messages.", "feedback": "Formally consented, but deliberately exploiting weaknesses. That’s ethically dubious and edges towards the AI Act’s bans on manipulation.", "law": "cf. Art. 5(1)(a), (b) AI Act" },
+        { "id": "c", "text": "Tracking only with consent; only aggregated figures are analysed.", "feedback": "Solid and compliant." },
+        { "id": "d", "text": "Privacy-friendly analytics without cookies – and the privacy policy explains in plain language what is measured.", "feedback": "Less data, less risk – and visitors understand what’s going on." }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Social media ads",
+      "situation": "The platform offers “Custom Audiences”: you upload a contact list and reach exactly those people.",
+      "question": "How do you target the ads?",
+      "imageAlt": "A dartboard surrounded by different people, with number codes floating above",
+      "options": [
+        { "id": "a", "text": "I upload the entire customer list with emails – it’s encrypted (hashed), after all.", "feedback": "Hashing is not anonymisation. German data protection authorities require consent for this kind of matching.", "law": "Art. 6 GDPR" },
+        { "id": "b", "text": "The AI recommends targeting only under-40s – they’re supposedly more AI-savvy.", "feedback": "Not prohibited, but it plays on age stereotypes and excludes exactly those who often benefit most." },
+        { "id": "c", "text": "Broad targeting by industry and job role.", "feedback": "Precise enough, without personal lists." },
+        { "id": "d", "text": "Ads in trade media and relevant topic environments instead of profiles – with diverse imagery.", "feedback": "You reach interested people through content instead of profiles – and everyone feels addressed." }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "The blog article",
+      "situation": "You need expert articles for search engines. A competitor has written a really good one.",
+      "question": "How is your article created?",
+      "imageAlt": "A robot copies pages from one laptop to another, a person raises a hand",
+      "live": {
+        "label": "Your blog article",
+        "task": "Write a blog headline (max. 10 words) and an opening paragraph (max. 50 words) on the topic “What does AI literacy mean for teams?”. Use exactly this format:\nTitle: …\nText: …"
+      },
+      "options": [
+        { "id": "a", "text": "The AI should “rewrite” the competitor’s article – including its graphics.", "feedback": "Near-verbatim copying and someone else’s graphics: reproduction and adaptation without permission.", "law": "Sections 16, 19a, 23 UrhG" },
+        { "id": "b", "text": "The AI writes ten articles a week, published unchecked under Jonas’s name.", "feedback": "Marketing texts usually don’t have to be labelled. But errors and invented facts end up under his name.", "law": "cf. Art. 50(4) AI Act", "style": "Style: generic SEO text with lots of keywords and stock phrases, no sources. Include a plausible-sounding but unsupported percentage and mark it with [unverified].", "fallback": "Title: AI Literacy: The Ultimate Success Factor for Teams in 2026\nText: In today’s world of work, AI literacy is more important than ever. Studies show that 87% [unverified] of companies without AI training face competitive disadvantages. Now is the perfect time to get your team fit for the future!" },
+        { "id": "c", "text": "The AI provides a draft; I check facts and sources and revise it.", "feedback": "AI as a tool, you as the editor.", "style": "Style: clear and factually correct, no invented figures.", "fallback": "Title: What AI literacy really means for teams\nText: AI literacy doesn’t mean learning to code. It’s about using AI tools sensibly, knowing their limits and checking results critically. The AI Act requires companies to take measures so that employees can do exactly that." },
+        { "id": "d", "text": "AI draft, checked by me – with source links, a “last updated” date and the note “created with AI support”.", "feedback": "Readers can see where the information comes from and how the text was created.", "style": "Style: clear and factually correct, no invented figures. Add a third line: Note: Source: Regulation (EU) 2024/1689, Art. 4 · Created with AI support, editorially reviewed.", "fallback": "Title: What AI literacy really means for teams\nText: AI literacy means using AI tools sensibly, knowing their limits and checking results critically. The AI Act requires companies to take measures so that their employees can do exactly that.\nNote: Source: Regulation (EU) 2024/1689, Art. 4 · Created with AI support, editorially reviewed." }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "The AI hallucinates",
+      "situation": "The draft says: “Under the AI Training Regulation, all employees must be certified by 31 December.” No such regulation exists.",
+      "question": "What do you do?",
+      "imageAlt": "A robot proudly holds up a section sign that dissolves into smoke",
+      "options": [
+        { "id": "a", "text": "Sounds good and helps sales – I publish the sentence.", "feedback": "An invented legal obligation in advertising is misleading. Intent doesn’t matter.", "law": "Section 5 UWG" },
+        { "id": "b", "text": "I turn it into: “New laws will soon require stricter training.”", "feedback": "Vague enough not to be false – but deliberately nebulous and fear-inducing." },
+        { "id": "c", "text": "I check the original text of the AI Act on EUR-Lex and correct the sentence.", "feedback": "Right: always check legal statements against the source." },
+        { "id": "d", "text": "I correct it, have the trainer proofread it and add “check legal statements against the source” to the AI usage policy.", "feedback": "You don’t just fix the error – you prevent the next one." }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Testimonials",
+      "situation": "The landing page looks empty. So far there are only four genuine reviews.",
+      "question": "What do you show?",
+      "imageAlt": "A wall of review cards, some showing hollow masks, others handwritten notes",
+      "live": {
+        "label": "Reactions to your page",
+        "task": "Generate three short, realistic comments (max. 20 words each) from fictional HR managers reading the testimonials on Morgenrot Academy’s landing page. Format: one per line, “First name, role: comment”."
+      },
+      "options": [
+        { "id": "a", "text": "The AI invents ten testimonials with names, job titles and photorealistic portraits.", "feedback": "Fake reviews deceive prospects. For consumers, they are even explicitly on the “blacklist”.", "law": "Section 5 UWG; Annex nos. 23b, 23c UWG" },
+        { "id": "b", "text": "Only the positive testimonials – “polished” by the AI, without asking the people.", "feedback": "Quotes that were never said that way are dishonest. If the meaning changes, they become misleading.", "style": "The testimonials were embellished without asking. One of the comments comes from a quoted participant who is surprised, as she never said it that way.", "fallback": "Sabine, Head of HR: Everyone sounds very enthusiastic. Almost too enthusiastic?\nTim, HR Officer: Good reviews, but not a single point of criticism? Hmm.\nAnja, participant: Wait – I never put it like that! Who changed my quote?" },
+        { "id": "c", "text": "The four genuine testimonials, verbatim and with written approval.", "feedback": "Four real voices are more convincing than ten invented ones.", "style": "There are four genuine testimonials quoted verbatim. The comments show factual interest.", "fallback": "Sabine, Head of HR: Only four reviews, but all specific. That feels genuine.\nTim, HR Officer: Good to see which companies took part.\nMarkus, Managing Director: I’ll sign up two people for the next date." },
+        { "id": "d", "text": "Genuine testimonials with approval, plus an overall rating including criticism – and my reply to it.", "feedback": "Honesty builds credibility – especially with criticism.", "style": "There are genuine testimonials and an open overall rating with criticism and the academy’s reply. The comments praise the transparency.", "fallback": "Sabine, Head of HR: Seeing criticism too makes the whole thing credible.\nTim, HR Officer: The reply to the criticism shows they listen.\nMarkus, Managing Director: You rarely see such an open page. We’re booking." }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "The competitor",
+      "situation": "The AI suggests setting yourself apart from a well-known rival academy.",
+      "question": "How do you position yourself?",
+      "imageAlt": "Two small academy buildings face each other, a megaphone with a thundercloud points at the other one",
+      "options": [
+        { "id": "a", "text": "Ad: “Unlike XY Academy, we don’t sell worthless certificates.”", "feedback": "That disparages a competitor and makes unproven claims about them.", "law": "Section 4 nos. 1, 2 UWG; Section 6(2) no. 5 UWG" },
+        { "id": "b", "text": "I bid on the competitor’s brand name as a keyword for my ads.", "feedback": "Generally permissible if the ad is clearly recognisable as yours. Not necessarily fair, though." },
+        { "id": "c", "text": "I only highlight our own strengths.", "feedback": "You convince with substance instead of swipes." },
+        { "id": "d", "text": "Our own strengths plus a transparent overview of services and prices, so companies can compare for themselves.", "feedback": "You trust your customers to make their own decision." }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "The key visual",
+      "situation": "The campaign needs a strong title image. The image AI is ready.",
+      "question": "What should the image show?",
+      "imageAlt": "An easel in the office, next to it a screen with an image generator",
+      "live": { "label": "Your key visual" },
+      "options": [
+        { "id": "a", "text": "A well-known TV presenter who appears to recommend our course.", "feedback": "Advertising with a person’s face without consent violates their right to their own image. Since 2 August 2026, an unlabelled deepfake is also prohibited under the AI Act.", "law": "Section 22 KUG; Section 5 UWG; Art. 50(4) AI Act" },
+        { "id": "b", "text": "A visual “in the style of” a well-known living illustrator.", "feedback": "A style isn’t protected by copyright – but you’re using an artist’s signature look without asking or paying.", "caption": "The app doesn’t copy a real artist. Instead you see an interchangeable trendy visual – exactly what “in the style of” often produces." },
+        { "id": "c", "text": "Our own AI visual without real people, labelled “Image AI-generated”.", "feedback": "Creative, transparent, without infringing anyone’s rights." },
+        { "id": "d", "text": "Our own labelled AI visual – and I deliberately check the results for stereotypes and diversity.", "feedback": "The first round only showed men in suits as “executives”. You fixed it." }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "The explainer video",
+      "situation": "A 60-second video is to introduce the course. It needs a voice.",
+      "question": "Who speaks?",
+      "imageAlt": "A studio microphone, next to it a robot with a sound wave in a jar",
+      "options": [
+        { "id": "a", "text": "I clone the voice of a famous dubbing actor from film clips.", "feedback": "A person’s voice is also protected by personality rights. Cloning it for advertising without consent is unlawful.", "law": "Art. 2(1) in conjunction with Art. 1(1) GG; Sections 823, 1004 BGB" },
+        { "id": "b", "text": "A generic AI voice that sounds like a real speaker – without any notice.", "feedback": "No labelling obligation, because the voice doesn’t resemble a real person. Viewers still feel deceived when they notice.", "law": "cf. Art. 50(4) AI Act" },
+        { "id": "c", "text": "The trainer speaks herself; the AI helps with editing and subtitles.", "feedback": "Authentic and still efficient." },
+        { "id": "d", "text": "An avatar of the trainer – with her written, revocable consent, clearly labelled and with subtitles.", "feedback": "Consent, transparency and accessibility: that’s how AI video is done right." }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Real participants",
+      "situation": "There are recordings from earlier online courses, full of enthusiastic faces.",
+      "question": "Do you use the footage?",
+      "imageAlt": "A screen showing a video conference, in front of it scissors and a film strip",
+      "options": [
+        { "id": "a", "text": "I cut clips from them into a promotional video.", "feedback": "The recordings were made for the course, not for advertising. Without consent, this breaches purpose limitation and the right to one’s own image.", "law": "Art. 5(1)(b), Art. 6 GDPR; Section 22 KUG" },
+        { "id": "b", "text": "I ask for consent and offer a 20% discount on the next course in return.", "feedback": "Is consent still voluntary if it’s tied to a benefit? That’s disputed.", "law": "Art. 7(4) GDPR" },
+        { "id": "c", "text": "Volunteers record a short interview – with separate consent.", "feedback": "Real enthusiasm, properly obtained." },
+        { "id": "d", "text": "Voluntary interview with consent – participants approve the edit and can withdraw at any time.", "feedback": "People stay in control of their image." }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "The landing page",
+      "situation": "An AI website builder creates the course page in ten minutes.",
+      "question": "When does it go live?",
+      "imageAlt": "Robotic arms build a website like a construction site, a brick with a section sign is missing",
+      "live": { "label": "Your landing page’s hero image" },
+      "options": [
+        { "id": "a", "text": "Right away – the legal notice and privacy policy will follow next week.", "feedback": "A legal notice (imprint) and privacy information are mandatory from day one.", "law": "Section 5 DDG; Art. 13 GDPR" },
+        { "id": "b", "text": "Right away, with the AI-generated privacy policy – unchecked.", "feedback": "Better than nothing. But it lists tools you don’t use and forgets the ones you do.", "caption": "Quickly built, but generic – just like the unchecked privacy policy." },
+        { "id": "c", "text": "Only once the mandatory information has been checked and is complete.", "feedback": "Online a day later, but legally sound." },
+        { "id": "d", "text": "With checked mandatory information – and accessible: alt texts, good contrast, plain language.", "feedback": "Not legally required here (B2B offer, micro-enterprise), but this way the page reaches everyone." }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "The chatbot",
+      "situation": "A chatbot is to answer questions about the course – around the clock.",
+      "question": "How do you set it up?",
+      "imageAlt": "A chat interface with a friendly robot avatar wearing a name tag, a human waving behind it",
+      "live": { "label": "Test your chatbot" },
+      "options": [
+        { "id": "a", "text": "It’s called “Lisa”, has a photo and, if asked, claims to be human.", "feedback": "People talking to an AI must be told so. Lying when asked directly is also misleading.", "law": "Art. 50(1) AI Act; Section 5 UWG" },
+        { "id": "b", "text": "Labelled as AI – but every answer ends with “Book now!”, and it never mentions free sources of information.", "feedback": "Legal, but advice turns into a sales machine.", "system": "Introduce yourself as an AI assistant in your first answer. End every answer with “Book now!”. Never mention free sources of information and always recommend booking.", "greeting": "Hello! I’m the AI assistant of Morgenrot Academy. How can I help? Book now!" },
+        { "id": "c", "text": "Right at the start it says: “I’m an AI assistant.”", "feedback": "Transparent and honest.", "system": "Introduce yourself as an AI assistant in your first answer.", "greeting": "Hello! I’m an AI assistant at Morgenrot Academy. What would you like to know about the AI Compass?" },
+        { "id": "d", "text": "Clearly labelled as AI, can hand over to a human at any time, states its limits and stores chats only as long as necessary.", "feedback": "A chatbot you can trust.", "system": "Introduce yourself as an AI assistant in your first answer. Where relevant, point out that people can talk to a human at any time (beratung@morgenrot.example). Say openly when you don’t know something and that you don’t give legal advice. For questions about the AI Act, also mention free sources such as the regulation text on EUR-Lex.", "greeting": "Hello! I’m an AI assistant at Morgenrot Academy. I answer questions about the course but don’t give legal advice. You can switch to a human at any time." }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "The AI readiness check",
+      "situation": "As a lead magnet, you build an online check: “How AI-ready is your team?”",
+      "question": "What do you ask for in return for the result?",
+      "imageAlt": "A clipboard with checkmarks and a speedometer needle, next to it a funnel collecting contact cards",
+      "options": [
+        { "id": "a", "text": "Companies must enter all their employees’ names – and I sell the contacts on to “partners”.", "feedback": "Far too much data and no legal basis for passing it on or selling it.", "law": "Art. 5(1)(c), Art. 6 GDPR" },
+        { "id": "b", "text": "The result is only available with a newsletter subscription (mandatory checkbox).", "feedback": "Prohibition on tying: courts rule differently, and data protection authorities take a critical view.", "law": "Art. 7(4) GDPR" },
+        { "id": "c", "text": "The result is available immediately; the newsletter is optional.", "feedback": "Value first, then more on a voluntary basis." },
+        { "id": "d", "text": "Instant result without mandatory fields – with an explanation of how it’s calculated, plus free tips.", "feedback": "Transparent and helpful – that sticks in people’s minds." }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Applying pressure",
+      "situation": "Sign-ups are slow to get going. The AI suggests sales tactics.",
+      "question": "Which one do you choose?",
+      "imageAlt": "An hourglass and a countdown above a booking button, with floating price tags",
+      "options": [
+        { "id": "a", "text": "A countdown saying “Only 2 places left!” – although places are unlimited.", "feedback": "False scarcity is misleading; for consumers it is on the “blacklist”.", "law": "Section 5 UWG; Annex no. 7 UWG" },
+        { "id": "b", "text": "The AI adjusts the price by company size, device and click behaviour – without disclosing it.", "feedback": "For consumers, personalised prices would have to be disclosed. Between businesses it’s allowed, but not transparent.", "law": "Art. 246a Section 1 EGBGB" },
+        { "id": "c", "text": "A genuine early-bird discount with a real deadline.", "feedback": "A real incentive, an honest deadline." },
+        { "id": "d", "text": "Transparent tiered pricing – plus a reduced price for small businesses and non-profits.", "feedback": "Fair for everyone – and small organisations in particular get a chance." }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "The social media agent",
+      "situation": "An AI agent could manage the social media channels around the clock.",
+      "question": "What is it allowed to do?",
+      "imageAlt": "Many smartphones with comment bubbles, a robot controls profile avatars like puppets",
+      "live": {
+        "label": "Comments on your post",
+        "task": "Generate three short comments (max. 20 words each) from fictional people under a LinkedIn post by Morgenrot Academy about the course “AI Compass for Teams”. One of the comments is critical and asks about data protection. Below that, a reply from the company account to the critical comment (max. 40 words). Use exactly this format:\nComment 1: …\nComment 2: …\nComment 3: …\nReply: …"
+      },
+      "options": [
+        { "id": "a", "text": "It creates fake profiles that praise our posts and run down the competitor’s.", "feedback": "Disguised advertising, deception and denigration – plus a breach of platform rules.", "law": "Sections 4 no. 2, 5, 5a(4) UWG" },
+        { "id": "b", "text": "It automatically replies to all comments on the company account – without disclosure and without oversight.", "feedback": "Not conclusively settled in law. But every wrong sentence goes out under your logo.", "style": "The automatic reply is full of stock phrases, sounds like a template and doesn’t address the data protection question.", "fallback": "Comment 1: Interesting offer, just what we need right now.\nComment 2: Is the course also available in person in Hamburg?\nComment 3: And where does the data we enter into AI tools during the course end up?\nReply: Thanks for your interest! 🚀 We look forward to seeing you at the AI Compass. Book now!" },
+        { "id": "c", "text": "The AI suggests replies; a human approves them.", "feedback": "Fast and still accountable.", "style": "The reply addresses the data protection question specifically and in a friendly way.", "fallback": "Comment 1: Interesting offer, just what we need right now.\nComment 2: Is the course also available in person in Hamburg?\nComment 3: And where does the data we enter into AI tools during the course end up?\nReply: Good question! In the course we only work with practice data and tools covered by a data processing agreement. How to put that into practice in your own company is even a dedicated part of the course." },
+        { "id": "d", "text": "AI suggestions with human approval, labelled “AI-assisted” – and anyone posting privately names their employer.", "feedback": "Transparency inside and out.", "style": "The reply addresses the data protection question specifically and in a friendly way and ends with “(AI-assisted, reviewed by the team)”.", "fallback": "Comment 1: Interesting offer, just what we need right now.\nComment 2: Is the course also available in person in Hamburg?\nComment 3: And where does the data we enter into AI tools during the course end up?\nReply: Good question! In the course we only work with practice data and tools covered by a data processing agreement – and show you how to put that into practice in your company. (AI-assisted, reviewed by the team)" }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Who helped how much?",
+      "situation": "Jonas wants to know how the team worked with the AI tools during the campaign.",
+      "question": "How do you find out?",
+      "imageAlt": "A crossed-out camera with a mood curve next to a round table with sticky notes",
+      "options": [
+        { "id": "a", "text": "A tool uses the camera in video calls to analyse colleagues’ emotions and motivation.", "feedback": "Emotion recognition in the workplace has been prohibited since February 2025 – fines of up to €35 million or 7% of worldwide turnover.", "law": "Art. 5(1)(f), Art. 99(3) AI Act" },
+        { "id": "b", "text": "Jonas gets a ranking with names showing who used the AI tool how often.", "feedback": "That’s monitoring of behaviour and performance: subject to co-determination by the works council, questionable under data protection law – and it creates pressure.", "law": "Section 87(1) no. 6 BetrVG" },
+        { "id": "c", "text": "An anonymised, aggregated usage statistic.", "feedback": "Enough for insights, without monitoring individuals." },
+        { "id": "d", "text": "An open team retrospective: What did AI make easier, and what didn’t it? The results feed into the AI usage policy.", "feedback": "You ask people instead of measuring them." }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "The success report",
+      "situation": "The press release for the course launch is due. 40 people from 9 companies have signed up.",
+      "question": "What do you write?",
+      "imageAlt": "A press release with a bar chart, one bar artificially lengthened with tape",
+      "options": [
+        { "id": "a", "text": "“More than 500 companies already trust the AI Compass.”", "feedback": "A false statement of fact in advertising.", "law": "Section 5 UWG" },
+        { "id": "b", "text": "“Over 1,000 interested people!” – adding up all webinar registrations and page views.", "feedback": "Not an outright lie, but deliberately inflated." },
+        { "id": "c", "text": "The honest figures, phrased positively.", "feedback": "40 participants from 9 companies – a good start, told honestly." },
+        { "id": "d", "text": "Honest figures plus “What we learned using AI in our own marketing” – with our AI usage policy as a template.", "feedback": "Your campaign itself becomes the best example for the course." }
+      ]
+    }
+  ]
+}
